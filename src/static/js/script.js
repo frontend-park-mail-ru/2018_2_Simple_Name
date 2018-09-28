@@ -1,8 +1,15 @@
 'use strict';
+const httpReq = window.httpModule;
 
 const root = document.getElementById("root");
 
-const xhr = new XMLHttpRequest();
+function createLinkMenu(){
+    const link = document.createElement('a');
+    link.textContent = "Back to main menu";
+    link.href = "menu";
+    link.dataset.href = "menu";
+    return link;
+}
 
 function createMenu() {
     const logo = document.createElement('div');
@@ -51,7 +58,9 @@ function createMenu() {
 
 }
 
-function createSingIn(){
+function createSingIn() {
+    root.innerHTML = '';
+
     const header = document.createElement('div');
     header.dataset.sectionName = 'header';
     header.id = "header";
@@ -96,14 +105,32 @@ function createSingIn(){
 
     const pLink = document.createElement('p');
     form.appendChild(pLink);
-    const link = document.createElement('a');
-    link.textContent = "Back to main menu";
-    link.href = "menu";
-    link.dataset.href = "menu";
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const email = form.elements['email'].value;
+        const password = form.elements['password'].value;
+
+        httpReq.doPost({
+            url: '/login',
+            callback(res) {
+                createProfile();
+            },
+            data: {
+                email,
+                password
+            }
+        })
+    });
+
+    const link = createLinkMenu()
     pLink.appendChild(link);
 }
 
-function createSingUp(){
+function createSingUp() {
+    root.innerHTML = '';
+
     const header = document.createElement('div');
     header.dataset.sectionName = 'header';
     header.id = "header";
@@ -128,43 +155,80 @@ function createSingUp(){
     body.appendChild(formblock)
 
     const form = document.createElement('form');
-    form.id = 'SignInform';
+    form.id = 'SignUpform';
     formblock.appendChild(form);
 
-    const username = document.createElement('input');
-    username.placeholder = "Username"
-    form.appendChild(username);
+    const inputs = [
+		{
+			name: 'email',
+			type: 'email',
+			placeholder: 'Email'
+		},
+		{
+			name: 'password',
+			type: 'password',
+			placeholder: 'Password'
+		},
+		{
+			name: 'password_repeat',
+			type: 'password',
+			placeholder: 'Repeat Password'
+		},
+		{
+			name: 'submit',
+            type: 'submit',
+		}
+	];
 
-    form.appendChild(document.createElement('br'));
-    const email = document.createElement('input');
-    email.placeholder = "Email"
-    form.appendChild(email);
+	inputs.forEach(function (item) {
+		const input = document.createElement('input');
 
-    form.appendChild(document.createElement('br'));
-    const password = document.createElement('input');
-    password.placeholder = "Password"
-    form.appendChild(password);
+		input.name = item.name;
+		input.type = item.type;
 
-    form.appendChild(document.createElement('br'));
-    const repeatPassword = document.createElement('input');
-    repeatPassword.placeholder = "Repeat password"
-    form.appendChild(repeatPassword);
+        input.placeholder = item.placeholder;
 
-    form.appendChild(document.createElement('br'));
-    const submit = document.createElement('button');
-    submit.textContent = "Register"
-    form.appendChild(submit);
+		form.appendChild(input);
+		form.appendChild(document.createElement('br'));
+    });
+    
+    form.addEventListener('submit', function (event) {
+        
+        event.preventDefault();
 
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+		const password_repeat = form.elements[ 'password_repeat' ].value;
+		
+		if (password !== password_repeat) {
+			alert('Passwords is not equals');
+			return;
+        }
+        if(email == ""){
+            alert("Enter email!")
+            return 
+        }
+       
+		httpReq.doPost({
+			callback (res) {
+				createProfile();
+			},
+			url: '/signup',
+			data: {
+				email,
+				password,
+			}
+		});
+    });
+    
     const pLink = document.createElement('p');
     form.appendChild(pLink);
-    const link = document.createElement('a');
-    link.textContent = "Back to main menu";
-    link.href = "menu";
-    link.dataset.href = "menu";
+
+    const link = createLinkMenu()
     pLink.appendChild(link);
 }
 
-function createLeaders(){
+function createLeaders() {
 
 
     const header = document.createElement('div');
@@ -186,10 +250,7 @@ function createLeaders(){
 
     const pLink = document.createElement('p');
     headerTitle.appendChild(pLink);
-    const link = document.createElement('a');
-    link.textContent = "Back to main menu";
-    link.href = "menu";
-    link.dataset.href = "menu";
+    const link = createLinkMenu()
     pLink.appendChild(link);
 
     const table = document.createElement('table');
@@ -211,18 +272,18 @@ function createLeaders(){
 
     table.appendChild(tableHeader);
 
-  /*  const em = document.createElement('em');
-    em.textContent = 'Nothing to display';
-    body.appendChild(em);*/
+    /*  const em = document.createElement('em');
+      em.textContent = 'Nothing to display';
+      body.appendChild(em);*/
 
     xhr.open('POST', '/liderboards', true);
     xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
     xhr.send('Request');
 
     xhr.onreadystatechange = function () {
-        if (xhr.readyState!==4) return;
-        if (xhr.status !== 200 ){
-            alert( xhr.status + ': ' + xhr.statusText );
+        if (xhr.readyState !== 4) return;
+        if (xhr.status !== 200) {
+            alert(xhr.status + ': ' + xhr.statusText);
         } else {
             const top = JSON.parse(xhr.responseText);
             /*const d1 = document.createElement('div');
@@ -238,7 +299,7 @@ function createLeaders(){
             let username;
             let score;
 
-            Object.entries(top).forEach(function ([id,info]) {
+            Object.entries(top).forEach(function ([id, info]) {
                 username = info.nickname;
                 score = info.score;
 
@@ -269,7 +330,7 @@ function createLeaders(){
 
 }
 
-function createProfile(){
+function createProfile() {
     const logo = document.createElement('div');
     logo.classList.add("p_name");
 
@@ -285,14 +346,12 @@ function createProfile(){
 
     const pLink = document.createElement('p');
     body.appendChild(pLink);
-    const link = document.createElement('a');
-    link.textContent = "Back to main menu";
-    link.href = "menu";
-    link.dataset.href = "menu";
+
+    const link = createLinkMenu()
     pLink.appendChild(link);
 }
 
-function createAbout(){
+function createAbout() {
     const header = document.createElement('div');
     header.id = "header";
     header.dataset.sectionName = 'header';
@@ -319,12 +378,11 @@ function createAbout(){
 
     const pLink = document.createElement('p');
     headerTitle.appendChild(pLink);
-    const link = document.createElement('a');
-    link.textContent = "Back to main menu";
-    link.href = "menu";
+
+    const link = createLinkMenu()
     pLink.appendChild(link);
 
-    
+
     root.appendChild(body);
 }
 
@@ -336,8 +394,6 @@ const buttons = {
     about: createAbout,
     menu: createMenu,
 };
-
-createMenu();
 
 root.addEventListener("click", function (event) {
     if (!(event.target instanceof HTMLAnchorElement)) return;
@@ -352,3 +408,5 @@ root.addEventListener("click", function (event) {
     buttons[href]();
 
 });
+
+createMenu();
