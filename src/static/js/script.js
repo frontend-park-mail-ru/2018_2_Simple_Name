@@ -23,8 +23,8 @@ function createMenu() {
     logo.appendChild(logo_header);
 
     const titles = {
-        sing_in: 'Sing in',
-        sing_up: 'Sing up',
+        signin: 'Sign in',
+        signup: 'Sign up',
         leaders: 'Leaders',
         profile: 'Profile',
         about: 'About'
@@ -380,8 +380,8 @@ function createAbout() {
 }
 
 const buttons = {
-    sing_in: createSingIn,
-    sing_up: createSingUp,
+    signin: createSingIn,
+    signup: createSingUp,
     leaders: createLeaders,
     profile: createProfile,
     about: createAbout,
