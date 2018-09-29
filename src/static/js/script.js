@@ -1,12 +1,12 @@
 'use strict';
 
-import { doForm } from "./components/form.mjs";
+import { Form } from "./components/form.mjs";
 
 const httpReq = window.httpModule;
 
 const root = document.getElementById("root");
 
-function createLinkMenu(){
+function createLinkMenu() {
     const link = document.createElement('a');
     link.textContent = "Back to main menu";
     link.href = "menu";
@@ -86,7 +86,7 @@ function createSingIn() {
     const formblock = document.createElement('div');
     formblock.id = 'formblock';
     body.appendChild(formblock)
-       
+
     const inputs = [
         {
             name: 'email',
@@ -104,7 +104,8 @@ function createSingIn() {
             value: 'Submit'
         }
     ];
-    const form  = doForm({inputs:inputs,formId:'signinForm'})
+    const formObj = new Form();
+    const form = formObj.render({ inputs: inputs, formId: 'signinForm' })
     formblock.appendChild(form);
 
     const pLink = document.createElement('p');
@@ -128,7 +129,7 @@ function createSingIn() {
                 password
             }
         })
-    });  
+    });
 }
 
 function createSingUp() {
@@ -178,7 +179,8 @@ function createSingUp() {
             value: 'Submit'
         }
     ];
-    const form  = doForm({inputs:inputs,formId:'signupForm'})
+    const formObj = new Form()
+    const form = formObj.render({ inputs: inputs, formId: 'signupForm' })
     formblock.appendChild(form);
 
     const pLink = document.createElement('p');
@@ -186,34 +188,34 @@ function createSingUp() {
 
     const link = createLinkMenu()
     pLink.appendChild(link);
-    
+
     form.addEventListener('submit', function (event) {
-        
+
         event.preventDefault();
 
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
-		
-		if (password !== password_repeat) {
-			alert('Passwords is not equals');
-			return;
+        const email = form.elements['email'].value;
+        const password = form.elements['password'].value;
+        const password_repeat = form.elements['password_repeat'].value;
+
+        if (password !== password_repeat) {
+            alert('Passwords is not equals');
+            return;
         }
-        if(email == ""){
+        if (email == "") {
             alert("Enter email!")
-            return 
+            return
         }
-       
-		httpReq.doPost({
-			callback (res) {
-				createProfile();
-			},
-			url: '/signup',
-			data: {
-				email,
-				password,
-			}
-		});
+
+        httpReq.doPost({
+            callback(res) {
+                createProfile();
+            },
+            url: '/signup',
+            data: {
+                email,
+                password,
+            }
+        });
     });
 }
 
@@ -368,7 +370,7 @@ function createAbout() {
     aboutTextblock.appendChild(aboutText);
 
     const pLink = document.createElement('p');
-    headerTitle.appendChild(pLink);
+    body.appendChild(pLink);
 
     const link = createLinkMenu()
     pLink.appendChild(link);

@@ -25,6 +25,7 @@ class Application {
         const ids = {};
 
         app.get('/', function (req, res) {
+            res.cookie("session_expires","1",{expires:new Date(Date.now()+ 500),httpOnly:true})
             res.sendFile(path.resolve('./src/index.html'));
         });
 
