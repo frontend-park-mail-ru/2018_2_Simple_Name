@@ -1,6 +1,6 @@
 'use strict';
 
-import { Form } from "./components/form.mjs";
+import { Form } from "./components/form.js";
 
 const httpReq = window.httpModule;
 
