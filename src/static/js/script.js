@@ -1,4 +1,7 @@
 'use strict';
+
+import { doForm } from "./components/form.mjs";
+
 const httpReq = window.httpModule;
 
 const root = document.getElementById("root");
@@ -83,28 +86,31 @@ function createSingIn() {
     const formblock = document.createElement('div');
     formblock.id = 'formblock';
     body.appendChild(formblock)
-
-    const form = document.createElement('form');
-    form.id = 'SignInform';
+       
+    const inputs = [
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password'
+        },
+        {
+            name: 'submit',
+            type: 'submit',
+            value: 'Submit'
+        }
+    ];
+    const form  = doForm({inputs:inputs,formId:'signinForm'})
     formblock.appendChild(form);
-
-    const username = document.createElement('input');
-    username.placeholder = "Username"
-    form.appendChild(username);
-
-
-    form.appendChild(document.createElement('br'));
-    const password = document.createElement('input');
-    password.placeholder = "Password"
-    form.appendChild(password);
-
-    form.appendChild(document.createElement('br'));
-    const submit = document.createElement('button');
-    submit.textContent = "Submit"
-    form.appendChild(submit);
 
     const pLink = document.createElement('p');
     form.appendChild(pLink);
+    const link = createLinkMenu()
+    pLink.appendChild(link);
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -122,10 +128,7 @@ function createSingIn() {
                 password
             }
         })
-    });
-
-    const link = createLinkMenu()
-    pLink.appendChild(link);
+    });  
 }
 
 function createSingUp() {
@@ -153,44 +156,36 @@ function createSingUp() {
     const formblock = document.createElement('div');
     formblock.id = 'formblock';
     body.appendChild(formblock)
-
-    const form = document.createElement('form');
-    form.id = 'SignUpform';
+    const inputs = [
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password'
+        },
+        {
+            name: 'password_repeat',
+            type: 'password',
+            placeholder: 'Repeat Password'
+        },
+        {
+            name: 'submit',
+            type: 'submit',
+            value: 'Submit'
+        }
+    ];
+    const form  = doForm({inputs:inputs,formId:'signupForm'})
     formblock.appendChild(form);
 
-    const inputs = [
-		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
-			name: 'password',
-			type: 'password',
-			placeholder: 'Password'
-		},
-		{
-			name: 'password_repeat',
-			type: 'password',
-			placeholder: 'Repeat Password'
-		},
-		{
-			name: 'submit',
-            type: 'submit',
-		}
-	];
+    const pLink = document.createElement('p');
+    form.appendChild(pLink);
 
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
-
-		input.name = item.name;
-		input.type = item.type;
-
-        input.placeholder = item.placeholder;
-
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
-    });
+    const link = createLinkMenu()
+    pLink.appendChild(link);
     
     form.addEventListener('submit', function (event) {
         
@@ -220,16 +215,10 @@ function createSingUp() {
 			}
 		});
     });
-    
-    const pLink = document.createElement('p');
-    form.appendChild(pLink);
-
-    const link = createLinkMenu()
-    pLink.appendChild(link);
 }
 
 function createLeaders() {
-
+    root.innerHTML = '';
 
     const header = document.createElement('div');
     header.dataset.sectionName = 'header';
@@ -331,6 +320,7 @@ function createLeaders() {
 }
 
 function createProfile() {
+    root.innerHTML = '';
     const logo = document.createElement('div');
     logo.classList.add("p_name");
 
@@ -352,6 +342,7 @@ function createProfile() {
 }
 
 function createAbout() {
+    root.innerHTML = '';
     const header = document.createElement('div');
     header.id = "header";
     header.dataset.sectionName = 'header';
