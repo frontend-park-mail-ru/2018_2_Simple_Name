@@ -1,9 +1,5 @@
-.button_menu{
+/* .button_menu{
     margin-top: 8px;
-}
-
-A{
-    text-decoration: none;
 }
 
 h1{
@@ -26,7 +22,6 @@ h1{
     margin-top: 10vw;
 }
 
-/*Стили кирилла*/
 
 #headerTitle{
     text-align: center
@@ -41,7 +36,72 @@ h1{
     padding: 1% 27%;
     align-items: center;
 }
+*/
 
-#formblock{
+.button_menu{
+    margin-top: 10px;
     align-items: center;
+}
+
+.form-group{
+    margin: auto; 
+    width:100px;
+}
+
+.pageTitle {
+    text-align: center;
+    padding-top: 10%;
+    color:#A66F00;
+    font-family: sans-serif;
+}
+
+.menu {
+    text-align: center;
+    font-size: 30px;
+    width: auto;
+    margin: 10px;
+}
+
+
+.button-menu{
+    margin-top: 8px;
+}
+
+.about-page{
+    padding: 1% 27%;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: #A60000;
+    font-family: 'Courier New', Courier, monospace;
+} 
+
+button {
+    margin-top: 15px;
+    /* align-items: center; */
+    background-color: #A66F00;
+    border: none;
+    color: #A60000;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px 46px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-weight:bold;
+    font-size: 16px;
+}
+
+body {
+    /* background-color: gray; */
+    /* background-image: url('image/game-background.png'); */
+    color: whitesmoke;
+    /* color: rgb(3, 43, 19); */
+    background-color: rgb(3, 43, 19);
+}
+
+
+#text-color {
+    color: red;
 }

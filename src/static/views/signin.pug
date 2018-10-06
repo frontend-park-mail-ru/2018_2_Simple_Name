@@ -1,0 +1,24 @@
+extends layout/base
+include modules/header
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Sign in')
+
+block content
+    div
+        form(method='POST' action='/register')
+            div.form-group
+                label(for='email') Email:
+                input#email(type='email', placeholder='name@email.com' name='email')
+
+            div.form-group
+                label(for='password') Password:
+                input#password(type='password', placeholder='Password', name='password')
+
+                button(type='submit') Sign in
+
+                a.button-menu(href= 'menu.html') Back to menu
+

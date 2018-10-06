@@ -1,0 +1,43 @@
+extends layout/base
+include modules/header
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Sign up')
+
+block content
+  div
+    form(method='POST' action='/register')
+      div.form-group
+        label(for='firstname') First Name:
+        input#name.form-control(type='text', placeholder='First name' name='firstname')
+
+      div.form-group
+        label(for='lastName') Last Name:
+        input#lastName.form-control(type='text', placeholder='Last name' name='lastname')
+
+      div.form-group
+        label(for='nickname') Nickname:
+        input#name.form-control(type='text', placeholder='Nickname' name='nickname')
+
+      div.form-group
+        label(for='email') Email:
+        input#email.form-control(type='email', placeholder='name@email.com' name='email')
+
+      div.form-group
+        label(for='password') Password:
+        input#password.form-control(type='password', placeholder='Password', name='password')
+
+      div.form-group
+        label(for='repeatPassword') Confirm Password:
+        input#repeatPassword.form-control(type='password', placeholder='Repeat password', name='repeatPassword')
+
+        button(type='submit') Sign up
+
+        a.button-menu(href= 'menu.html') Back to menu
+
+        
+
+        

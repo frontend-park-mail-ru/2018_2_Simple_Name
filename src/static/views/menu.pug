@@ -1,0 +1,23 @@
+extends layout/base
+include modules/header
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Simple Game')
+
+block content
+    div
+        mixin menuList(link, item)
+            dl.menu
+                dt
+                    a(href=link)= item
+
+        +menuList('signup.html', 'Sign up')
+        +menuList('signin.html', 'Sign in')
+        +menuList('leaders.html', 'Leaders')
+        +menuList('profile.html', 'Profile')
+        +menuList('about.html', 'About')
+
+
