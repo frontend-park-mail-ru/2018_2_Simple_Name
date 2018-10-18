@@ -1,7 +1,20 @@
 'use strict';
 
-import { Form } from "./components/form.js";
-import about from '../views/about.js';
+// import {Form} from './components/form.js';
+// import about from '../views/about.js';
+
+// import menu from '../views/menu.pug';
+
+
+
+// import menu from '../views/menu.js';
+// import about from '../views/about.js';
+// import signup from '../views/signup.js';
+// import signin from '../views/signin.js';
+// import profile from '../views/profile.js';
+// import scoreboard from '../views/scoreboard.js';
+
+
 
 const httpReq = window.httpModule;
 
@@ -15,6 +28,18 @@ function createLinkMenu() {
 }
 
 function createMenu() {
+    // -----------
+    // httpReq.doGet({
+    //     callback(res) {
+    //         const pug = require('pug');
+    //         const fs = require('fs');
+    //         var jsFunctionString = pug.compileFileClient('../views/menu.pug', {name: "fancyTemplateFun"});
+    //         var file = fs.writeFile("menu.js", jsFunctionString);
+    //         res.write(file);
+    //     },
+    //     url: '/'
+    // });
+    // -----------
     const logo = document.createElement('div');
     logo.classList.add("p_name");
 
@@ -145,14 +170,13 @@ function createSignIn() {
                     alert("Wrong login or password");
                     return;
                 }
-                if(res.status == 400){
+                if (res.status == 400) {
                     alert("Wrong email or password")
                 }
-                if(res.status == 200){
+                if (res.status == 200) {
                     alert("You are log in!")
                     createProfile();
                 }
-                //createProfile();
             },
             data: formData
         })
@@ -197,18 +221,18 @@ function createSignUp() {
     formblock.id = 'formblock';
     body.appendChild(formblock)
     const inputs = [
-      {
-          name: 'name',
-          placeholder: 'Name'
-      },
-      {
-          name: 'last_name',
-          placeholder: 'Last name'
-      },
-      {
-          name: 'nick',
-          placeholder: 'Nick'
-      },
+        {
+            name: 'name',
+            placeholder: 'Name'
+        },
+        {
+            name: 'last_name',
+            placeholder: 'Last name'
+        },
+        {
+            name: 'nick',
+            placeholder: 'Nick'
+        },
         {
             name: 'email',
             type: 'email',
@@ -270,8 +294,8 @@ function createSignUp() {
 
         httpReq.doPost({
             callback(res) {
-              console.log(res.status)
-                if (res.status == 208){
+                console.log(res.status)
+                if (res.status == 208) {
                     alert("Email already exist");
                     return;
                 }
@@ -346,54 +370,49 @@ function createLeaders() {
 
 
     httpReq.doGet({
-      callback(res) {
-          if (res.status > 300) {
-              alert('Something wrong');
-              root.innerHTML = '';
-              createMenu();
-              return;
-          }
-          res.json().then(function(top) {
+        callback(res) {
+            if (res.status > 300) {
+                alert('Something wrong');
+                root.innerHTML = '';
+                createMenu();
+                return;
+            }
+            res.json().then(function (top) {
 
-            const tbody = document.createElement('tbody');
+                const tbody = document.createElement('tbody');
 
-            let username;
-            let score;
-            let age;
+                let username;
+                let score;
+                let age;
 
-            Object.entries(top).forEach(function ([id, info]) {
-                username = info.nick;
-                score = info.Score;
-                age = info.Age;
+                Object.entries(top).forEach(function ([id, info]) {
+                    username = info.nick;
+                    score = info.Score;
+                    age = info.Age;
 
 
-                const tr = document.createElement('tr');
-                const tdUsername = document.createElement('td');
-                const tdScore = document.createElement('td');
-                 const tdAge = document.createElement('td');
+                    const tr = document.createElement('tr');
+                    const tdUsername = document.createElement('td');
+                    const tdScore = document.createElement('td');
+                    const tdAge = document.createElement('td');
 
-                tdUsername.textContent = username;
-                tdScore.textContent = score;
-                   tdAge.textContent = age;
+                    tdUsername.textContent = username;
+                    tdScore.textContent = score;
+                    tdAge.textContent = age;
 
-                tr.appendChild(tdUsername);
-                tr.appendChild(tdScore);
-                 tr.appendChild(tdAge);
+                    tr.appendChild(tdUsername);
+                    tr.appendChild(tdScore);
+                    tr.appendChild(tdAge);
 
-                tbody.appendChild(tr);
+                    tbody.appendChild(tr);
 
-                table.appendChild(tbody);
-              });
+                    table.appendChild(tbody);
+                });
             });
-          },
-  url: '/leaders'
+        },
+        url: '/leaders'
 
-});
-
-
-
-
-
+    });
 
     body.appendChild(table);
     root.appendChild(body);
@@ -416,118 +435,121 @@ function createProfile(me) {
     root.appendChild(body);
 
 
-    if (me){
-      const formblock = document.createElement('div');
-      const img = document.createElement('img');
-      img.src="static/media/" + me.Uid;
-      body.appendChild(img);
+    if (me) {
+        const formblock = document.createElement('div');
+        const img = document.createElement('img');
+        img.src = "static/media/" + me.Uid;
+        body.appendChild(img);
 
-      //Вывод имени, фамилии!
+        //Вывод имени, фамилии!
 
-      formblock.id = 'formblock';
-      body.appendChild(formblock);
+        formblock.id = 'formblock';
+        body.appendChild(formblock);
 
-      const inputs = [
-          {
-              name:'my_file',
-              type:'file'
-          },
-          {
-              name: 'nick',
-              placeholder: me.nick
-          },
-          {
-              name: 'password',
-              type: 'password',
-              placeholder: 'Password'
-          },
-          {
-              name: 'password_repeat',
-              type: 'password',
-              placeholder: 'Repeat Password'
-          },
-          {
-              name: 'submit',
-              type: 'submit',
-              value: 'Submit'
-          }
-      ];
-      const formObj = new Form();
-      const form = formObj.render({ inputs: inputs, formId: 'profileForm' })
-      formblock.appendChild(form);
+        const inputs = [
+            {
+                name: 'my_file',
+                type: 'file'
+            },
+            {
+                name: 'nick',
+                placeholder: me.nick
+            },
+            {
+                name: 'password',
+                type: 'password',
+                placeholder: 'Password'
+            },
+            {
+                name: 'password_repeat',
+                type: 'password',
+                placeholder: 'Repeat Password'
+            },
+            {
+                name: 'submit',
+                type: 'submit',
+                value: 'Submit'
+            }
+        ];
+        const formObj = new Form();
+        const form = formObj.render({ inputs: inputs, formId: 'profileForm' })
+        formblock.appendChild(form);
 
-      const pLink = document.createElement('p');
-      form.appendChild(pLink);
+        const pLink = document.createElement('p');
+        form.appendChild(pLink);
 
-      const link = createLinkMenu();
-      pLink.appendChild(link);
-
-
-      form.addEventListener('submit', function (event) {
-
-      event.preventDefault();
-
-      let formData = new FormData(document.forms.profileForm);
-           //file is actually new FileReader.readAsData(myId.files[0]);
-      //  formData.append("my_file", avatar);
-
-      const password = form.elements['password'].value;
-      const password_repeat = form.elements['password_repeat'].value;
-
-      if (password !== password_repeat) {
-          alert('Passwords is not equals');
-          return;
-        }
-
-        formData.append("password", password)
+        const link = createLinkMenu();
+        pLink.appendChild(link);
 
 
-          httpReq.doPost({ // Отправка аватарки
-              callback(res) {
-                  if (res.status > 300) {
-                      alert("Something was wrong");
-                      return;
-                  }
-                  createProfile();
-              },
-              url: '/profile',
-              data: formData
-          });
+        form.addEventListener('submit', function (event) {
 
-      });
-    } else {
-      httpReq.doGet({
-        callback(res) {
-          console.log("Create prof")
-          console.log(res.status);
-            if (res.status > 300) {
-                alert('Unauthorized');
-                root.innerHTML = '';
-					      createMenu();
+            event.preventDefault();
+
+            let formData = new FormData(document.forms.profileForm);
+            //file is actually new FileReader.readAsData(myId.files[0]);
+            //  formData.append("my_file", avatar);
+
+            const password = form.elements['password'].value;
+            const password_repeat = form.elements['password_repeat'].value;
+
+            if (password !== password_repeat) {
+                alert('Passwords is not equals');
                 return;
             }
-            //let respon = res.json();
-            //const user = JSON.parse(res.responseText);
 
-            res.json().then(function(user) {
-              root.innerHTML = '';
-              createProfile(user);
-      });
+            formData.append("password", password)
 
-        },
-        url: '/profile'
-      })
+
+            httpReq.doPost({ // Отправка аватарки
+                callback(res) {
+                    if (res.status > 300) {
+                        alert("Something was wrong");
+                        return;
+                    }
+                    createProfile();
+                },
+                url: '/profile',
+                data: formData
+            });
+
+        });
+    } else {
+        httpReq.doGet({
+            callback(res) {
+                console.log("Create prof")
+                console.log(res.status);
+                if (res.status > 300) {
+                    alert('Unauthorized');
+                    root.innerHTML = '';
+                    createMenu();
+                    return;
+                }
+                //let respon = res.json();
+                //const user = JSON.parse(res.responseText);
+
+                res.json().then(function (user) {
+                    root.innerHTML = '';
+                    createProfile(user);
+                });
+
+            },
+            url: '/profile'
+        })
     }
-
-
-
-
 
 }
 
 function createAbout() {
-    const html = about()
-    root.innerHTML = html;
+
+    var pug = require('pug');
+
+    var fn = pug.compileClient('string of pug', options);
+    var html = fn(locals);
+    // res.render('about', { name: 'sonwogneor' });
+
+    // const html = about()
+    // root.innerHTML = html;
     // const header = document.createElement('div');
     // header.id = "header";
     // header.dataset.sectionName = 'header';
@@ -557,7 +579,6 @@ function createAbout() {
 
     // const link = createLinkMenu()
     // pLink.appendChild(link);
-
 
     // root.appendChild(body);
 }

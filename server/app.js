@@ -1,33 +1,41 @@
 'use strict';
 
-
 const express = require('express');
 const body = require('body-parser');
-const cookie = require('cookie-parser');
-const morgan = require('morgan');
 const uuid = require('uuid/v4');
 const path = require('path');
-const app = express();
+const pug = require('pug');
+const fs = require('fs');
 
 
 class Application {
     constructor() {
-        this.expressApp = express();
+        this.express = express();
         this.attachRoutes();
     }
 
     attachRoutes() {
-        let app = this.expressApp;
-        let jsonParser = body.json();
-        app.use(express.static('./src/static/'));
+
+        var app = this.express;
+
+        app.use(express.static('../src/static/'));
+
+        app.set('views', path.join(__dirname, '../src/static/views'));
+        app.set('view engine', 'pug');
 
         const users = {};
         const ids = {};
 
         app.get('/', function (req, res) {
-            res.cookie("session_expires","1",{expires:new Date(Date.now()+ 500),httpOnly:true})
-            res.sendFile(path.resolve('./src/index.html'));
+            // res.cookie("session_expires", "1", { expires: new Date(Date.now() + 500), httpOnly: true })
+            res.sendFile(path.resolve('../src/index.html'));
+            // res.render('menu');
+
+            // var jsFunctionString = pug.compileFileClient('../src/static/views/menu.pug');
+            // var file = fs.writeFile("templates.js", jsFunctionString);
+            // res.write(file);
         });
+
 
         app.post('/signup', function (req, res) {
             const password = req.body.password;
