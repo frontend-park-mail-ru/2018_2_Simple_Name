@@ -1,12 +1,8 @@
 'use strict';
 
-// import {Form} from './components/form.js';
+import { Form } from './components/form.js';
+
 // import about from '../views/about.js';
-
-// import menu from '../views/menu.pug';
-
-
-
 // import menu from '../views/menu.js';
 // import about from '../views/about.js';
 // import signup from '../views/signup.js';
@@ -28,62 +24,46 @@ function createLinkMenu() {
 }
 
 function createMenu() {
-    // -----------
-    // httpReq.doGet({
-    //     callback(res) {
-    //         const pug = require('pug');
-    //         const fs = require('fs');
-    //         var jsFunctionString = pug.compileFileClient('../views/menu.pug', {name: "fancyTemplateFun"});
-    //         var file = fs.writeFile("menu.js", jsFunctionString);
-    //         res.write(file);
-    //     },
-    //     url: '/'
-    // });
-    // -----------
-    const logo = document.createElement('div');
-    logo.classList.add("p_name");
+    window.menuTemplate();
+    //     const logo = document.createElement('div');
+//     logo.classList.add("p_name");
 
-    const logo_header = document.createElement('h1');
-    logo_header.innerHTML = 'Simple game';
-    logo.appendChild(logo_header);
+//     const logo_header = document.createElement('h1');
+//     logo_header.innerHTML = 'Simple game';
+//     logo.appendChild(logo_header);
 
-    const titles = {
-        signin: 'Sign in',
-        signup: 'Sign up',
-        leaders: 'Leaders',
-        profile: 'Profile',
-        about: 'About'
-    };
+//     const titles = {
+//         signin: 'Sign in',
+//         signup: 'Sign up',
+//         leaders: 'Leaders',
+//         profile: 'Profile',
+//         about: 'About'
+//     };
 
-    const dl = document.createElement('dl');
-    dl.classList.add("menu");
+//     const dl = document.createElement('dl');
+//     dl.classList.add("menu");
 
-    Object.entries(titles).forEach(function (entry) {
-        const dt = document.createElement('dt');
-        dt.classList.add("button_menu");
+//     Object.entries(titles).forEach(function (entry) {
+//         const dt = document.createElement('dt');
+//         dt.classList.add("button_menu");
 
-        const href = entry[0];
-        const title = entry[1];
+//         const href = entry[0];
+//         const title = entry[1];
 
-        const a = document.createElement('a');
-        a.href = href;
-        a.dataset.href = href;
-        a.title = title;
-        a.textContent = title;
+//         const a = document.createElement('a');
+//         a.href = href;
+//         a.dataset.href = href;
+//         a.title = title;
+//         a.textContent = title;
 
-        a.classList.add("button_menu");
+//         a.classList.add("button_menu");
 
-        dt.appendChild(a);
-        dl.appendChild(dt);
+//         dt.appendChild(a);
+//         dl.appendChild(dt);
 
-
-
-    });
-    root.appendChild(logo);
-
-    root.appendChild(dl);
-
-
+//     });  
+//     root.appendChild(logo);
+//     root.appendChild(dl);
 }
 
 function createSignIn() {
@@ -542,45 +522,39 @@ function createProfile(me) {
 
 function createAbout() {
 
-    var pug = require('pug');
+    const html = about()
+    root.innerHTML = html;
+    const header = document.createElement('div');
+    header.id = "header";
+    header.dataset.sectionName = 'header';
+    root.appendChild(header);
 
-    var fn = pug.compileClient('string of pug', options);
-    var html = fn(locals);
-    // res.render('about', { name: 'sonwogneor' });
+    const logo = document.createElement('span');
+    logo.id = 'logo';
+    const headerTitle = document.createElement('h1');
+    headerTitle.textContent = 'About';
+    headerTitle.id = "headerTitle";
 
-    // const html = about()
-    // root.innerHTML = html;
-    // const header = document.createElement('div');
-    // header.id = "header";
-    // header.dataset.sectionName = 'header';
-    // root.appendChild(header);
+    header.appendChild(logo);
+    header.appendChild(headerTitle);
 
-    // const logo = document.createElement('span');
-    // logo.id = 'logo';
-    // const headerTitle = document.createElement('h1');
-    // headerTitle.textContent = 'About';
-    // headerTitle.id = "headerTitle";
+    const body = document.createElement('div');
+    body.id = 'body';
 
-    // header.appendChild(logo);
-    // header.appendChild(headerTitle);
+    const aboutTextblock = document.createElement('div');
+    body.appendChild(aboutTextblock);
 
-    // const body = document.createElement('div');
-    // body.id = 'body';
+    const aboutText = document.createElement('p');
+    aboutText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    aboutTextblock.appendChild(aboutText);
 
-    // const aboutTextblock = document.createElement('div');
-    // body.appendChild(aboutTextblock);
+    const pLink = document.createElement('p');
+    body.appendChild(pLink);
 
-    // const aboutText = document.createElement('p');
-    // aboutText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    // aboutTextblock.appendChild(aboutText);
+    const link = createLinkMenu()
+    pLink.appendChild(link);
 
-    // const pLink = document.createElement('p');
-    // body.appendChild(pLink);
-
-    // const link = createLinkMenu()
-    // pLink.appendChild(link);
-
-    // root.appendChild(body);
+    root.appendChild(body);
 }
 
 const buttons = {
