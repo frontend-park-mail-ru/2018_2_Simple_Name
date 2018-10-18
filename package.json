@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs server"
+    "start": "nodejs server",
+    "build": "pug -c src --name-after-file --pretty"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
+    "linter": "0.0.7",
     "morgan": "^1.9.0",
     "pug": "^2.0.3",
     "uuid": "^3.3.2"
