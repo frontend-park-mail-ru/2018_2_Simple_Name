@@ -18,22 +18,17 @@ class Application {
 
         var app = this.express;
 
-        app.use(express.static('../src/static/'));
+        app.use(express.static('src/static/'));
 
-        app.set('views', path.join(__dirname, '../src/static/views'));
+        app.set('views', path.join(__dirname, 'src/static/views'));
         app.set('view engine', 'pug');
 
         const users = {};
         const ids = {};
 
         app.get('/', function (req, res) {
-            // res.render('menu');
             res.cookie("session_expires", "1", { expires: new Date(Date.now() + 500), httpOnly: true })
-            res.sendFile(path.resolve('../src/index.html'));
-
-            // var jsFunctionString = pug.compileFileClient('../src/static/views/menu.pug');
-            // var file = fs.writeFile("templates.js", jsFunctionString);
-            // res.write(file);
+            res.sendFile(path.resolve('src/index.html'));
         });
 
 
