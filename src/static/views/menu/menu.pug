@@ -1,5 +1,5 @@
-extends layout/main
-include modules/header
+extends ../layout/main
+include ../modules/header
 
 block title
     | Simple Game
@@ -18,6 +18,6 @@ block content
         +menuList('signin', 'Sign in')
         +menuList('leaders', 'Leaders')
         +menuList('profile', 'Profile')
-        +menuList('about', 'About')
+        +menuList('/about', 'About')
 
 
