@@ -1,9 +1,9 @@
 {
-  "name": "sample",
+  "name": "simplegame",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodejs server",
+    "start": "node server",
     "build": "pug -c src --name-after-file --pretty"
   },
   "dependencies": {

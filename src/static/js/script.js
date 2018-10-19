@@ -2,16 +2,6 @@
 
 import { Form } from './components/form.js';
 
-// import about from '../views/about.js';
-// import menu from '../views/menu.js';
-// import about from '../views/about.js';
-// import signup from '../views/signup.js';
-// import signin from '../views/signin.js';
-// import profile from '../views/profile.js';
-// import scoreboard from '../views/scoreboard.js';
-
-
-
 const httpReq = window.httpModule;
 
 const root = document.getElementById("root");
@@ -24,46 +14,47 @@ function createLinkMenu() {
 }
 
 function createMenu() {
-    window.menuTemplate();
+    const menuHtml = window.menuTemplate();
+    root.innerHTML = menuHtml;
     //     const logo = document.createElement('div');
-//     logo.classList.add("p_name");
+    // logo.classList.add("p_name");
 
-//     const logo_header = document.createElement('h1');
-//     logo_header.innerHTML = 'Simple game';
-//     logo.appendChild(logo_header);
+    // const logo_header = document.createElement('h1');
+    // logo_header.innerHTML = 'Simple game';
+    // logo.appendChild(logo_header);
 
-//     const titles = {
-//         signin: 'Sign in',
-//         signup: 'Sign up',
-//         leaders: 'Leaders',
-//         profile: 'Profile',
-//         about: 'About'
-//     };
+    // const titles = {
+    //     signin: 'Sign in',
+    //     signup: 'Sign up',
+    //     leaders: 'Leaders',
+    //     profile: 'Profile',
+    //     about: 'About'
+    // };
 
-//     const dl = document.createElement('dl');
-//     dl.classList.add("menu");
+    // const dl = document.createElement('dl');
+    // dl.classList.add("menu");
 
-//     Object.entries(titles).forEach(function (entry) {
-//         const dt = document.createElement('dt');
-//         dt.classList.add("button_menu");
+    // Object.entries(titles).forEach(function (entry) {
+    //     const dt = document.createElement('dt');
+    //     dt.classList.add("button_menu");
 
-//         const href = entry[0];
-//         const title = entry[1];
+    //     const href = entry[0];
+    //     const title = entry[1];
 
-//         const a = document.createElement('a');
-//         a.href = href;
-//         a.dataset.href = href;
-//         a.title = title;
-//         a.textContent = title;
+    //     const a = document.createElement('a');
+    //     a.href = href;
+    //     a.dataset.href = href;
+    //     a.title = title;
+    //     a.textContent = title;
 
-//         a.classList.add("button_menu");
+    //     a.classList.add("button_menu");
 
-//         dt.appendChild(a);
-//         dl.appendChild(dt);
+    //     dt.appendChild(a);
+    //     dl.appendChild(dt);
 
-//     });  
-//     root.appendChild(logo);
-//     root.appendChild(dl);
+    // });  
+    // root.appendChild(logo);
+    // root.appendChild(dl);
 }
 
 function createSignIn() {
@@ -522,39 +513,40 @@ function createProfile(me) {
 
 function createAbout() {
 
-    const html = about()
-    root.innerHTML = html;
-    const header = document.createElement('div');
-    header.id = "header";
-    header.dataset.sectionName = 'header';
-    root.appendChild(header);
+    const link = createLinkMenu();
 
-    const logo = document.createElement('span');
-    logo.id = 'logo';
-    const headerTitle = document.createElement('h1');
-    headerTitle.textContent = 'About';
-    headerTitle.id = "headerTitle";
+    const aboutHtml = window.aboutTemplate(link);
+    root.innerHTML = aboutHtml;
+    // const header = document.createElement('div');
+    // header.id = "header";
+    // header.dataset.sectionName = 'header';
+    // root.appendChild(header);
 
-    header.appendChild(logo);
-    header.appendChild(headerTitle);
+    // const logo = document.createElement('span');
+    // logo.id = 'logo';
+    // const headerTitle = document.createElement('h1');
+    // headerTitle.textContent = 'About';
+    // headerTitle.id = "headerTitle";
 
-    const body = document.createElement('div');
-    body.id = 'body';
+    // header.appendChild(logo);
+    // header.appendChild(headerTitle);
 
-    const aboutTextblock = document.createElement('div');
-    body.appendChild(aboutTextblock);
+    // const body = document.createElement('div');
+    // body.id = 'body';
 
-    const aboutText = document.createElement('p');
-    aboutText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    aboutTextblock.appendChild(aboutText);
+    // const aboutTextblock = document.createElement('div');
+    // body.appendChild(aboutTextblock);
 
-    const pLink = document.createElement('p');
-    body.appendChild(pLink);
+    // const aboutText = document.createElement('p');
+    // aboutText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    // aboutTextblock.appendChild(aboutText);
 
-    const link = createLinkMenu()
-    pLink.appendChild(link);
+    // const pLink = document.createElement('p');
+    // body.appendChild(pLink);
 
-    root.appendChild(body);
+    // pLink.appendChild(link);
+
+    // root.appendChild(body);
 }
 
 const buttons = {
