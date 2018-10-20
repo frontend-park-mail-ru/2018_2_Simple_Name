@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "build": "pug -c src --name-after-file --pretty"
+    "prestart": "pug -c src --name-after-file --pretty",
+    "start": "node server"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
