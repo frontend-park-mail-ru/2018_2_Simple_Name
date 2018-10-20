@@ -1,7 +1,7 @@
 function pug_attr(t,e,n,f){return!1!==e&&null!=e&&(e||"class"!==t&&"style"!==t)?!0===e?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||-1===e.indexOf('"'))?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
 var pug_match_html=/["&<>]/;
-function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function menuTemplate(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {var pug_debug_sources = {"src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug":"extends ..\u002Flayout\u002Fmain\ninclude ..\u002Fmodules\u002Fheader\n\nblock title\n    | Simple Game\n\nblock header\n    +pageTitle('Simple Game')\n\nblock content\n    div\n        mixin menuList(link, item)\n            dl.menu\n                dt\n                    a(href=link)= item\n\n        +menuList('signup', 'Sign up')\n        +menuList('signin', 'Sign in')\n        +menuList('leaders', 'Leaders')\n        +menuList('profile', 'Profile')\n        +menuList('about', 'About')\n\n\n","src\u002Fstatic\u002Fviews\u002Flayout\u002Fmain.pug":"\u002F\u002F- doctype html\n\u002F\u002F- html(lang=\"ru-RU\")\n\u002F\u002F- link(href=\"style.css\" rel=\"stylesheet\")\nhead\n    \u002F\u002F- meta(http-equiv=\"Content-Type\", content=\"text\u002Fhtml; charset=UTF-8\")\n    title\n        block title\n    \n    \u002F\u002F- link(rel=\"stylesheet\", type=\"text\u002Fcss\" href=\"css\u002Fmain.css\")\n\n    block header\nbody\n    block content\n    ","src\u002Fstatic\u002Fviews\u002Fmodules\u002Fheader.pug":"mixin pageTitle(name)\n    h1.pageTitle= name"};
+function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function menuTemplate(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {var pug_debug_sources = {"src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug":"extends ..\u002Flayout\u002Fmain\ninclude ..\u002Fmodules\u002Fheader\n\nblock title\n    | Simple Game\n\nblock header\n    +pageTitle('Simple Game')\n\nblock content\n    div\n        mixin menuList(link, item)\n            dl.menu\n                dt\n                    a(href=link name=link)= item\n        +menuList('signup', 'Sign up')\n        +menuList('signin', 'Sign in')\n        +menuList('leaders', 'Leaders')\n        +menuList('profile', 'Profile')\n        +menuList('about', 'About')\n\n\n","src\u002Fstatic\u002Fviews\u002Flayout\u002Fmain.pug":"\u002F\u002F- doctype html\n\u002F\u002F- html(lang=\"ru-RU\")\n\u002F\u002F- link(href=\"style.css\" rel=\"stylesheet\")\nhead\n    \u002F\u002F- meta(http-equiv=\"Content-Type\", content=\"text\u002Fhtml; charset=UTF-8\")\n    title\n        block title\n    \n    \u002F\u002F- link(rel=\"stylesheet\", type=\"text\u002Fcss\" href=\"css\u002Fmain.css\")\n\n    block header\nbody\n    block content\n    ","src\u002Fstatic\u002Fviews\u002Fmodules\u002Fheader.pug":"mixin pageTitle(name)\n    h1.pageTitle= name"};
 var pug_indent = [];
 ;pug_debug_line = 1;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmodules\u002Fheader.pug";
 pug_mixins["pageTitle"] = pug_interp = function(name){
@@ -43,29 +43,29 @@ pug_html = pug_html + "\n      ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003Cdt\u003E";
 ;pug_debug_line = 15;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
-pug_html = pug_html + "\u003Ca" + (pug_attr("href", link, true, false)) + "\u003E";
+pug_html = pug_html + "\u003Ca" + (pug_attr("href", link, true, false)+pug_attr("name", link, true, false)) + "\u003E";
 ;pug_debug_line = 15;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_html = pug_html + (pug_escape(null == (pug_interp = item) ? "" : pug_interp)) + "\u003C\u002Fa\u003E\u003C\u002Fdt\u003E\n    ";
 pug_html = pug_html + pug_indent.join("");
 pug_html = pug_html + "\u003C\u002Fdl\u003E";
 };
-;pug_debug_line = 17;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
+;pug_debug_line = 16;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_indent.push('    ');
 pug_mixins["menuList"]('signup', 'Sign up');
 pug_indent.pop();
-;pug_debug_line = 18;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
+;pug_debug_line = 17;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_indent.push('    ');
 pug_mixins["menuList"]('signin', 'Sign in');
 pug_indent.pop();
-;pug_debug_line = 19;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
+;pug_debug_line = 18;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_indent.push('    ');
 pug_mixins["menuList"]('leaders', 'Leaders');
 pug_indent.pop();
-;pug_debug_line = 20;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
+;pug_debug_line = 19;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_indent.push('    ');
 pug_mixins["menuList"]('profile', 'Profile');
 pug_indent.pop();
-;pug_debug_line = 21;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
+;pug_debug_line = 20;pug_debug_filename = "src\u002Fstatic\u002Fviews\u002Fmenu\u002Fmenu.pug";
 pug_indent.push('    ');
 pug_mixins["menuList"]('about', 'About');
 pug_indent.pop();

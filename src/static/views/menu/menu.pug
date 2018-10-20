@@ -12,8 +12,7 @@ block content
         mixin menuList(link, item)
             dl.menu
                 dt
-                    a(href=link)= item
-
+                    a(href=link name=link)= item
         +menuList('signup', 'Sign up')
         +menuList('signin', 'Sign in')
         +menuList('leaders', 'Leaders')
