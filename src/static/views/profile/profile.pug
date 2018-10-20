@@ -9,6 +9,16 @@ block header
 
 block content
     div
-        a.button-menu(name='menu' href='') Back to menu
+        form(method='POST' action='/register')
+            div.form-group
+                label(for='nickname') Nickname:
+                input#name.form-control(type='text', placeholder='Nickname' name='nickname')
+
+                label(for='password') Password:
+                input#password(type='password', placeholder='Password', name='password')
+
+                button(type='submit') Change and save
+            
+    a.button-menu(name='menu' href='') Back to menu
 
         

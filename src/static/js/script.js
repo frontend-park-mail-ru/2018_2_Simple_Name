@@ -245,8 +245,12 @@ function createSignUp() {
 
 }
 
-function createLeaders() {
-    const scoreboardHtml = window.scoreboardTemplate();
+function createScoreboard() {
+    // const obj = {'name': 123, 'name1': 1232, 'name2': 1121323};
+    // const scoreboardHtml = window.scoreboardTemplate(JSON.stringify(obj));
+    // const scoreboardHtml = window.scoreboardTemplate({'name': 123, 'name1': 1232, 'name2': 1121323});
+  //  var inputPlayers = 'dewad';
+    const scoreboardHtml = window.scoreboardTemplate({inputPlayers: {'name': 123, 'name1': 1232, 'name2': 1121323}});
     root.innerHTML = scoreboardHtml;
     // root.innerHTML = '';
     //
@@ -481,10 +485,10 @@ function createAbout() {
     root.innerHTML = aboutHtml;
 }
 
-const buttons = {
+const menuButtons = {
     'signin': createSignIn,
     'signup': createSignUp,
-    'leaders': createLeaders,
+    'leaders': createScoreboard,
     'profile': createProfile,
     'about': createAbout,
     'menu': createMenu,
@@ -495,12 +499,21 @@ root.addEventListener("click", function (event) {
     event.preventDefault();
 
     const target = event.target;
-    //const href = target.dataset.href;
     const eventName = target.name;
-
-    root.innerHTML = '';
-    buttons[eventName]();
-//
+    menuButtons[eventName]();
 });
+
+// pagination.addEventListener("click", function (event) {
+//     if (!(event.target instanceof HTMLAnchorElement)) return;
+
+//     event.preventDefault();
+
+//     const target = event.target;
+//     const nextPageNumber = event.pagination__number;
+
+
+
+//     // buttons[eventName]();
+// });
 
 createMenu();
