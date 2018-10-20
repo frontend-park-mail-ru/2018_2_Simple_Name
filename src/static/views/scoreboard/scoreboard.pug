@@ -7,20 +7,9 @@ block title
 block header
     +pageTitle('Leaders')
 
-    //- each val in [1, 2, 3, 4, 5]
-    //- li= val
-
 block content
 
-    div#pagintaion
-        //- - var tmp = JSON.stringify(inputPlayers)
-
-        //- var user = {
-        //-     name: 'John Doe',
-        //-     role: 'admin'
-        //- };
-        //- - var players = #{inputPlayers}  //Все игроки на одной странице
-
+    div
         table.score-table
             tr
                 each val in ['Nickname', 'Score']
@@ -70,9 +59,9 @@ block content
         //- 4 is ellipsis
         //- 9 is the last number, starting from last number of first part (5)
         //- arrows - show prev/next arrows
-        //- +pagination(5, 1, 4, 9, arrows)
-        
-        //- +pagination(5, 3, 4, 9, 100)
+        //- +pagination(5, 3, 4, 9, arrows)
+        div#pagination
+            +pagination(5, activePage, 4, pagesCount, arrows)
 
     a.button-menu(name='menu' href='') Back to menu
 

@@ -14,82 +14,7 @@ function createMenu() {
 function createSignIn() {
     const signinHtml = window.signinTemplate();
     root.innerHTML = signinHtml
-    // root.innerHTML = '';
-    //
-    // const header = document.createElement('div');
-    // header.dataset.sectionName = 'header';
-    // header.id = "header";
-    // root.appendChild(header);
-    //
-    // httpReq.doGet({
-    //     callback(res) {
-    //         if (res.status > 300) {
-    //             alert("You already logged in");
-    //             root.innerHTML = '';
-    //             createMenu();
-    //             return;
-    //         }
-    //     },
-    //     url: '/signin'
-    // });
-    //
-    // const logo = document.createElement('span');
-    // logo.id = 'logo';
-    // const headerTitle = document.createElement('h1');
-    // headerTitle.textContent = 'Sign in';
-    // headerTitle.id = "headerTitle";
-    //
-    // header.appendChild(logo);
-    // header.appendChild(headerTitle);
-    //
-    // const body = document.createElement('div');
-    // body.id = 'body';
-    // root.appendChild(body);
-    //
-    // const formblock = document.createElement('div');
-    // formblock.id = 'formblock';
-    // body.appendChild(formblock)
-    //
-    // const inputs = [
-    //     {
-    //         name: 'email',
-    //         type: 'email',
-    //         placeholder: 'Email'
-    //     },
-    //     {
-    //         name: 'password',
-    //         type: 'password',
-    //         placeholder: 'Password'
-    //     },
-    //     {
-    //         name: 'submit',
-    //         type: 'submit',
-    //         value: 'Submit'
-    //     }
-    // ];
-    // const formObj = new Form();
-    // const form = formObj.render({ inputs: inputs, formId: 'signinForm' })
-    // formblock.appendChild(form);
-    //
-    // const pLink = document.createElement('p');
-    // form.appendChild(pLink);
-    // const link = createLinkMenu()
-    // pLink.appendChild(link);
-    //
-    // form.addEventListener('submit', function (event) {
-    //     event.preventDefault();
-    //
-    //     const email = form.elements['email'].value;
-    //     const password = form.elements['password'].value;
-    //     if (email == "" || password == "") {
-    //         alert("Enter email!")
-    //         return
-    //     }
-    //
-    //     let formData = new FormData()
-    //     formData.append("password", password)
-    //     formData.append("email", email)
-    //
+
     //     httpReq.doPost({
     //         url: '/signin',
     //         callback(res) {
@@ -114,21 +39,7 @@ function createSignIn() {
 function createSignUp() {
     const signupHtml = window.signupTemplate();
     root.innerHTML = signupHtml
-    // root.innerHTML = '';
-    //
-    // const header = document.createElement('div');
-    // header.dataset.sectionName = 'header';
-    // header.id = "header";
-    // root.appendChild(header);
-    //
-    // const logo = document.createElement('span');
-    // logo.id = 'logo';
-    // const headerTitle = document.createElement('h1');
-    // headerTitle.textContent = 'Sign up';
-    // headerTitle.id = "headerTitle";
-    //
-    // header.appendChild(logo);
-    // header.appendChild(headerTitle);
+
     //
     // httpReq.doGet({
     //     callback(res) {
@@ -141,58 +52,7 @@ function createSignUp() {
     //     },
     //     url: '/signup'
     // });
-    //
-    // const body = document.createElement('div');
-    // body.id = 'body';
-    // root.appendChild(body);
-    //
-    // const formblock = document.createElement('div');
-    // formblock.id = 'formblock';
-    // body.appendChild(formblock)
-    // const inputs = [
-    //     {
-    //         name: 'name',
-    //         placeholder: 'Name'
-    //     },
-    //     {
-    //         name: 'last_name',
-    //         placeholder: 'Last name'
-    //     },
-    //     {
-    //         name: 'nick',
-    //         placeholder: 'Nick'
-    //     },
-    //     {
-    //         name: 'email',
-    //         type: 'email',
-    //         placeholder: 'Email'
-    //     },
-    //     {
-    //         name: 'password',
-    //         type: 'password',
-    //         placeholder: 'Password'
-    //     },
-    //     {
-    //         name: 'password_repeat',
-    //         type: 'password',
-    //         placeholder: 'Repeat Password'
-    //     },
-    //     {
-    //         name: 'submit',
-    //         type: 'submit',
-    //         value: 'Submit'
-    //     }
-    // ];
-    // const formObj = new Form()
-    // const form = formObj.render({ inputs: inputs, formId: 'signupForm' })
-    // formblock.appendChild(form);
-    //
-    // const pLink = document.createElement('p');
-    // form.appendChild(pLink);
-    //
-    // const link = createLinkMenu()
-    // pLink.appendChild(link);
-    //
+
     // form.addEventListener('submit', function (event) {
     //
     //     event.preventDefault();
@@ -245,56 +105,27 @@ function createSignUp() {
 
 }
 
-function createScoreboard() {
-    // const obj = {'name': 123, 'name1': 1232, 'name2': 1121323};
-    // const scoreboardHtml = window.scoreboardTemplate(JSON.stringify(obj));
-    // const scoreboardHtml = window.scoreboardTemplate({'name': 123, 'name1': 1232, 'name2': 1121323});
-  //  var inputPlayers = 'dewad';
-    const scoreboardHtml = window.scoreboardTemplate({inputPlayers: {'name': 123, 'name1': 1232, 'name2': 1121323}});
+function createScoreboard(nextPageNumber) {
+
+    httpReq.doGet({
+
+    })
+
+    const scoreboardHtml = window.scoreboardTemplate({ inputPlayers: { 'name': 123, 'name1': 1232, 'name2': 1121323 } });
     root.innerHTML = scoreboardHtml;
-    // root.innerHTML = '';
-    //
-    // const header = document.createElement('div');
-    // header.dataset.sectionName = 'header';
-    // header.id = "header";
-    // root.appendChild(header);
-    //
-    // const logo = document.createElement('span');
-    // logo.id = 'logo';
-    // const headerTitle = document.createElement('h1');
-    // headerTitle.textContent = 'Leaderboard';
-    // headerTitle.id = "headerTitle";
-    //
-    // header.appendChild(logo);
-    // header.appendChild(headerTitle);
-    //
-    // const body = document.createElement('div');
-    // body.id = 'body';
-    //
-    // const pLink = document.createElement('p');
-    // headerTitle.appendChild(pLink);
-    // const link = createLinkMenu()
-    // pLink.appendChild(link);
-    //
-    // const table = document.createElement('table');
-    //
-    // table.border = 1;
-    //
-    // const tableHeader = document.createElement('tr');
-    // const th1 = document.createElement('th');
-    // const th2 = document.createElement('th');
-    // const th3 = document.createElement('th');
-    //
-    // th1.innerText = 'Nick';
-    // th2.innerText = 'Score';
-    // th3.innerText = 'Age';
-    //
-    // tableHeader.appendChild(th1);
-    // tableHeader.appendChild(th2);
-    // tableHeader.appendChild(th3);
-    //
-    // table.appendChild(tableHeader);
-    //
+
+    const pagination = document.getElementById("pagination");
+
+    pagination.addEventListener("click", function (event) {
+        if (!(event.target instanceof HTMLAnchorElement)) return;
+
+        event.preventDefault();
+
+        const nextPageNumber = event.pagination__number;
+        createScoreboard(nextPageNumber);
+
+    });
+
     // /*  const em = document.createElement('em');
     //   em.textContent = 'Nothing to display';
     //   body.appendChild(em);*/
@@ -357,68 +188,8 @@ function createScoreboard() {
 function createProfile(me) {
     const profileHtml = window.profileTemplate();
     root.innerHTML = profileHtml;
-    // root.innerHTML = '';
-    // const logo = document.createElement('div');
-    // logo.classList.add("p_name");
-    //
-    // const logo_header = document.createElement('h1');
-    // logo_header.innerHTML = 'Profile';
-    // logo.appendChild(logo_header);
-    //
-    // root.appendChild(logo);
-    //
-    // const body = document.createElement('div');
-    // body.id = 'body';
-    // root.appendChild(body);
-    //
     //
     // if (me) {
-    //     const formblock = document.createElement('div');
-    //     const img = document.createElement('img');
-    //     img.src = "static/media/" + me.Uid;
-    //     body.appendChild(img);
-    //
-    //     //Вывод имени, фамилии!
-    //
-    //     formblock.id = 'formblock';
-    //     body.appendChild(formblock);
-    //
-    //     const inputs = [
-    //         {
-    //             name: 'my_file',
-    //             type: 'file'
-    //         },
-    //         {
-    //             name: 'nick',
-    //             placeholder: me.nick
-    //         },
-    //         {
-    //             name: 'password',
-    //             type: 'password',
-    //             placeholder: 'Password'
-    //         },
-    //         {
-    //             name: 'password_repeat',
-    //             type: 'password',
-    //             placeholder: 'Repeat Password'
-    //         },
-    //         {
-    //             name: 'submit',
-    //             type: 'submit',
-    //             value: 'Submit'
-    //         }
-    //     ];
-    //     const formObj = new Form();
-    //     const form = formObj.render({ inputs: inputs, formId: 'profileForm' })
-    //     formblock.appendChild(form);
-    //
-    //     const pLink = document.createElement('p');
-    //     form.appendChild(pLink);
-    //
-    //     const link = createLinkMenu();
-    //     pLink.appendChild(link);
-    //
-    //
     //     form.addEventListener('submit', function (event) {
     //
     //         event.preventDefault();
@@ -502,18 +273,5 @@ root.addEventListener("click", function (event) {
     const eventName = target.name;
     menuButtons[eventName]();
 });
-
-// pagination.addEventListener("click", function (event) {
-//     if (!(event.target instanceof HTMLAnchorElement)) return;
-
-//     event.preventDefault();
-
-//     const target = event.target;
-//     const nextPageNumber = event.pagination__number;
-
-
-
-//     // buttons[eventName]();
-// });
 
 createMenu();
