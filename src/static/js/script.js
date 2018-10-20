@@ -5,6 +5,7 @@ import { Form } from './components/form.js';
 const httpReq = window.httpModule;
 
 const root = document.getElementById("root");
+
 function createLinkMenu() {
     const link = document.createElement('a');
     link.textContent = "Back to main menu";
@@ -513,40 +514,10 @@ function createProfile(me) {
 
 function createAbout() {
 
-    const link = createLinkMenu();
+    // const link = createLinkMenu();
 
-    const aboutHtml = window.aboutTemplate(link);
+    const aboutHtml = window.aboutTemplate();
     root.innerHTML = aboutHtml;
-    // const header = document.createElement('div');
-    // header.id = "header";
-    // header.dataset.sectionName = 'header';
-    // root.appendChild(header);
-
-    // const logo = document.createElement('span');
-    // logo.id = 'logo';
-    // const headerTitle = document.createElement('h1');
-    // headerTitle.textContent = 'About';
-    // headerTitle.id = "headerTitle";
-
-    // header.appendChild(logo);
-    // header.appendChild(headerTitle);
-
-    // const body = document.createElement('div');
-    // body.id = 'body';
-
-    // const aboutTextblock = document.createElement('div');
-    // body.appendChild(aboutTextblock);
-
-    // const aboutText = document.createElement('p');
-    // aboutText.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    // aboutTextblock.appendChild(aboutText);
-
-    // const pLink = document.createElement('p');
-    // body.appendChild(pLink);
-
-    // pLink.appendChild(link);
-
-    // root.appendChild(body);
 }
 
 const buttons = {
@@ -560,14 +531,15 @@ const buttons = {
 
 root.addEventListener("click", function (event) {
     if (!(event.target instanceof HTMLAnchorElement)) return;
-
     event.preventDefault();
 
     const target = event.target;
     const href = target.dataset.href;
+    console.log(target);
 
-    root.innerHTML = '';
-    buttons[href]();
+    // console.log(href);
+    // root.innerHTML = '';
+    // buttons[href]();
 
 });
 
