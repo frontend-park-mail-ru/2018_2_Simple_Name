@@ -15,24 +15,25 @@ function createSignIn() {
     const signinHtml = window.signinTemplate();
     root.innerHTML = signinHtml
 
-    //     httpReq.doPost({
-    //         url: '/signin',
-    //         callback(res) {
-    //             if (res.status == 404) {
-    //                 alert("Wrong login or password");
-    //                 return;
-    //             }
-    //             if (res.status == 400) {
-    //                 alert("Wrong email or password")
-    //             }
-    //             if (res.status == 200) {
-    //                 alert("You are log in!")
-    //                 createProfile();
-    //             }
-    //         },
-    //         data: formData
-    //     })
-    // });
+    httpReq.doPost({
+        url: '/signin',
+        contentType: 'application/json',
+        data: formData,
+
+        callback(res) {
+            if (res.status == 404) {
+                alert("Wrong login or password");
+                return;
+            }
+            if (res.status == 400) {
+                alert("Wrong email or password")
+            }
+            if (res.status == 200) {
+                alert("You are log in!")
+                createProfile();
+            }
+        },
+    });
 
 }
 
