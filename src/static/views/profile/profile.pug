@@ -9,16 +9,17 @@ block header
 
 block content
     div
-        form(method='POST' action='/register')
+        form(method='POST' action='/')
             div.form-group
-                label(for='nickname') Nickname:
+                label(for='nickname') Change nickname:
                 input#name.form-control(type='text', placeholder='Nickname' name='nickname')
 
-                label(for='password') Password:
+                label(for='password') Chang password:
                 input#password(type='password', placeholder='Password', name='password')
+                
+                button(type="image") Upload
 
-                button(type='submit') Change and save
-            
+                button(type='submit') Change and save            
     a.button-menu(name='menu' href='') Back to menu
 
         
