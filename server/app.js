@@ -27,7 +27,7 @@ class Application {
         const ids = {};
 
         app.get('/', function (req, res) {
-            res.cookie("session_expires", "1", { expires: new Date(Date.now() + 500), httpOnly: true })
+            // res.cookie("session_expires", "1", { expires: new Date(Date.now() + 500), httpOnly: true })
             res.sendFile(path.resolve('src/index.html'));
         });
 
@@ -53,7 +53,7 @@ class Application {
             ids[id] = email;
             users[email] = user;
 
-            res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
+            // res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
             res.status(201).json({ id });
         });
 
@@ -70,11 +70,11 @@ class Application {
             const id = uuid();
             ids[id] = email;
 
-            res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
+            // res.cookie('sessionid', id, { expires: new Date(Date.now() + 1000 * 60 * 10) });
             res.status(201).json({ id });
         });
 
-        app.get('/leaders', function (req, res) {
+        app.get('/scoreboard', function (req, res) {
             const scorelist = Object.values(users)
                 .sort((l, r) => r.score - l.score)
                 .map(user => {
