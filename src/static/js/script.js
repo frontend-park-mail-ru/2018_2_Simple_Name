@@ -1,8 +1,6 @@
 'use strict';
 
-import { Form } from './components/form.js';
-
-const httpReq = window.httpModule;
+const httpRequest = window.httpModule;
 
 const root = document.getElementById("root");
 
@@ -15,7 +13,7 @@ function createSignIn() {
     const signinHtml = window.signinTemplate();
     root.innerHTML = signinHtml
 
-    httpReq.doPost({
+    httpRequest.doPost({
         url: '/signin',
         contentType: 'application/json',
         data: formData,
@@ -41,76 +39,68 @@ function createSignUp() {
     const signupHtml = window.signupTemplate();
     root.innerHTML = signupHtml
 
-    //
-    // httpReq.doGet({
-    //     callback(res) {
-    //         if (res.status > 300) {
-    //             alert("You already register");
-    //             root.innerHTML = '';
-    //             createMenu();
-    //             return;
-    //         }
-    //     },
-    //     url: '/signup'
-    // });
+    const form = document.getElementById('signupForm');
 
-    // form.addEventListener('submit', function (event) {
-    //
-    //     event.preventDefault();
-    //     const name = form.elements['name'].value;
-    //     const last_name = form.elements['last_name'].value;
-    //     const nick = form.elements['nick'].value;
-    //     const email = form.elements['email'].value;
-    //     const password = form.elements['password'].value;
-    //     const password_repeat = form.elements['password_repeat'].value;
-    //
-    //     if (password !== password_repeat) {
-    //         alert('Passwords is not equals');
-    //         return;
-    //     }
-    //     if (email == "") {
-    //         alert("Enter email!")
-    //         return
-    //     }
-    //
-    //     let formData = new FormData()
-    //     formData.append("name", name)
-    //     formData.append("last_name", last_name)
-    //     formData.append("nick", nick)
-    //
-    //     formData.append("password", password)
-    //     formData.append("email", email)
-    //
-    //
-    //     httpReq.doPost({
-    //         callback(res) {
-    //             console.log(res.status)
-    //             if (res.status == 208) {
-    //                 alert("Email already exist");
-    //                 return;
-    //             }
-    //             if (res.status == 400) {
-    //                 alert("Something is wrong");
-    //                 return;
-    //             }
-    //             if (res.status == 409) {
-    //                 alert("StatusConflict");
-    //                 return;
-    //             }
-    //             createProfile();
-    //         },
-    //         url: '/signup',
-    //         data: formData
-    //     });
-    // });
+    form.addEventListener('submit', function (event) {
 
+        event.preventDefault();
+
+        const firstname = form.elements["firstname"].value;
+        const lastName = form.elements['lastName'].value;
+        const nickname = form.elements['nickname'].value;
+        const email = form.elements['email'].value;
+        const password = form.elements['password'].value;
+        const repeatPassword = form.elements['repeatPassword'].value;
+
+        if (password !== repeatPassword) {
+            alert('Passwords is not equals');
+            return;
+        }
+        if (email == "") {
+            alert("Enter email!")
+            return
+        }
+
+        const jsonSignupData = {
+            firstName: firstname,
+            lastName: lastName,
+            nickname: nickname,
+            email: email,
+            password: password,
+            repeatPassword: repeatPassword
+        }
+
+        httpRequest.doPost({
+            url: '/signup',
+            data: jsonSignupData,
+            contentType: 'application/json',
+
+            callback(res) {
+                console.log(res.status)
+                if (res.status > 300) {
+                    alert("You already register");
+                    createMenu();
+                    return;
+                }
+                if (res.status == 208) {
+                    alert("Email already exist");
+                    return;
+                }
+                if (res.status == 400) {
+                    alert("Something is wrong");
+                    return;
+                }
+                if (res.status == 409) {
+                    alert("StatusConflict");
+                    return;
+                }
+                createProfile();
+            },
+        });
+    });
 }
 
 function createScoreboard(nextPageNumber) {
-
-    httpReq.doGet({
-
-    })
 
     const scoreboardHtml = window.scoreboardTemplate({ inputPlayers: { 'name': 123, 'name1': 1232, 'name2': 1121323 } });
     root.innerHTML = scoreboardHtml;
@@ -124,7 +114,6 @@ function createScoreboard(nextPageNumber) {
 
         const nextPageNumber = event.pagination__number;
         createScoreboard(nextPageNumber);
-
     });
 
     // /*  const em = document.createElement('em');
@@ -136,7 +125,7 @@ function createScoreboard(nextPageNumber) {
     // // xhr.send('Request');
     //
     //
-    // httpReq.doGet({
+    // httpRequest.doGet({
     //     callback(res) {
     //         if (res.status > 300) {
     //             alert('Something wrong');
@@ -210,7 +199,7 @@ function createProfile(me) {
     //         formData.append("password", password)
     //
     //
-    //         httpReq.doPost({ // Отправка аватарки
+    //         httpRequest.doPost({ // Отправка аватарки
     //             callback(res) {
     //                 if (res.status > 300) {
     //                     alert("Something was wrong");
@@ -224,7 +213,7 @@ function createProfile(me) {
     //
     //     });
     // } else {
-    //     httpReq.doGet({
+    //     httpRequest.doGet({
     //         callback(res) {
     //             console.log("Create prof")
     //             console.log(res.status);

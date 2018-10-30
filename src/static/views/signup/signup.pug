@@ -9,29 +9,23 @@ block header
 
 block content
   div
-    form(method='POST' action='/register')
-      div.form-group
-        label(for='firstname') First Name:
-        input#name.form-control(type='text', placeholder='First name' name='firstname')
+    form(method= 'POST' action='#')#signupForm
+      div.form-group First Name:
+        input#firstname.form-control(type='text', placeholder='First name' name='firstname')
 
-      div.form-group
-        label(for='lastName') Last Name:
+      div.form-group Last Name:
         input#lastName.form-control(type='text', placeholder='Last name' name='lastname')
 
-      div.form-group
-        label(for='nickname') Nickname:
-        input#name.form-control(type='text', placeholder='Nickname' name='nickname')
+      div.form-group Nickname:
+        input#nickname.form-control(type='text', placeholder='Nickname' name='nickname')
 
-      div.form-group
-        label(for='email') Email:
+      div.form-group Email:
         input#email.form-control(type='email', placeholder='name@email.com' name='email')
 
-      div.form-group
-        label(for='password') Password:
+      div.form-group Password:
         input#password.form-control(type='password', placeholder='Password', name='password')
 
-      div.form-group
-        label(for='repeatPassword') Confirm Password:
+      div.form-group Confirm Password:
         input#repeatPassword.form-control(type='password', placeholder='Repeat password', name='repeatPassword')
 
         button(type='submit') Sign up

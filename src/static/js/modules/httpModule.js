@@ -1,7 +1,7 @@
 (function () {
 
-    class httpReq {
-        _dofetch({ url = '/', method = '', data, contentType, callback = function () { } } = {}) {
+    class httpRequest {
+        _dofetch({ url = '/', method, data, contentType, callback = function () { } } = {}) {
             fetch(url, {
                 method: method,
                 mode: 'cors',
