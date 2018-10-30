@@ -10,34 +10,66 @@ function createMenu() {
 }
 
 function createSignIn() {
-    const signinHtml = window.signinTemplate();
-    root.innerHTML = signinHtml
 
-    httpRequest.doPost({
-        url: '/signin',
-        contentType: 'application/json',
-        data: formData,
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
 
         callback(res) {
-            if (res.status == 404) {
-                alert("Wrong login or password");
-                return;
-            }
-            if (res.status == 400) {
-                alert("Wrong email or password")
-            }
             if (res.status == 200) {
-                alert("You are log in!")
-                createProfile();
+                alert("You already auth")
+                createMenu()
             }
         },
     });
 
+
+    const signinHtml = window.signinTemplate();
+    root.innerHTML = signinHtml;
+
+    const form = document.getElementById('signinForm');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        httpRequest.doPost({
+            url: 'http://127.0.0.1:8080/signin',
+            contentType: 'application/json',
+            //data: formData,
+
+            callback(res) {
+                if (res.status == 404) {
+                    alert("Wrong login or password");
+                    return;
+                }
+                if (res.status == 400) {
+                    alert("Wrong email or password")
+                }
+                if (res.status == 200) {
+                    alert("You are log in!")
+                    createProfile();
+                }
+            },
+        });
+    })
+
 }
 
 function createSignUp() {
+
+
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
+
+        callback(res) {
+            if (res.status == 200) {
+                alert("You already auth")
+                createMenu()
+            }
+        },
+    });
+
+
     const signupHtml = window.signupTemplate();
-    root.innerHTML = signupHtml
+    root.innerHTML = signupHtml;
 
     const form = document.getElementById('signupForm');
 
@@ -68,7 +100,7 @@ function createSignUp() {
             email: email,
             password: password,
             repeatPassword: repeatPassword
-        }
+        };
 
         httpRequest.doPost({
             url: '/signup',
@@ -176,6 +208,17 @@ function createScoreboard(nextPageNumber) {
 }
 
 function createProfile(me) {
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
+
+        callback(res) {
+            if (res.status == 400){
+                alert("Please login");
+                createSignIn();
+            }
+        },
+    });
+
     const profileHtml = window.profileTemplate();
     root.innerHTML = profileHtml;
     //

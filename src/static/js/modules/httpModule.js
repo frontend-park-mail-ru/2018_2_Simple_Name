@@ -20,12 +20,12 @@
         }
 
         doGet(params = {}) {
-            this._dofetch({ ...params, method: 'GET'});
+            this._dofetch({ ...params, method: 'GET', contentType: 'text/plain'});
         }
 
         doPost(params = {}) {
             this._dofetch({ ...params, method: 'POST'});
         }
     }
-    window.httpModule = new httpReq();
+    window.httpModule = new httpRequest();
 })();
