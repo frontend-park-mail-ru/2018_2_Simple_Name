@@ -6,7 +6,7 @@
                 method: method,
                 mode: 'cors',
                 credentials: 'include',
-                body: data,
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': contentType,
                 },
@@ -20,7 +20,7 @@
         }
 
         doGet(params = {}) {
-            this._dofetch({ ...params, method: 'GET'});
+            this._dofetch({ ...params, method: 'GET', contentType: 'text/plain'});
         }
 
         doPost(params = {}) {

@@ -10,49 +10,77 @@ function createMenu() {
 }
 
 function createSignIn() {
-    const signinHtml = window.signinTemplate();
-    root.innerHTML = signinHtml
 
-    const form = document.getElementById('siginForm');
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
+
+        callback(res) {
+            if (res.status == 200) {
+                alert("You already auth")
+                createMenu()
+            }
+        },
+    });
+
+    const signinHtml = window.signinTemplate();
+    root.innerHTML = signinHtml;
+
+    const form = document.getElementById('signinForm');
 
     form.addEventListener('submit', function (event) {
-
         event.preventDefault();
+
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
 
-        const jsonSigninData = {
-            email: email,
-            password: password
-        }
+        const JSONdata = {
+            "email": email,
+            "password": password
+        };
 
         httpRequest.doPost({
-            url: '/signin',
+            url: 'http://127.0.0.1:8080/signin',
             contentType: 'application/json',
-            data: jsonSigninData,
+            data: JSONdata,
 
             callback(res) {
                 if (res.status == 400) {
-                    alert("Wrong email or password")
-                } else if (res.status == 200) {
-                    alert("You are already logged in!")
-                    createProfile();
-                } else if (res.status == 201) {
+                    alert("Wrong login or password");
+                    return;
+                }
+                if (res.status == 500) {
+                    alert("¯\\_(ツ)_/¯")
+                }
+                if (res.status == 200) {
+                    alert("You are log in!")
                     createProfile();
                 }
             },
         });
-    });
+    })
 }
 
 function createSignUp() {
+
+
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
+
+        callback(res) {
+            if (res.status == 200) {
+                alert("You already auth")
+                createMenu()
+            }
+        },
+    });
+
+
     const signupHtml = window.signupTemplate();
-    root.innerHTML = signupHtml
+    root.innerHTML = signupHtml;
 
     const form = document.getElementById('signupForm');
 
     form.addEventListener('submit', function (event) {
-
         event.preventDefault();
 
         const firstname = form.elements['firstname'].value;
@@ -62,6 +90,7 @@ function createSignUp() {
         const password = form.elements['password'].value;
         const repeatPassword = form.elements['repeatPassword'].value;
 
+
         if (password !== repeatPassword) {
             alert('Passwords is not equals');
             return;
@@ -70,22 +99,21 @@ function createSignUp() {
             return
         }
 
-        const jsonSignupData = {
-            firstName: firstname,
-            lastName: lastName,
-            nickname: nickname,
-            email: email,
-            password: password,
-            repeatPassword: repeatPassword
-        }
+        const JSONdata = {
+            "name": firstname,
+            "last_name": lastName,
+            "nick": nickname,
+            "email": email,
+            "password": password
+        };
 
         httpRequest.doPost({
-            url: '/signup',
-            data: jsonSignupData,
+            url: 'http://127.0.0.1:8080/signup',
+            data: JSONdata,
             contentType: 'application/json',
 
             callback(res) {
-                console.log(res.status)
+                console.log(res.status);
                 if (res.status > 300) {
                     alert("You already register");
                     createMenu();
@@ -178,6 +206,17 @@ function createScoreboard(nextPageNumber) {
 }
 
 function createProfile(me) {
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/islogged',
+
+        callback(res) {
+            if (res.status == 400){
+                alert("Please login");
+                createSignIn();
+            }
+        },
+    });
+
     const profileHtml = window.profileTemplate();
     root.innerHTML = profileHtml;
 
