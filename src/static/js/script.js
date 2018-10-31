@@ -22,7 +22,6 @@ function createSignIn() {
         },
     });
 
-
     const signinHtml = window.signinTemplate();
     root.innerHTML = signinHtml;
 
@@ -30,18 +29,27 @@ function createSignIn() {
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+
+        const email = form.elements['email'].value;
+        const password = form.elements['password'].value;
+
+        const JSONdata = {
+            "email": email,
+            "password": password
+        };
+
         httpRequest.doPost({
             url: 'http://127.0.0.1:8080/signin',
             contentType: 'application/json',
-            //data: formData,
+            data: JSONdata,
 
             callback(res) {
-                if (res.status == 404) {
+                if (res.status == 400) {
                     alert("Wrong login or password");
                     return;
                 }
-                if (res.status == 400) {
-                    alert("Wrong email or password")
+                if (res.status == 500) {
+                    alert("¯\\_(ツ)_/¯")
                 }
                 if (res.status == 200) {
                     alert("You are log in!")
@@ -74,55 +82,54 @@ function createSignUp() {
     const form = document.getElementById('signupForm');
 
     form.addEventListener('submit', function (event) {
-
         event.preventDefault();
 
         const firstname = form.elements["firstname"].value;
-        const lastName = form.elements['lastName'].value;
+        const lastName = form.elements['lastname'].value;
         const nickname = form.elements['nickname'].value;
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
         const repeatPassword = form.elements['repeatPassword'].value;
 
+
         if (password !== repeatPassword) {
             alert('Passwords is not equals');
             return;
         }
-        if (email == "") {
-            alert("Enter email!")
+        if (email === "") {
+            alert("Enter email!");
             return
         }
 
-        const jsonSignupData = {
-            firstName: firstname,
-            lastName: lastName,
-            nickname: nickname,
-            email: email,
-            password: password,
-            repeatPassword: repeatPassword
+        const JSONdata = {
+            "name": firstname,
+            "last_name": lastName,
+            "nick": nickname,
+            "email": email,
+            "password": password
         };
 
         httpRequest.doPost({
-            url: '/signup',
-            data: jsonSignupData,
+            url: 'http://127.0.0.1:8080/signup',
+            data: JSONdata,
             contentType: 'application/json',
 
             callback(res) {
-                console.log(res.status)
+                console.log(res.status);
                 if (res.status > 300) {
                     alert("You already register");
                     createMenu();
                     return;
                 }
-                if (res.status == 208) {
+                if (res.status === 208) {
                     alert("Email already exist");
                     return;
                 }
-                if (res.status == 400) {
+                if (res.status === 400) {
                     alert("Something is wrong");
                     return;
                 }
-                if (res.status == 409) {
+                if (res.status === 409) {
                     alert("StatusConflict");
                     return;
                 }

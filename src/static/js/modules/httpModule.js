@@ -6,7 +6,7 @@
                 method: method,
                 mode: 'cors',
                 credentials: 'include',
-                body: data,
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': contentType,
                 },
