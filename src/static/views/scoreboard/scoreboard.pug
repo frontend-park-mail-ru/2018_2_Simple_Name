@@ -21,27 +21,27 @@ block content
                 
 
         //- Pagination
-        mixin pagination(amount, active)
-            //- amount - amount of displayed numbers +1 prior ellipsis
+            //- amount - amount of displayed numbers
             //- active - active number
-            //- ellipsis - number to be replaced by ellipsis
-            //- last - number after ellipsis
+        - const pageAmount= Math.ceil(Object.keys(inputPlayers).length / 3) //Кол-во страниц
+
+        mixin pagination(amount, active)
             .pagination
                 //- prev arrow
-                a(href="" title="Prev page").pagination__prev.icon-pagination-prev ◀
+                a(href="" title="Prev page") ◀
                 //-
                 - for (var index = 1; index <= amount; index++)
                     if (index === active)
-                        a(href="#" title="Current page #{index}" ).active.pagination__number= index
+                        a(href="" title="Current page #{index}" ).active= index
                     else
-                        a(href="#" title="Go to page #{index}" ).pagination__number= index
+                        a(href="" title="Go to page #{index}" )= index
 
                 //- next arrow
-                a(href="#" title="Next page").pagination__next.icon-pagination-next ▶
+                a(href="#" title="Next page") ▶
                 //-
 
         div#pagination
-            +pagination(5, 2)
+            +pagination(pageAmount, nextPageNumber)
 
     a.button-menu(name='menu' href='') Back to menu
 

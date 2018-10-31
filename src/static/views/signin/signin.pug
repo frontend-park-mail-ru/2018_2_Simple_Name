@@ -9,13 +9,11 @@ block header
 
 block content
     div
-        form(method='POST' action='/register')
-            div.form-group
-                label(for='email') Email:
+        form(method='POST' action='/login')#siginForm
+            div.form-group Email:
                 input#email(type='email', placeholder='name@email.com' name='email')
 
-            div.form-group
-                label(for='password') Password:
+            div.form-group Password:
                 input#password(type='password', placeholder='Password', name='password')
 
                 button(type='submit') Sign in

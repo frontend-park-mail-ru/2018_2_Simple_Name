@@ -9,17 +9,19 @@ block header
 
 block content
     div
-        form(method='POST' action='/')
+        form(method='POST' action='/')#profileForm
+            div.form-group Change nickname:
+                input#nickname.form-control(type='text', placeholder='Nickname' name='nickname')
+            div.form-group Change password:
+                input#password(type='password', placeholder='New Password', name='password')
             div.form-group
-                label(for='nickname') Change nickname:
-                input#name.form-control(type='text', placeholder='Nickname' name='nickname')
-
-                label(for='password') Chang password:
-                input#password(type='password', placeholder='Password', name='password')
+                input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
+            div.form-group
+                input#currentpassword(type='password', placeholder='Current Password', name='currentpassword')
                 
-                button(type="image") Upload
+                button(type="image") Upload avatar
 
-                button(type='submit') Change and save            
+                button(type='submit') Save changes
     a.button-menu(name='menu' href='') Back to menu
 
         

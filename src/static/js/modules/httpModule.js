@@ -1,7 +1,7 @@
 (function () {
 
     class httpRequest {
-        _dofetch({ url = '/', method, data, contentType, callback = function () { } } = {}) {
+        _dofetch({ url, method, data, contentType, callback = function () { } } = {}) {
             fetch(url, {
                 method: method,
                 mode: 'cors',
@@ -27,5 +27,5 @@
             this._dofetch({ ...params, method: 'POST'});
         }
     }
-    window.httpModule = new httpReq();
+    window.httpModule = new httpRequest();
 })();
