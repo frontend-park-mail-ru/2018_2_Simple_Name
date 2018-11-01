@@ -8,10 +8,11 @@ block header
     +pageTitle('Profile')
 
 block content
+    - var nickname = playerNickname
     div
         form(method='POST' action='/')#profileForm
             div.form-group Change nickname:
-                input#nickname.form-control(type='text', placeholder='Nickname' name='nickname')
+                input#nickname.form-control(type='text', placeholder= playerNickname name='nickname')
             div.form-group Change password:
                 input#password(type='password', placeholder='New Password', name='password')
             div.form-group

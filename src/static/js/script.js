@@ -63,15 +63,13 @@ function createSignIn() {
 }
 
 function createSignUp() {
-
     httpRequest.doGet({
         url: 'http://127.0.0.1:8080/islogged',
-
         callback(res) {
             if (res.status == 200) {
                 alert("You are already authorized")
-                createMenu()
-            } else { return; }
+                createMenu();
+            } else {return}
         },
     });
 
@@ -208,9 +206,10 @@ function createScoreboard() {
 }
 
 function createProfile(me) {
+    var playerNickname;
+
     httpRequest.doGet({
         url: 'http://127.0.0.1:8080/islogged',
-
         callback(res) {
             if (res.status == 400) {
                 alert("Please login");
@@ -219,62 +218,78 @@ function createProfile(me) {
         },
     });
 
-    const profileHtml = window.profileTemplate();
+
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/usernickname',
+        callback(res){
+            if (res.status > 300) {
+                alert("Something wrong");
+                createMenu();
+                return;
+            }
+            res.json().then(function(data){
+                playerNickname = data;
+                console.warn(playerNickname);
+            });
+        },
+    })
+
+    const profileHtml = window.profileTemplate({playerNickname});
     root.innerHTML = profileHtml;
 
     const form = document.getElementById('profileForm');
 
-    if (me) {
-        form.addEventListener('submit', function (event) {
+    // if (me) {
+    //     form.addEventListener('submit', function (event) {
 
-            event.preventDefault();
+    //         event.preventDefault();
 
-            // let formData = new FormData(document.forms.profileForm);
-            //file is actually new FileReader.readAsData(myId.files[0]);
-            //  formData.append("my_file", avatar);
+    //         // let formData = new FormData(document.forms.profileForm);
+    //         //file is actually new FileReader.readAsData(myId.files[0]);
+    //         //  formData.append("my_file", avatar);
 
-            // const password = form.elements['password'].value;
-            // const repeatPassword = form.elements['repeatPassword'].value;
+    //         // const password = form.elements['password'].value;
+    //         // const repeatPassword = form.elements['repeatPassword'].value;
 
-            // jsonProfileData = {
-            //     password: password,
-            //     repeatPassword: repeatPassword
-            // }
+    //         // jsonProfileData = {
+    //         //     password: password,
+    //         //     repeatPassword: repeatPassword
+    //         // }
 
-            httpRequest.doPost({ // Отправка аватарки
-                callback(res) {
-                    if (res.status > 300) {
-                        alert("Something was wrong");
-                        return;
-                    }
-                    createProfile();
-                },
-                url: '/profile',
-                data: formData,
-                contentType: '',
-            });
+    //         httpRequest.doPost({ // Отправка аватарки
+    //             callback(res) {
+    //                 if (res.status > 300) {
+    //                     alert("Something was wrong");
+    //                     return;
+    //                 }
+    //                 createProfile();
+    //             },
+    //             url: '/profile',
+    //             data: formData,
+    //             contentType: '',
+    //         });
 
-        });
-    } else {
-        httpRequest.doGet({
-            url: '/profile',
+    //     });
+    // } else {
+    //     httpRequest.doGet({
+    //         url: '/profile',
 
-            callback(res) {
-                console.log(res.status);
-                if (res.status > 300) {
-                    alert('Unauthorized');
-                    createMenu();
-                    return;
-                }
-                //let response = res.json();
-                //const user = JSON.parse(res.responseText);
+    //         callback(res) {
+    //             console.log(res.status);
+    //             if (res.status > 300) {
+    //                 alert('Unauthorized');
+    //                 createMenu();
+    //                 return;
+    //             }
+    //             //let response = res.json();
+    //             //const user = JSON.parse(res.responseText);
 
-                res.json().then(function (user) {
-                    createProfile(user);
-                });
-            },
-        })
-    }
+    //             res.json().then(function (user) {
+    //                 createProfile(user);
+    //             });
+    //         },
+    //     })
+    // }
 }
 
 function createAbout() {
