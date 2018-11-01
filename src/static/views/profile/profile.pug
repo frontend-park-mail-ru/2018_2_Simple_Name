@@ -9,19 +9,21 @@ block header
 
 block content
     - var nickname = playerNickname
+    - var wayToAva = 'http://127.0.0.1:8080/userpic'
     div
         form(method='POST' action='/')#profileForm
-            div.form-group Change nickname:
-                input#nickname.form-control(type='text', placeholder= playerNickname name='nickname')
+            img.form-group.profile-pic(src= imgSrc)
+            div.form-group Upload avatar:
+                input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
+            div.form-group Change nickname (#{playerNickname}):
+                input#newnickname.form-control(type='text' value= playerNickname, placeholder= playerNickname name='newnickname')
             div.form-group Change password:
-                input#password(type='password', placeholder='New Password', name='password')
+                input#newpassword(type='password', placeholder='New Password', name='newpassword')
             div.form-group
                 input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
-            div.form-group
-                input#currentpassword(type='password', placeholder='Current Password', name='currentpassword')
+                //- div.form-group
+                //-     input#currentpassword(type='password', placeholder='Current Password', name='currentpassword')
                 
-                button(type="image") Upload avatar
-
                 button(type='submit') Save changes
     a.button-menu(name='menu' href='') Back to menu
 

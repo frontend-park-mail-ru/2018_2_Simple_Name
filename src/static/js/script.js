@@ -82,6 +82,7 @@ function createSignUp () {
 
     const firstname = form.elements['firstname'].value
     const lastname = form.elements['lastname'].value
+    const age = form.elements['age'].value
     const nickname = form.elements['nickname'].value
     const email = form.elements['email'].value
     const password = form.elements['password'].value
@@ -98,6 +99,7 @@ function createSignUp () {
     const JSONdata = {
       'name': firstname,
       'last_name': lastname,
+      'age': age,
       'nick': nickname,
       'email': email,
       'password': password
@@ -176,7 +178,7 @@ function createScoreboard () {
 
     // Отправляем индекс страницы на бэк и получаем новых лидеров
     httpRequest.doGet({
-      url: 'http://127.0.0.1:8080/...',
+      url: 'http://127.0.0.1:8080/leaders',
       data: pageName,
 
       callback (res) {
@@ -207,7 +209,7 @@ function createProfile (me) {
       }
     }
   })
-
+  // Запрашиваем никнейм пользователя для отображения
   httpRequest.doGet({
     url: 'http://127.0.0.1:8080/usernickname',
     callback (res) {
@@ -226,59 +228,74 @@ function createProfile (me) {
   const profileHtml = window.profileTemplate({ playerNickname })
   root.innerHTML = profileHtml
 
-  // const form = document.getElementById('profileForm')
+  if (me) {
+    const form = document.getElementById('profileForm')
+    form.addEventListener('submit', function (event) {
+      event.preventDefault()
 
-  // if (me) {
-  //     form.addEventListener('submit', function (event) {
+      const newPassword = form.elements['newpassword'].value
+      const repeatNewPassword = form.elements['repeatnewpassword'].value
+      const newNickname = form.elements['newnickname'].value
 
-  //         event.preventDefault();
+      var avatarformData = new FormData(form.elemnts['newavatar'])
 
-  //         // let formData = new FormData(document.forms.profileForm);
-  //         //file is actually new FileReader.readAsData(myId.files[0]);
-  //         //  formData.append("my_file", avatar);
+      if (newPassword !== repeatNewPassword) {
+        alert('Password are not equal')
+        createProfile()
+        return
+      }
 
-  //         // const password = form.elements['password'].value;
-  //         // const repeatPassword = form.elements['repeatPassword'].value;
+      const JSONdata = {
+        'password': newPassword,
+        'nickname': newNickname
+      }
 
-  //         // jsonProfileData = {
-  //         //     password: password,
-  //         //     repeatPassword: repeatPassword
-  //         // }
+      // Смена пароля пользователем
+      httpRequest.doPut({
+        url: 'http://127.0.0.1:8080/changepass',
+        data: JSONdata,
+        contentType: 'application/json',
+        callback (res) {
+          if (res.status > 300) {
+            alert('Something was wrong')
+          }
+        }
+      })
 
-  //         httpRequest.doPost({ // Отправка аватарки
-  //             callback(res) {
-  //                 if (res.status > 300) {
-  //                     alert("Something was wrong");
-  //                     return;
-  //                 }
-  //                 createProfile();
-  //             },
-  //             url: '/profile',
-  //             data: formData,
-  //             contentType: '',
-  //         });
+      httpRequest.doPost({
+        url: 'http://127.0.0.1:8080/changeuserdata',
+        data: avatarformData,
+        contentType: 'multipart/form-data',
+        callback (res) {
+          if (res.status > 300) {
+            alert('Something was wrong')
+            return
+          }
+          res.json().then(function (data) {
+            imgSrc = data
+            const profileHtml = window.profileTemplate({ imgSrc, playerNickname })
+            root.innerHTML = profileHtml
+          })
+        }
+      })
+    })
+  } else {
+    httpRequest.doGet({
+      url: 'http://127.0.0.1:8080/profile',
 
-  //     });
-  // } else {
-  //     httpRequest.doGet({
-  //         url: '/profile',
-
-  //         callback(res) {
-  //             console.log(res.status);
-  //             if (res.status > 300) {
-  //                 alert('Unauthorized');
-  //                 createMenu();
-  //                 return;
-  //             }
-  //             //let response = res.json();
-  //             //const user = JSON.parse(res.responseText);
-
-  //             res.json().then(function (user) {
-  //                 createProfile(user);
-  //             });
-  //         },
-  //     })
-  // }
+      callback (res) {
+        console.log(res.status)
+        if (res.status > 300) {
+          alert('Unauthorized')
+          createMenu()
+          return
+        }
+        res.json().then(function (user) {
+          createProfile(user)
+        })
+      }
+    })
+  }
 }
 
 function createAbout () {
@@ -296,6 +313,7 @@ const menuButtons = {
 }
 
 root.addEventListener('click', function (event) {
+  if (!(event.target instanceof HTMLAnchorElement)) return
   event.preventDefault()
 
   const target = event.target

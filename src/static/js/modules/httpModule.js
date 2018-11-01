@@ -1,5 +1,5 @@
 (function () {
-  class httpRequest {
+  class HttpRequest {
     _dofetch ({ url, method, data, contentType, callback = function () { } } = {}) {
       fetch(url, {
         method: method,
@@ -30,5 +30,5 @@
       this._dofetch({ ...params, method: 'PUT' })
     }
   }
-  window.httpModule = new httpRequest()
+  window.httpModule = new HttpRequest()
 })()

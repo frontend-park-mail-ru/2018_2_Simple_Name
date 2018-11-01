@@ -11,22 +11,25 @@ block content
   div
     form(method= 'POST' action='/signup')#signupForm
       div.form-group First Name:
-        input#firstname.form-control(type='text', placeholder='First name' name='firstname')
+        input#firstname.form-control(type='text' placeholder='First name' name='firstname')
 
       div.form-group Last Name:
-        input#lastname.form-control(type='text', placeholder='Last name' name='lastname')
+        input#lastname.form-control(type='text' placeholder='Last name' name='lastname')
+
+      div.form-group Your age:
+        input#age.form-control(type='number' placeholder='21' min='1' max='125' name='age')
 
       div.form-group Nickname:
-        input#nickname.form-control(type='text', placeholder='Nickname' name='nickname')
+        input#nickname.form-control(type='text' placeholder='Nickname' name='nickname')
 
       div.form-group Email:
-        input#email.form-control(type='email', placeholder='name@email.com' name='email')
+        input#email.form-control(type='email' placeholder='name@email.com' name='email')
 
       div.form-group Password:
-        input#password.form-control(type='password', placeholder='Password', name='password')
+        input#password.form-control(type='password' placeholder='Password', name='password')
 
       div.form-group Confirm Password:
-        input#repeatPassword.form-control(type='password', placeholder='Repeat password', name='repeatPassword')
+        input#repeatPassword.form-control(type='password' placeholder='Repeat password', name='repeatPassword')
 
         button(type='submit') Sign up
 
