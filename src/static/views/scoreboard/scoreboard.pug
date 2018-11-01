@@ -10,38 +10,39 @@ block header
 block content
 
     div
-        table.score-table
-            tr
-                each val in ['Nickname', 'Score']
-                    th= val 
-            each nick, score in inputPlayers
+        mixin scoreTable(players)
+            table.score-table
                 tr
-                    td= score
-                    td= nick
+                    each val in ['Nickname', 'Score']
+                        th= val 
+                each nick, score in players
+                    tr
+                        td= score
+                        td= nick
                 
-
-        //- Pagination
-            //- amount - amount of displayed numbers
-            //- active - active number
-        - const pageAmount= Math.ceil(Object.keys(inputPlayers).length / 3) //Кол-во страниц
-
         mixin pagination(amount, active)
             .pagination
                 //- prev arrow
-                a(href="" title="Prev page") ◀
-                //-
-                - for (var index = 1; index <= amount; index++)
-                    if (index === active)
-                        a(href="" title="Current page #{index}" ).active= index
-                    else
-                        a(href="" title="Go to page #{index}" )= index
+                if (amount > 1)
+                    a(href='' title="Prev page" name= index) ◀
 
-                //- next arrow
-                a(href="#" title="Next page") ▶
-                //-
+                    - for (var index = 1; index <= amount; index++)
+
+                        - var titleName = 'Current page ' + index;
+                        - var pageName = index;
+
+                        if (index === active)
+                            a(href='' title= titleName name= pageName).active= index
+                        else
+                            a(href='' title= b name= pageName)= index
+
+                    //- next arrow
+                    a(href='' title="Next page") ▶
+
+        +scoreTable(inputPlayers)
 
         div#pagination
-            +pagination(pageAmount, nextPageNumber)
+            +pagination(pagesCount, index)
 
     a.button-menu(name='menu' href='') Back to menu
 

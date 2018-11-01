@@ -16,8 +16,10 @@ function createSignIn() {
 
         callback(res) {
             if (res.status == 200) {
-                alert("You already auth")
+                alert("You already authorized")
                 createMenu()
+            } else {
+                return;
             }
         },
     });
@@ -49,7 +51,7 @@ function createSignIn() {
                     return;
                 }
                 if (res.status == 500) {
-                    alert("¯\\_(ツ)_/¯")
+                    alert("¯\_(ツ)_/¯")
                 }
                 if (res.status == 200) {
                     alert("You are log in!")
@@ -62,18 +64,16 @@ function createSignIn() {
 
 function createSignUp() {
 
-
     httpRequest.doGet({
         url: 'http://127.0.0.1:8080/islogged',
 
         callback(res) {
             if (res.status == 200) {
-                alert("You already auth")
+                alert("You are already authorized")
                 createMenu()
-            }
+            } else { return; }
         },
     });
-
 
     const signupHtml = window.signupTemplate();
     root.innerHTML = signupHtml;
@@ -84,7 +84,7 @@ function createSignUp() {
         event.preventDefault();
 
         const firstname = form.elements['firstname'].value;
-        const lastName = form.elements['lastName'].value;
+        const lastname = form.elements['lastname'].value;
         const nickname = form.elements['nickname'].value;
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
@@ -101,7 +101,7 @@ function createSignUp() {
 
         const JSONdata = {
             "name": firstname,
-            "last_name": lastName,
+            "last_name": lastname,
             "nick": nickname,
             "email": email,
             "password": password
@@ -136,73 +136,75 @@ function createSignUp() {
     });
 }
 
-function createScoreboard(nextPageNumber) {
-    const page = 1;
-    const inputPlayers = {
-        'name': 123,
-        'name1': 1232,
-        'name2': 1121323,
-        'name3': 123,
-        'name4': 22222,
-        'name5': 44343,
-        'name6': 12312333,
-    }
-    const scoreboardHtml = window.scoreboardTemplate({inputPlayers}, nextPageNumber);
+function createScoreboard() {
+
+    let pagesCount, inputPlayers;
+    // Заправшиваем кол-во страниц с игроками
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/askForPlayersCount',
+        callback(res) {
+            if (res.status > 300) {
+                alert('Something wrong');
+                createMenu();
+                return;
+            }
+            res.then(function (data) {
+                pagesCount = data;
+            });
+        },
+    });
+    //Заправшиваем игроков
+    httpRequest.doGet({
+        url: 'http://127.0.0.1:8080/askForPlayers',
+        callback(res) {
+            if (res.status > 300) {
+                alert('Something wrong');
+                createMenu();
+                return;
+            }
+            res.json().then(function (data) {
+                inputPlayers = data;
+            });
+        },
+    });
+
+    // Индекс актвиной страницы при первом открытии старницы слидерами
+    const index = 1;
+
+    const scoreboardHtml = window.scoreboardTemplate({ index, pagesCount, inputPlayers });
     root.innerHTML = scoreboardHtml;
 
-    createScoreboard(page);
-    
-    // const pagination = document.getElementById("pagination");
+    const pagination = document.getElementById("pagination");
 
-    // pagination.addEventListener("click", function (event) {
-    //     if (!(event.target instanceof HTMLAnchorElement)) return;
+    pagination.addEventListener("click", function (event) {
+        if (!(event.target instanceof HTMLAnchorElement)) return;
 
-    //     event.preventDefault();
-    // });
+        event.preventDefault();
 
-    // httpRequest.doGet({
-    //     callback(res) {
-    //         if (res.status > 300) {
-    //             alert('Something wrong');
-    //             root.innerHTML = '';
-    //             createMenu();
-    //             return;
-    //         }
-    //         res.json().then(function (top) {
+        const target = event.target;
+        const pageName = target.name;
+        //Приводим к числу имя страницы
+        // const intPageName = parseInt(pageName, 10);
 
-    //             const tbody = document.createElement('tbody');
+        //Отправляем индекс страницы на бэк и получаем новых лидеров
+        httpRequest.doGet({
+            url: 'http://127.0.0.1:8080/...',
+            data: pageName,
 
-    //             let username;
-    //             let score;
-    //             let age;
-
-    //             Object.entries(top).forEach(function ([id, info]) {
-    //                 username = info.nick;
-    //                 score = info.Score;
-    //                 age = info.Age;
-
-
-    //                 const tr = document.createElement('tr');
-    //                 const tdUsername = document.createElement('td');
-    //                 const tdScore = document.createElement('td');
-    //                 const tdAge = document.createElement('td');
-
-    //                 tdUsername.textContent = username;
-    //                 tdScore.textContent = score;
-    //                 tdAge.textContent = age;
-
-    //                 tr.appendChild(tdUsername);
-    //                 tr.appendChild(tdScore);
-    //                 tr.appendChild(tdAge);
-
-    //                 tbody.appendChild(tr);
-
-    //                 table.appendChild(tbody);
-    //             });
-    //         });
-    //     },
-    //     url: '/leaders'
-    // });
+            callback(res) {
+                if (res.status > 300) {
+                    console.log('Something wrong');
+                    createMenu();
+                    return;
+                }
+                //Отрисовываем новых лидеров
+                res.json().then(function (playersData) {
+                    const scoreboardHtml = window.scoreboardTemplate({ pageName, pagesCount, playersData });
+                    root.innerHTML = scoreboardHtml;
+                });
+            },
+        });
+    });
 }
 
 function createProfile(me) {
@@ -210,7 +212,7 @@ function createProfile(me) {
         url: 'http://127.0.0.1:8080/islogged',
 
         callback(res) {
-            if (res.status == 400){
+            if (res.status == 400) {
                 alert("Please login");
                 createSignIn();
             }
@@ -236,7 +238,7 @@ function createProfile(me) {
 
             // jsonProfileData = {
             //     password: password,
-            //     repeatPassword: repeadPassword
+            //     repeatPassword: repeatPassword
             // }
 
             httpRequest.doPost({ // Отправка аватарки
@@ -255,24 +257,22 @@ function createProfile(me) {
         });
     } else {
         httpRequest.doGet({
+            url: '/profile',
+
             callback(res) {
                 console.log(res.status);
                 if (res.status > 300) {
                     alert('Unauthorized');
-                    root.innerHTML = '';
                     createMenu();
                     return;
                 }
-                //let respon = res.json();
+                //let response = res.json();
                 //const user = JSON.parse(res.responseText);
 
                 res.json().then(function (user) {
-                    root.innerHTML = '';
                     createProfile(user);
                 });
-
             },
-            url: '/profile'
         })
     }
 }
