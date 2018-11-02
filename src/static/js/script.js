@@ -272,7 +272,7 @@ function createProfile (me) {
             return
           }
           res.json().then(function (data) {
-            imgSrc = data
+            const imgSrc = data
             const profileHtml = window.profileTemplate({ imgSrc, playerNickname })
             root.innerHTML = profileHtml
           })
