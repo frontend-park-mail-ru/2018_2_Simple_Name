@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint --fix ./",
+    "build": "pug -c src --name-after-file --pretty",
     "prestart": "pug -c src --name-after-file --pretty",
     "start": "node server"
   },
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-google": "^0.11.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
