@@ -61,7 +61,7 @@ a {
     font-family: 'Courier New', Courier, monospace;
 } 
 
-button {
+.button {
     margin-top: 15px;
     background-color: #A66F00;
     border: none;

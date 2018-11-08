@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --fix ./",
-    "build": "pug -c src --name-after-file --pretty",
-    "prestart": "pug -c src --name-after-file --pretty",
+    "lint": "./node_modules/.bin/eslint ./",
+    "build": "pug -c src --name-after-file",
+    "prestart": "pug -c src --name-after-file",
     "start": "node server"
   },
   "dependencies": {

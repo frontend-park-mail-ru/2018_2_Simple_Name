@@ -16,7 +16,9 @@ block content
             div.form-group Password:
                 input#password(type='password', placeholder='Password', name='password')
 
-                button(type='submit') Sign in
+                button.button(type='submit') Sign in
+
+                div #{errText}
 
     a.button-menu(name='menu' href='') Back to menu
 
