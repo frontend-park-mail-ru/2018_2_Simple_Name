@@ -43,6 +43,7 @@ module.exports = {
         "no-use-before-define": 0,
         "keyword-spacing": 0,
         "arrow-parens": 0,
-        "no-undef": 0
+        "no-undef": 0,
+        "func-names": 0
     }
 };

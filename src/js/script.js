@@ -338,24 +338,24 @@ function createProfile(me) {
         });
 
         form.addEventListener('logout', (event) => {
-          event.preventDefault();
-          httpRequest({
-            url:'http://127.0.0.1:8080/logout',
-            data: 123,
-            contentType: 'application/json',
-            callback(res){
-              if (res.status == 500) {
-                const errText = 'Server error';
-                root.innerHTML = window.profiletemplateTemplate({ errText });
-              }
-              if (res.status == 200){
-                const errText = 'You are succsesfuly logouted';
-                root.innerHTML = window.menutemplateTemplate({ errText });
-              }
-            }
-          })
+            event.preventDefault();
+            httpRequest({
+                url: 'http://127.0.0.1:8080/logout',
+                data: 123,
+                contentType: 'application/json',
+                callback(res) {
+                    if (res.status === 500) {
+                        const errText = 'Server error';
+                        root.innerHTML = window.profiletemplateTemplate({ errText });
+                    }
+                    if (res.status === 200) {
+                        const errText = 'You are succsesfuly logouted';
+                        root.innerHTML = window.menutemplateTemplate({ errText });
+                    }
+                }
+            });
         });
-        
+
     } else {
         httpRequest.doGet({
             url: 'http://127.0.0.1:8080/profile',
