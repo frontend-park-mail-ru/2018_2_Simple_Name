@@ -222,15 +222,17 @@ function createProfile(userInfo, statusText) {
     let playerAge;
 
 
-    httpRequest.doGet({
-        url: '/islogged',
-        callback(res) {
-            if (res.status === 400) {
-                const errText = 'You are not logged in';
-                createSignin(errText);
+    if (userInfo === undefined) {
+        httpRequest.doGet({
+            url: '/islogged',
+            callback(res) {
+                if (res.status === 400) {
+                    const errText = 'You are not logged in';
+                    createSignin(errText);
+                }
             }
-        }
-    });
+        });
+    }
 
     // Запрашиваем никнейм пользователя для отображения
     if (userInfo === undefined) {
@@ -255,18 +257,6 @@ function createProfile(userInfo, statusText) {
     playerFirstname = userInfo.name;
     playerLastname = userInfo.last_name;
     playerEmail = userInfo.email;
-
-    const cookie = document.cookie.split(";");
-    const path = "";
-    console.log(cookie);
-
-    cookie.forEach(function(c) {
-       // console.log(c);
-        // if (cookie.name === 'session_id') {
-        //     path = cookie.value
-        // }
-    });
-    const imgSrc = '/static/';
 
     const profileHtml = window.profiletemplateTemplate({
         playerNickname,
