@@ -162,7 +162,7 @@ function createScoreboard(statusText) {
     httpRequest.doGet({
         url: `/leaders?limit=${
             playersOnPage
-            }&offset=${
+        }&offset=${
             playersOnPage * index}`,
         callback(res) {
             if (res.status > 300) {
@@ -194,7 +194,7 @@ function createScoreboard(statusText) {
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-                }&offset=${
+            }&offset=${
                 playersOnPage * PageName}`,
 
             callback(res) {
@@ -244,7 +244,7 @@ function createProfile(userInfo, statusText) {
                 res.json().then((profileInfo) => {
                     Object.entries(profileInfo).forEach(() => {
                         createProfile(profileInfo);
-                        return;
+
                     });
                 });
             }

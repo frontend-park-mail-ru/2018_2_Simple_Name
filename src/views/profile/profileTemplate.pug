@@ -8,15 +8,21 @@ block header
     +pageTitle('Profile')
 
 block content
-    - var nickname = playerNickname
     - var wayToAva = ''
     div
         form(method='POST')#profileForm
-            div.form-group Nickname: #{playerNickname}
-            div.form-group Hightscore: #{playerScore}
-            div.form-group Name: #{playerFirstname}
-            div.form-group Lastname: #{playerLastname}
             img.form-group.profile-pic(src= imgSrc)
+            div.form-group Nickname:
+                input#nickname(type='text', value= playerNickname, readonly)
+            div.form-group Highscore:
+                input#score(type='text', value= playerScore, readonly)
+            div.form-group Name:
+                input#firstname(type='text', value= playerFirstname, readonly) 
+            div.form-group Lastname:
+                input#lastname(type='text', value= playerLastname,  readonly) 
+            div.form-group Email:
+                input#email(type='email', value= playerEmail, readonly)
+
             div.form-group Upload avatar:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
             div.form-group Change password:
