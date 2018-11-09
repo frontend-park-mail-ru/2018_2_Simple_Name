@@ -12,9 +12,9 @@ block content
     - var wayToAva = ''
     div
         form(method='POST')#profileForm
-            div.form-group #{playerNickname}
-            div.form-group #{playerFirstname}
-            div.form-group #{playerLastname}
+            div.form-group #{playerNickname}: #{playerScore}
+            //- div.form-group #{playerFirstname}
+            //- div.form-group #{playerLastname}
             img.form-group.profile-pic(src= imgSrc)
             div.form-group Upload avatar:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
@@ -29,5 +29,5 @@ block content
 
         a.button-menu(name='menu' href='') Back to menu
 
-    div.warn-title #{errText}
+    div.warn-title #{statusText}
 

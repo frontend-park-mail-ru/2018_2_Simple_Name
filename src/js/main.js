@@ -2,41 +2,24 @@ const httpRequest = window.httpModule;
 
 const root = document.getElementById('root');
 
-function createMenu() {
-    const menuHtml = window.menutemplateTemplate();
+function createMenu(statusText) {
+    const menuHtml = window.menutemplateTemplate({ statusText });
     root.innerHTML = menuHtml;
 }
 
-// function createAbout() {
-//   window.About = new About();
-//   const aboutView = window.About; // эквивалентно const aboutView = window.aboutView;
-//   function showView(aboutView, data) {
-//    if (data) {
-//     aboutView.data = data;
-//    }
-
-//    currentView.hide();
-//    aboutView.show();
-//    currentView = aboutView;
-//   }
-
-//   showView(AboutView, { })
-// }
-
-function createSignIn() {
+function createSignIn(statusText) {
     httpRequest.doGet({
         url: '/islogged',
 
         callback(res) {
             if (res.status === 200) {
-                // alert('You already authorized');
                 const errText = 'You already authorized';
-                root.innerHTML = window.profiletemplateTemplate({ errText });
+                createProfile(errText);
             }
         }
     });
 
-    const signinHtml = window.signintemplateTemplate();
+    const signinHtml = window.signintemplateTemplate({ statusText });
     root.innerHTML = signinHtml;
 
     const form = document.getElementById('signinForm');
@@ -59,42 +42,36 @@ function createSignIn() {
 
             callback(res) {
                 if (res.status === 400) {
-                    // alert('Wrong login or password');
                     const errText = 'Wrong login or password';
-                    root.innerHTML = window.signintemplateTemplate({ errText });
+                    createSignin(errText);
                     return;
                 }
                 if (res.status === 500) {
-                    // alert('Server error');
                     const errText = 'Server error';
-                    root.innerHTML = window.signintemplateTemplate({ errText });
+                    createSignin(errText);
                     return;
                 }
                 if (res.status === 200) {
-                    // alert('You are already logged in!');
-                    const errText = 'You are already logged in!';
-                    root.innerHTML = window.profiletemplateTemplate({ errText });
-
-                    // createProfile();
+                    const errText = 'You are already loggined!';
+                    createProfile(errText);
                 }
             }
         });
     });
 }
 
-function createSignUp() {
+function createSignUp(statusText) {
     httpRequest.doGet({
         url: '/islogged',
         callback(res) {
             if (res.status === 200) {
-                // alert('You are already authorized');
                 const errText = 'You are already authorized';
-                root.innerHTML = window.profiletemplateTemplate({ errText });
+                createProfile(errText);
             }
         }
     });
 
-    const signupHtml = window.signuptemplateTemplate();
+    const signupHtml = window.signuptemplateTemplate({ statusText });
     root.innerHTML = signupHtml;
 
     const form = document.getElementById('signupForm');
@@ -111,13 +88,11 @@ function createSignUp() {
         const repeatPassword = form.elements.repeatPassword.value;
 
         if (password !== repeatPassword) {
-            // alert('Passwords is not equals');
             const errText = 'Passwords is not equals';
-            root.innerHTML = window.signuptemplateTemplate({ errText });
+            createSignup(errText);
             return;
         } if (email === '') {
-            // alert('Enter email!');
-            root.innerHTML = window.signuptemplateTemplate({ errText });
+            createSignup(errText);
             return;
         }
 
@@ -140,22 +115,18 @@ function createSignUp() {
             callback(res) {
                 console.log(res.status);
                 if (res.status > 300) {
-                    // alert('You already register');
                     const errText = 'You already register';
-                    root.innerHTML = window.menutemplateTemplate({ errText });
+                    createMenu(errText);
                     createMenu();
                 } else if (res.status === 208) {
-                    // alert('Email already exist');
                     const errText = 'Email already exist';
-                    root.innerHTML = window.signuptemplateTemplate({ errText });
+                    createSignup(errText);
                 } else if (res.status === 400) {
-                    // alert('Something is wrong');
                     const errText = 'Something is wrong';
-                    root.innerHTML = window.signuptemplateTemplate({ errText });
+                    createSignup(errText);
                 } else if (res.status === 409) {
-                    // alert('StatusConflict');
                     const errText = 'StatusConflict';
-                    root.innerHTML = window.signuptemplateTemplate({ errText });
+                    createSignup(errText);
                 } else {
                     createProfile();
                 }
@@ -164,26 +135,26 @@ function createSignUp() {
     });
 }
 
-function createScoreboard() {
+function createScoreboard(statusText) {
     let pagesCount;
     let inputPlayers;
     // Кол-во игроков на странице
     const playersOnPage = 5;
     // Индекс актвиной страницы при первом открытии старницы с лидерами
     const index = 1;
-    // Заправшиваем кол-во страниц с игроками
+    // Заправшиваем кол-во всех игроков
     httpRequest.doGet({
-        url: '/leaderspages',
+        url: '/leaderscount',
         callback(res) {
             if (res.status > 300) {
-                // alert('Something wrong');
                 const errText = 'Something is wrong';
-                root.innerHTML = window.menutemplateTemplate({ errText });
-                // createMenu();
+                createMenu(errText);
                 return;
             }
-            res.then((data) => {
-                pagesCount = data;
+            res.json().then((data) => {
+                Object.entries(data).forEach(() => {
+                    const leaders = data.leadersCount;
+                });
             });
         }
     });
@@ -191,14 +162,12 @@ function createScoreboard() {
     httpRequest.doGet({
         url: `/leaders?limit=${
             playersOnPage
-        }&offset=${
+            }&offset=${
             playersOnPage * index}`,
         callback(res) {
             if (res.status > 300) {
-                // alert('Something wrong');
                 const errText = 'Can not get leaders';
-                root.innerHTML = window.menutemplateTemplate({ errText });
-                // createMenu();
+                createMenu(errText);
                 return;
             }
             res.json().then((data) => {
@@ -207,7 +176,7 @@ function createScoreboard() {
         }
     });
 
-    const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers });
+    const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers, statusText });
     root.innerHTML = scoreboardHtml;
 
     const pagination = document.getElementById('pagination');
@@ -217,6 +186,7 @@ function createScoreboard() {
 
         const target = event.target;
         const pageName = target.name;
+
         // Приводим к числу имя страницы
         // const intPageName = parseInt(pageName, 10);
 
@@ -224,15 +194,13 @@ function createScoreboard() {
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-            }&offset=${
+                }&offset=${
                 playersOnPage * PageName}`,
 
             callback(res) {
                 if (res.status > 300) {
-                    // console.log('Something wrong');
                     const errText = 'Something wrong';
-                    root.innerHTML = window.menutemplateTemplate({ errText });
-                    // createMenu();
+                    createMenu(errText);
                     return;
                 }
                 // Отрисовываем новых лидеров
@@ -245,19 +213,20 @@ function createScoreboard() {
     });
 }
 
-function createProfile(me) {
+function createProfile(statusText) {
     let playerNickname;
     let playerFirstname;
     let playerLastname;
+    let playerEmail;
+    let playerScore;
+    let playerAge;
 
     httpRequest.doGet({
         url: '/islogged',
         callback(res) {
             if (res.status === 400) {
-                // alert('Please login');
                 const errText = 'You are not logged in';
-                root.innerHTML = window.signintemplateTemplate({ errText });
-                // createSignIn();
+                createSignin(errText);
             }
         }
     });
@@ -267,125 +236,100 @@ function createProfile(me) {
         url: '/profile',
         callback(res) {
             if (res.status > 300) {
-                // alert('Something wrong');
                 const errText = 'Something is wrong';
-                root.innerHTML = window.menutemplateTemplate({ errText });
-                // createMenu();
+                createMenu(errText);
                 return;
             }
             res.json().then((profileInfo) => {
                 Object.entries(profileInfo).forEach(() => {
                     playerNickname = profileInfo.nick;
-                    playerFirstname = profileInfo.firstname;
-                    playerLastname = profileInfo.lastname;
+                    playerScore = profileInfo.score;
+
                 });
             });
         }
     });
 
-    const profileHtml = window.profiletemplateTemplate({ playerNickname, playerFirstname, playerLastname });
+    const profileHtml = window.profiletemplateTemplate({ playerNickname, playerScore, statusText });
     root.innerHTML = profileHtml;
 
-        const form = document.getElementById('profileForm');
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
+    const form = document.getElementById('profileForm');
+    const logout = document.getElementById('logout');
 
-            const newPassword = form.elements.newpassword.value;
-            const repeatNewPassword = form.elements.repeatnewpassword.value;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-            const avatarformData = new FormData(form.elemnts.newavatar);
+        const newPassword = form.elements.newpassword.value;
+        const repeatNewPassword = form.elements.repeatnewpassword.value;
 
-            if (newPassword !== repeatNewPassword) {
-                // alert('Password are not equal');
-                const errText = 'Password are not equal';
-                root.innerHTML = window.profiletemplateTemplate({ errText });
-                // createProfile();
-                return;
+        const avatarformData = new FormData(form.elemnts.newavatar);
+
+        if (newPassword !== repeatNewPassword) {
+            const errText = 'Password are not equal';
+            createProfile(errText);
+            return;
+        }
+
+        const JSONdata = {
+            password: newPassword
+        };
+
+        // Смена пароля пользователем
+        httpRequest.doPut({
+            url: '/profile',
+            data: JSONdata,
+            contentType: 'application/json',
+            callback(res) {
+                if (res.status > 300) {
+                    const errText = 'Something was wrong';
+                    createProfile(errText);
+                }
+                if (res.status === 200) {
+                    const errText = 'Pass changed successfuly';
+                    createProfile(errText);
+                }
             }
-
-            const JSONdata = {
-                password: newPassword
-            };
-
-            // Смена пароля пользователем
-            httpRequest.doPut({
-                url: '/profile',
-                data: JSONdata,
-                contentType: 'application/json',
-                callback(res) {
-                    if (res.status > 300) {
-                        // alert('Something was wrong');
-                        const errText = 'Something was wrong';
-                        root.innerHTML = window.profiletemplateTemplate({ errText });
-                    }
-                    if (res.status === 200) {
-                        const errText = 'Pass changed successfuly';
-                        root.innerHTML = window.profiletemplateTemplate({ errText });
-                    }
-                }
-            });
-
-            httpRequest.doPost({
-                url: '/profile',
-                data: avatarformData,
-                contentType: 'multipart/form-data',
-                callback(res) {
-                    if (res.status > 300) {
-                        // alert('Something was wrong');
-                        const errText = 'Something was wrong';
-                        root.innerHTML = window.profiletemplateTemplate({ errText });
-                        return;
-                    }
-                    if (res.status === 200) {
-                        const errText = 'New avatar uploaded';
-                        root.innerHTML = window.profiletemplateTemplate({ errText });
-                    }
-                    res.json().then((data) => {
-                        const imgSrc = data;
-                        const profileHtml = window.profiletemplateTemplate({ imgSrc, playerNickname });
-                        root.innerHTML = profileHtml;
-                    });
-                }
-            });
         });
 
-        const logout = document.getElementById('logout');
-        logout.addEventListener('click', (event) => {
-            event.preventDefault();
-            httpRequest.doGet({
-                url: '/logout',
-                callback(res) {
-                    if (res.status === 500) {
-                        const errText = 'Server error';
-                        root.innerHTML = window.profiletemplateTemplate({ errText });
-                    }
-                    if (res.status === 200) {
-                        const errText = 'You are succsesfuly logouted';
-                        root.innerHTML = window.menutemplateTemplate({ errText });
-                    }
+        httpRequest.doPost({
+            url: '/profile',
+            data: avatarformData,
+            contentType: 'multipart/form-data',
+            callback(res) {
+                if (res.status > 300) {
+                    const errText = 'Something was wrong';
+                    createProfile(errText);
+                    return;
                 }
-            });
+                if (res.status === 200) {
+                    const errText = 'New avatar uploaded';
+                    createProfile(errText);
+                }
+                res.json().then((data) => {
+                    const imgSrc = data;
+                    const profileHtml = window.profiletemplateTemplate({ imgSrc, playerNickname });
+                    root.innerHTML = profileHtml;
+                });
+            }
         });
+    });
 
-    // } else {
-    //     httpRequest.doGet({
-    //         url: '/profile',
-
-    //         callback(res) {
-    //             console.log(res.status);
-    //             if (res.status > 300) {
-    //                 // alert('Unauthorized');
-    //                 const errText = 'Unauthorized';
-    //                 root.innerHTML = window.menutemplateTemplate({ errText });
-    //                 // createMenu();
-    //                 return;
-    //             }
-    //             res.json().then((user) => {
-    //                 createProfile(user);
-    //             });
-    //         }
-    //     });
-    // }
+    logout.addEventListener('click', (event) => {
+        event.preventDefault();
+        httpRequest.doGet({
+            url: '/logout',
+            callback(res) {
+                if (res.status === 500) {
+                    const errText = 'Server error';
+                    createProfile(errText);
+                }
+                if (res.status === 200) {
+                    const errText = 'You are succsesfuly logouted';
+                    createMenu(errText);
+                }
+            }
+        });
+    });
 }
 
 function createAbout() {
