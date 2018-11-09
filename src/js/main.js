@@ -258,6 +258,16 @@ function createProfile(userInfo, statusText) {
     playerLastname = userInfo.last_name;
     playerEmail = userInfo.email;
 
+    const cookie = document.cookie.split(";");
+    const path = "";
+    cookie.forEach(function(cookie) {
+        console.log(cookie);
+        // if (cookie.name === 'session_id') {
+        //     path = cookie.value
+        // }
+    });
+    const imgSrc = '/static/';
+
     const profileHtml = window.profiletemplateTemplate({
         playerNickname,
         playerAge,
