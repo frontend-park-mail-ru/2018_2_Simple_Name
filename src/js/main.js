@@ -25,7 +25,7 @@ function createMenu() {
 
 function createSignIn() {
     httpRequest.doGet({
-        url: 'http://simplename-game.now.sh:8000/islogged',
+        url: '/islogged',
 
         callback(res) {
             if (res.status === 200) {
@@ -121,17 +121,19 @@ function createSignUp() {
             return;
         }
 
+        const intAge = parseInt(age, 10);
+
         const JSONdata = {
-            name: firstname,
-            last_name: lastname,
-            age,
-            nick: nickname,
-            email,
-            password
+            'name': firstname,
+            'last_name': lastname,
+            'age': intAge,
+            'nick': nickname,
+            'email': email,
+            'password': password
         };
 
         httpRequest.doPost({
-            url: 'http://127.0.0.1:8000/signup',
+            url: '/signup',
             data: JSONdata,
             contentType: 'application/json',
 
@@ -171,7 +173,7 @@ function createScoreboard() {
     const index = 1;
     // Заправшиваем кол-во страниц с игроками
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8000/leaderspages',
+        url: '/leaderspages',
         callback(res) {
             if (res.status > 300) {
                 // alert('Something wrong');
@@ -187,7 +189,7 @@ function createScoreboard() {
     });
     // Заправшиваем игроков
     httpRequest.doGet({
-        url: `http://127.0.0.1:8000/leaders?limit=${
+        url: `/leaders?limit=${
             playersOnPage
         }&offset=${
             playersOnPage * index}`,
@@ -220,7 +222,7 @@ function createScoreboard() {
 
         // Отправляем limit и offset страницы на бэк и получаем новых лидеров
         httpRequest.doGet({
-            url: `http://127.0.0.1:8000/leaders?limit=${
+            url: `/leaders?limit=${
                 playersOnPage
             }&offset=${
                 playersOnPage * PageName}`,
@@ -249,7 +251,7 @@ function createProfile(me) {
     let playerLastname;
 
     httpRequest.doGet({
-        url: 'http://simplename-game.now.sh:8000/islogged',
+        url: '/islogged',
         callback(res) {
             if (res.status === 400) {
                 // alert('Please login');
@@ -262,7 +264,7 @@ function createProfile(me) {
 
     // Запрашиваем никнейм пользователя для отображения
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8000/profile',
+        url: '/profile',
         callback(res) {
             if (res.status > 300) {
                 // alert('Something wrong');
@@ -308,7 +310,7 @@ function createProfile(me) {
 
             // Смена пароля пользователем
             httpRequest.doPut({
-                url: 'http://127.0.0.1:8000/profile',
+                url: '/profile',
                 data: JSONdata,
                 contentType: 'application/json',
                 callback(res) {
@@ -325,7 +327,7 @@ function createProfile(me) {
             });
 
             httpRequest.doPost({
-                url: 'http://127.0.0.1:8000/profile',
+                url: '/profile',
                 data: avatarformData,
                 contentType: 'multipart/form-data',
                 callback(res) {
@@ -351,7 +353,7 @@ function createProfile(me) {
         form.addEventListener('logout', (event) => {
             event.preventDefault();
             httpRequest({
-                url: 'http://127.0.0.1:8000/logout',
+                url: '/logout',
                 // data: '',
                 // contentType: '',
                 callback(res) {
@@ -369,7 +371,7 @@ function createProfile(me) {
     }
     // } else {
     //     httpRequest.doGet({
-    //         url: 'http://127.0.0.1:8000/profile',
+    //         url: '/profile',
 
     //         callback(res) {
     //             console.log(res.status);
