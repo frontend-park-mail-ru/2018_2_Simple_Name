@@ -221,6 +221,7 @@ function createProfile(userInfo, statusText) {
     let playerScore;
     let playerAge;
 
+
     httpRequest.doGet({
         url: '/islogged',
         callback(res) {
@@ -242,10 +243,7 @@ function createProfile(userInfo, statusText) {
                     return;
                 }
                 res.json().then((profileInfo) => {
-                    Object.entries(profileInfo).forEach(() => {
-                        createProfile(profileInfo);
-
-                    });
+                    createProfile(profileInfo);
                 });
             }
         });
@@ -260,8 +258,10 @@ function createProfile(userInfo, statusText) {
 
     const cookie = document.cookie.split(";");
     const path = "";
-    cookie.forEach(function(cookie) {
-        console.log(cookie);
+    console.log(cookie);
+
+    cookie.forEach(function(c) {
+       // console.log(c);
         // if (cookie.name === 'session_id') {
         //     path = cookie.value
         // }
