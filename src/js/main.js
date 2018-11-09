@@ -213,7 +213,7 @@ function createScoreboard(statusText) {
     });
 }
 
-function createProfile(statusText) {
+function createProfile(userInfo, statusText) {
     let playerNickname;
     let playerFirstname;
     let playerLastname;
@@ -232,25 +232,41 @@ function createProfile(statusText) {
     });
 
     // Запрашиваем никнейм пользователя для отображения
-    httpRequest.doGet({
-        url: '/profile',
-        callback(res) {
-            if (res.status > 300) {
-                const errText = 'Something is wrong';
-                createMenu(errText);
-                return;
-            }
-            res.json().then((profileInfo) => {
-                Object.entries(profileInfo).forEach(() => {
-                    playerNickname = profileInfo.nick;
-                    playerScore = profileInfo.score;
-
+    if (userInfo === undefined) {
+        httpRequest.doGet({
+            url: '/profile',
+            callback(res) {
+                if (res.status > 300) {
+                    const errText = 'Something is wrong';
+                    createMenu(errText);
+                    return;
+                }
+                res.json().then((profileInfo) => {
+                    Object.entries(profileInfo).forEach(() => {
+                        createProfile(profileInfo);
+                        return;
+                    });
                 });
-            });
-        }
-    });
+            }
+        });
+    }
 
-    const profileHtml = window.profiletemplateTemplate({ playerNickname, playerScore, statusText });
+    playerNickname = userInfo.nick;
+    playerScore = userInfo.score;
+    playerAge = userInfo.age;
+    playerFirstname = userInfo.name;
+    playerLastname = userInfo.last_name;
+    playerEmail = userInfo.email;
+
+    const profileHtml = window.profiletemplateTemplate({
+        playerNickname,
+        playerAge,
+        playerFirstname,
+        playerLastname,
+        playerEmail,
+        playerScore,
+        statusText
+    });
     root.innerHTML = profileHtml;
 
     const form = document.getElementById('profileForm');
