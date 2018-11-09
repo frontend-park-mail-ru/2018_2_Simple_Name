@@ -9,10 +9,12 @@ block header
 
 block content
     - var nickname = playerNickname
-    - var wayToAva = 'http://127.0.0.1:8080/userpic'
+    - var wayToAva = ''
     div
         form(method='POST' action='/')#profileForm
             div.form-group #{playerNickname}
+            div.form-group #{playerFirstname}
+            div.form-group #{playerLastname}
             img.form-group.profile-pic(src= imgSrc)
             div.form-group Upload avatar:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
@@ -27,3 +29,4 @@ block content
                 div #{errText}
 
         a.button-menu(name='menu' href='') Back to menu
+

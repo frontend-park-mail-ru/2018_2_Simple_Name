@@ -25,7 +25,7 @@ function createMenu() {
 
 function createSignIn() {
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/islogged',
+        url: 'http://simplename-game.now.sh:8000/islogged',
 
         callback(res) {
             if (res.status === 200) {
@@ -53,7 +53,7 @@ function createSignIn() {
         };
 
         httpRequest.doPost({
-            url: 'http://127.0.0.1:8080/signin',
+            url: '/signin',
             contentType: 'application/json',
             data: JSONdata,
 
@@ -84,7 +84,7 @@ function createSignIn() {
 
 function createSignUp() {
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/islogged',
+        url: '/islogged',
         callback(res) {
             if (res.status === 200) {
                 // alert('You are already authorized');
@@ -131,7 +131,7 @@ function createSignUp() {
         };
 
         httpRequest.doPost({
-            url: 'http://127.0.0.1:8080/signup',
+            url: 'http://127.0.0.1:8000/signup',
             data: JSONdata,
             contentType: 'application/json',
 
@@ -165,9 +165,13 @@ function createSignUp() {
 function createScoreboard() {
     let pagesCount;
     let inputPlayers;
+    // Кол-во игроков на странице
+    const playersOnPage = 5;
+    // Индекс актвиной страницы при первом открытии старницы с лидерами
+    const index = 1;
     // Заправшиваем кол-во страниц с игроками
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/askForPlayersCount',
+        url: 'http://127.0.0.1:8000/leaderspages',
         callback(res) {
             if (res.status > 300) {
                 // alert('Something wrong');
@@ -183,7 +187,10 @@ function createScoreboard() {
     });
     // Заправшиваем игроков
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/askForPlayers',
+        url: `http://127.0.0.1:8000/leaders?limit=${
+            playersOnPage
+        }&offset=${
+            playersOnPage * index}`,
         callback(res) {
             if (res.status > 300) {
                 // alert('Something wrong');
@@ -198,16 +205,6 @@ function createScoreboard() {
         }
     });
 
-    // const inputPlayers = {
-    //   'name1': 123,
-    //   'name2': 123,
-    //   'name 3': 123333,
-    // }
-    // const pagesCount = 12;
-
-    // Индекс актвиной страницы при первом открытии старницы с лидерами
-    const index = 1;
-
     const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers });
     root.innerHTML = scoreboardHtml;
 
@@ -221,17 +218,19 @@ function createScoreboard() {
         // Приводим к числу имя страницы
         // const intPageName = parseInt(pageName, 10);
 
-        // Отправляем индекс страницы на бэк и получаем новых лидеров
+        // Отправляем limit и offset страницы на бэк и получаем новых лидеров
         httpRequest.doGet({
-            url: 'http://127.0.0.1:8080/leaders',
-            data: pageName,
+            url: `http://127.0.0.1:8000/leaders?limit=${
+                playersOnPage
+            }&offset=${
+                playersOnPage * PageName}`,
 
             callback(res) {
                 if (res.status > 300) {
                     // console.log('Something wrong');
                     const errText = 'Something wrong';
                     root.innerHTML = window.menutemplateTemplate({ errText });
-                    createMenu();
+                    // createMenu();
                     return;
                 }
                 // Отрисовываем новых лидеров
@@ -246,9 +245,11 @@ function createScoreboard() {
 
 function createProfile(me) {
     let playerNickname;
+    let playerFirstname;
+    let playerLastname;
 
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/islogged',
+        url: 'http://simplename-game.now.sh:8000/islogged',
         callback(res) {
             if (res.status === 400) {
                 // alert('Please login');
@@ -258,9 +259,10 @@ function createProfile(me) {
             }
         }
     });
+
     // Запрашиваем никнейм пользователя для отображения
     httpRequest.doGet({
-        url: 'http://127.0.0.1:8080/usernickname',
+        url: 'http://127.0.0.1:8000/profile',
         callback(res) {
             if (res.status > 300) {
                 // alert('Something wrong');
@@ -269,14 +271,17 @@ function createProfile(me) {
                 // createMenu();
                 return;
             }
-            res.json().then((data) => {
-                playerNickname = data;
-                console.warn(playerNickname);
+            res.json().then((profileInfo) => {
+                Object.entries(profileInfo).forEach(() => {
+                    playerNickname = profileInfo.nick;
+                    playerFirstname = profileInfo.firstname;
+                    playerLastname = profileInfo.lastname;
+                });
             });
         }
     });
 
-    const profileHtml = window.profiletemplateTemplate({ playerNickname });
+    const profileHtml = window.profiletemplateTemplate({ playerNickname, playerFirstname, playerLastname });
     root.innerHTML = profileHtml;
 
     if (me) {
@@ -286,7 +291,6 @@ function createProfile(me) {
 
             const newPassword = form.elements.newpassword.value;
             const repeatNewPassword = form.elements.repeatnewpassword.value;
-            // const newNickname = form.elements.newnickname.value;
 
             const avatarformData = new FormData(form.elemnts.newavatar);
 
@@ -299,13 +303,12 @@ function createProfile(me) {
             }
 
             const JSONdata = {
-                password: newPassword,
-                nickname: newNickname
+                password: newPassword
             };
 
             // Смена пароля пользователем
             httpRequest.doPut({
-                url: 'http://127.0.0.1:8080/changepass',
+                url: 'http://127.0.0.1:8000/profile',
                 data: JSONdata,
                 contentType: 'application/json',
                 callback(res) {
@@ -314,11 +317,15 @@ function createProfile(me) {
                         const errText = 'Something was wrong';
                         root.innerHTML = window.profiletemplateTemplate({ errText });
                     }
+                    if (res.status === 200) {
+                        const errText = 'Pass changed successfuly';
+                        root.innerHTML = window.profiletemplateTemplate({ errText });
+                    }
                 }
             });
 
             httpRequest.doPost({
-                url: 'http://127.0.0.1:8080/changeuserdata',
+                url: 'http://127.0.0.1:8000/profile',
                 data: avatarformData,
                 contentType: 'multipart/form-data',
                 callback(res) {
@@ -327,6 +334,10 @@ function createProfile(me) {
                         const errText = 'Something was wrong';
                         root.innerHTML = window.profiletemplateTemplate({ errText });
                         return;
+                    }
+                    if (res.status === 200) {
+                        const errText = 'New avatar uploaded';
+                        root.innerHTML = window.profiletemplateTemplate({ errText });
                     }
                     res.json().then((data) => {
                         const imgSrc = data;
@@ -340,9 +351,9 @@ function createProfile(me) {
         form.addEventListener('logout', (event) => {
             event.preventDefault();
             httpRequest({
-                url: 'http://127.0.0.1:8080/logout',
-                data: 123,
-                contentType: 'application/json',
+                url: 'http://127.0.0.1:8000/logout',
+                // data: '',
+                // contentType: '',
                 callback(res) {
                     if (res.status === 500) {
                         const errText = 'Server error';
@@ -355,26 +366,26 @@ function createProfile(me) {
                 }
             });
         });
-
-    } else {
-        httpRequest.doGet({
-            url: 'http://127.0.0.1:8080/profile',
-
-            callback(res) {
-                console.log(res.status);
-                if (res.status > 300) {
-                    // alert('Unauthorized');
-                    const errText = 'Unauthorized';
-                    root.innerHTML = window.menutemplateTemplate({ errText });
-                    // createMenu();
-                    return;
-                }
-                res.json().then((user) => {
-                    createProfile(user);
-                });
-            }
-        });
     }
+    // } else {
+    //     httpRequest.doGet({
+    //         url: 'http://127.0.0.1:8000/profile',
+
+    //         callback(res) {
+    //             console.log(res.status);
+    //             if (res.status > 300) {
+    //                 // alert('Unauthorized');
+    //                 const errText = 'Unauthorized';
+    //                 root.innerHTML = window.menutemplateTemplate({ errText });
+    //                 // createMenu();
+    //                 return;
+    //             }
+    //             res.json().then((user) => {
+    //                 createProfile(user);
+    //             });
+    //         }
+    //     });
+    // }
 }
 
 function createAbout() {

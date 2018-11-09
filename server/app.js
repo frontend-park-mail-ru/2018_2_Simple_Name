@@ -1,10 +1,32 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const path = require('path');
+// const httpProxy = require('http-proxy');
+var request = require('request');
+
+// class ProxyServer {
+//     constructor() {
+
+//     }
+
+//     proxyRoutes() {
+//         http.createServer((req, res) => {
+//             let url = req.body.url;
+//             proxy.web(req, res, { target: `http://95.163.209.195:80/${url.path}` });
+//         });
+//     }
+// }
 
 class Application {
     constructor() {
         this.express = express();
+
+        // const options = {
+        //     changeOrigin: true,
+        //     protocolRewrite: 308
+        // };
+
+        // this.proxy = httpProxy.createProxyServer({ options });
         this.attachRoutes();
     }
 
@@ -19,11 +41,38 @@ class Application {
         const users = {};
         const ids = {};
 
+        // request.get({
+        //     url: 'https://127.0.0.1:8000/',
+        //     proxy: 'http://95.163.209.195:80/'
+        // }, function (err, res) {
+        //     if (err) {
+        //         console.log('ERROR', err);
+        //     } else {
+        //         console.log('OK', res);
+        //     }
+        // });
+
+        // request.post({
+        //     url: 'https://127.0.0.1:8000/',
+        //     proxy: 'http://95.163.209.195:80/'
+        // }, function (err, res) {
+        //     if (err) {
+        //         console.log('ERROR', err);
+        //     } else {
+        //         console.log('OK', res);
+        //     }
+        // });
+
         app.get('/', (req, res) => {
             res.sendFile(path.resolve('src/index.html'));
+
+            // let url = req.body.url;
+            // proxy.web(req, res, { target: `http://95.163.209.195:80/${url.path}` });
         });
 
-
+        app.get('/islogged', (req, res) => {
+            res.redirect('http://95.163.209.195:80/islogged');
+        })
         app.post('/signup', (req, res) => {
             const password = req.body.password;
             const email = req.body.email;
@@ -66,19 +115,18 @@ class Application {
             res.status(201).json({ id });
         });
 
-        app.get('/scoreboard', (req, res) => {
-            const scorelist = Object.values(users)
-                .sort((l, r) => r.score - l.score)
-                .map(user => ({
-                    email: user.email,
-                    age: user.age,
-                    score: user.score
-                }));
+        // app.get('/scoreboard', (req, res) => {
+        //     const scorelist = Object.values(users)
+        //         .sort((l, r) => r.score - l.score)
+        //         .map(user => ({
+        //             email: user.email,
+        //             age: user.age,
+        //             score: user.score
+        //         }));
 
-            res.json(scorelist);
-        });
+        //     res.json(scorelist);
+        // });
     }
 }
-
 
 module.exports = Application;
