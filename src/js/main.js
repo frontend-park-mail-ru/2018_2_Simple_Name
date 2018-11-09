@@ -354,8 +354,6 @@ function createProfile(me) {
             event.preventDefault();
             httpRequest({
                 url: '/logout',
-                // data: '',
-                // contentType: '',
                 callback(res) {
                     if (res.status === 500) {
                         const errText = 'Server error';
