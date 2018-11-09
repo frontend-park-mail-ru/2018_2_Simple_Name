@@ -231,7 +231,7 @@ function createProfile(userInfo, statusText) {
         }
     });
 
-    // Запрашиваем никнейм пользователя для отображения
+    // Запрашиваем данные пользователя
     if (userInfo === undefined) {
         httpRequest.doGet({
             url: '/profile',
@@ -244,7 +244,6 @@ function createProfile(userInfo, statusText) {
                 res.json().then((profileInfo) => {
                     Object.entries(profileInfo).forEach(() => {
                         createProfile(profileInfo);
-
                     });
                 });
             }
