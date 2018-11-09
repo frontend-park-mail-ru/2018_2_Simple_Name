@@ -11,7 +11,7 @@ block content
     - var nickname = playerNickname
     - var wayToAva = ''
     div
-        form(method='POST' action='/')#profileForm
+        form(method='POST')#profileForm
             div.form-group #{playerNickname}
             div.form-group #{playerFirstname}
             div.form-group #{playerLastname}
@@ -24,7 +24,8 @@ block content
                 input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
                 
                 button.button(type='submit') Save changes
-                a.button-menu(name='logout' type='logout' href='') Logout
+
+        a.button-menu#logout(href='') Logout
 
         a.button-menu(name='menu' href='') Back to menu
 

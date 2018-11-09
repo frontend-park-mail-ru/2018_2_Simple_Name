@@ -286,7 +286,6 @@ function createProfile(me) {
     const profileHtml = window.profiletemplateTemplate({ playerNickname, playerFirstname, playerLastname });
     root.innerHTML = profileHtml;
 
-    if (me) {
         const form = document.getElementById('profileForm');
         form.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -350,9 +349,10 @@ function createProfile(me) {
             });
         });
 
-        form.addEventListener('logout', (event) => {
+        const logout = document.getElementById('logout');
+        logout.addEventListener('click', (event) => {
             event.preventDefault();
-            httpRequest({
+            httpRequest.doGet({
                 url: '/logout',
                 // data: '',
                 // contentType: '',
@@ -368,7 +368,7 @@ function createProfile(me) {
                 }
             });
         });
-    }
+
     // } else {
     //     httpRequest.doGet({
     //         url: '/profile',
