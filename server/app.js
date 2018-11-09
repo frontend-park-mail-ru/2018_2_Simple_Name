@@ -21,7 +21,7 @@ class Application {
         const ids = {};
 
         app.use("*", proxy("http://127.0.0.1:8080", {
-        //app.use("*", proxy("http://95.163.209.195:80", {
+        // app.use("*", proxy("http://95.163.209.195:80", {
             proxyReqPathResolver: (req) => {
                 return req.originalUrl;
             }
