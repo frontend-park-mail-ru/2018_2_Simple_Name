@@ -8,12 +8,12 @@ block header
     +pageTitle('Simple Game')
 
 block content
-    div
+    div 
         mixin menuList(link, item)
             dl.menu
                 dt
                     a(href=link name=link)= item
-
+    div.table-menu
         +menuList('signup', 'Sign up')
         +menuList('signin', 'Sign in')
         +menuList('leaders', 'Leaders')

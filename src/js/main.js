@@ -138,7 +138,7 @@ function createSignUp(statusText) {
 function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pageCount) {
     let pagesCount;
     let inputPlayers;
-    let playersCount;
+    let playersCount = this.playersCount;
     // Кол-во игроков на странице
     const playersOnPage = 5;
     // Индекс актвиной страницы при первом открытии старницы с лидерами
@@ -157,6 +157,8 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
             });
         }
     });
+
+    console.log(playersCount);
     // Заправшиваем игроков
     httpRequest.doGet({
         url: `/leaders?limit=${
@@ -222,14 +224,14 @@ function createProfile(userInfo, statusText) {
     let playerScore;
     let playerAge;
 
-
     if (userInfo === undefined) {
         httpRequest.doGet({
             url: '/islogged',
             callback(res) {
-                if (res.status === 400) {
+                if (res.status === 401) {
                     const errText = 'You are not logged in';
-                    createSignin(errText);
+                    createSignIn(errText);
+                    return;
                 }
             }
         });
