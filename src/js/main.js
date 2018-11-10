@@ -135,9 +135,10 @@ function createSignUp(statusText) {
     });
 }
 
-function createScoreboard(statusText) {
+function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pageCount) {
     let pagesCount;
     let inputPlayers;
+    let playersCount;
     // Кол-во игроков на странице
     const playersOnPage = 5;
     // Индекс актвиной страницы при первом открытии старницы с лидерами
@@ -152,9 +153,7 @@ function createScoreboard(statusText) {
                 return;
             }
             res.json().then((data) => {
-                Object.entries(data).forEach(() => {
-                    const leaders = data.leadersCount;
-                });
+                playersCount = data.leaderscount;
             });
         }
     });
@@ -162,7 +161,7 @@ function createScoreboard(statusText) {
     httpRequest.doGet({
         url: `/leaders?limit=${
             playersOnPage
-        }&offset=${
+            }&offset=${
             playersOnPage * index}`,
         callback(res) {
             if (res.status > 300) {
@@ -171,10 +170,15 @@ function createScoreboard(statusText) {
                 return;
             }
             res.json().then((data) => {
-                inputPlayers = data;
+                Object.entries(data).forEach(() => {
+                    inputPlayers = data.leaders;
+                });
             });
         }
     });
+
+    //Получаем количество страниц для пагинации
+    pagesCount = playersCount / playersOnPage;
 
     const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers, statusText });
     root.innerHTML = scoreboardHtml;
@@ -187,14 +191,11 @@ function createScoreboard(statusText) {
         const target = event.target;
         const pageName = target.name;
 
-        // Приводим к числу имя страницы
-        // const intPageName = parseInt(pageName, 10);
-
         // Отправляем limit и offset страницы на бэк и получаем новых лидеров
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-            }&offset=${
+                }&offset=${
                 playersOnPage * PageName}`,
 
             callback(res) {
@@ -260,8 +261,8 @@ function createProfile(userInfo, statusText) {
     const path = "";
     console.log(cookie);
 
-    cookie.forEach(function(c) {
-       // console.log(c);
+    cookie.forEach(function (c) {
+        // console.log(c);
         // if (cookie.name === 'session_id') {
         //     path = cookie.value
         // }
