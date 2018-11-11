@@ -241,7 +241,6 @@ function createProfile(userInfo, statusText) {
                 if (res.status === 401) {
                     const errText = 'You are not logged in';
                     createSignIn(errText);
-                    return;
                 }
             }
         });
@@ -280,6 +279,7 @@ function createProfile(userInfo, statusText) {
         playerScore,
         statusText
     });
+
     root.innerHTML = profileHtml;
 
     const form = document.getElementById('profileForm');
@@ -291,11 +291,9 @@ function createProfile(userInfo, statusText) {
         const newPassword = form.elements.newpassword.value;
         const repeatNewPassword = form.elements.repeatnewpassword.value;
 
-        const avatarformData = new FormData(form.elemnts.newavatar);
-
         if (newPassword !== repeatNewPassword) {
             const errText = 'Password are not equal';
-            createProfile(errText);
+            createProfile(userInfo, errText);
             return;
         }
 
@@ -304,43 +302,54 @@ function createProfile(userInfo, statusText) {
         };
 
         // Смена пароля пользователем
-        httpRequest.doPut({
-            url: '/profile',
-            data: JSONdata,
-            contentType: 'application/json',
-            callback(res) {
-                if (res.status > 300) {
-                    const errText = 'Something was wrong';
-                    createProfile(errText);
-                }
-                if (res.status === 200) {
-                    const errText = 'Pass changed successfuly';
-                    createProfile(errText);
-                }
-            }
-        });
 
-        httpRequest.doPost({
-            url: '/profile',
-            data: avatarformData,
-            contentType: 'multipart/form-data',
-            callback(res) {
+        const changePassword = newPassword !== "";
+        console.log(changePassword);
+        console.log(changePassword);
+        console.log(changePassword);
+        if (changePassword) {
+            httpRequest.doPut({
+                url: '/profile',
+                data: JSONdata,
+                contentType: 'application/json',
+                callback(res) {
+                    if (res.status > 300) {
+                        const errText = 'Something was wrong';
+                        createProfile(userInfo, errText);
+                    }
+                    if (res.status === 200) {
+                        const errText = 'Pass changed successfuly';
+                        res.json.then(function (userData) {
+                            createProfile(userData, errText);
+                        });
+                    }
+                }
+            });
+        }
+
+        const changeAvatar = form.elements.newavatar.value !== "";
+
+        if (changeAvatar) {
+            const avatarformData = new FormData();
+
+            avatarformData.append("new_avatar", form.elements.newavatar.files[0], "new_avatar");
+
+            fetch("/profile", {
+                method: "POST",
+                body: avatarformData
+            }).then(function (res) {
                 if (res.status > 300) {
                     const errText = 'Something was wrong';
-                    createProfile(errText);
-                    return;
+                    createProfile(undefined, errText);
                 }
                 if (res.status === 200) {
                     const errText = 'New avatar uploaded';
-                    createProfile(errText);
+                    createProfile(userInfo, errText);
                 }
-                res.json().then((data) => {
-                    const imgSrc = data;
-                    const profileHtml = window.profiletemplateTemplate({ imgSrc, playerNickname });
-                    root.innerHTML = profileHtml;
-                });
-            }
-        });
+            });
+        }
+
+
     });
 
     logout.addEventListener('click', (event) => {
