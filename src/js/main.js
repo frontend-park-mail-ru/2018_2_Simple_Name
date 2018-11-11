@@ -105,10 +105,13 @@ function createSignUp(statusText) {
         const repeatPassword = form.elements.repeatPassword.value;
 
         if (password !== repeatPassword) {
-            const errText = 'Passwords is not equals';
+            const errText = 'Passwords are not equal';
             createSignUp(errText);
+            return;
         } if (email === '') {
+            const errText = 'Enter your Email';
             createSignUp(errText);
+            return;
         }
 
         const intAge = parseInt(age, 10);
@@ -128,12 +131,7 @@ function createSignUp(statusText) {
             contentType: 'application/json',
 
             callback(res) {
-                console.log(res.status);
-                if (res.status > 300) {
-                    const errText = 'You already register';
-                    createMenu(errText);
-                    createMenu();
-                } else if (res.status === 208) {
+                if (res.status === 208) {
                     const errText = 'Email already exist';
                     createSignUp(errText);
                 } else if (res.status === 400) {
@@ -154,7 +152,6 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
     let pagesCount;
     // Кол-во игроков на странице
     const playersOnPage = 5;
-    // Индекс актвиной страницы при первом открытии старницы с лидерами
     // Заправшиваем кол-во всех игроков
 
     if (playersCount === undefined) {
@@ -172,14 +169,13 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
             }
         });
     } else {
-        // Заправшиваем игроков
 
         pagesCount = playersCount / playersOnPage + 1;
-
+        // Заправшиваем игроков
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-            }&offset=${
+                }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
@@ -315,7 +311,7 @@ function createProfile(userInfo, statusText) {
                 }).then((res) => {
                     if (res.status > 300) {
                         const errText = 'Something was wrong';
-                        createMenu();
+                        createMenu(errText);
                     }
                     if (res.status === 200) {
                         const errText = 'New avatar uploaded';
