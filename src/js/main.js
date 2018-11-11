@@ -24,7 +24,7 @@ function createMenu(statusText) {
 
         const target = event.target;
         const eventName = target.name;
-        
+
         menuButtons[eventName]();
     });
 }
@@ -43,6 +43,12 @@ function createSignIn(statusText) {
 
     const signinHtml = window.signintemplateTemplate({ statusText });
     root.innerHTML = signinHtml;
+
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu();
+    });
 
     const form = document.getElementById('signinForm');
 
@@ -65,11 +71,11 @@ function createSignIn(statusText) {
             callback(res) {
                 if (res.status === 400) {
                     const errText = 'Wrong login or password';
-                    createSignin(errText);
+                    createSignIn(errText);
                 }
                 if (res.status === 500) {
                     const errText = 'Server error';
-                    createSignin(errText);
+                    createSignIn(errText);
                 }
                 if (res.status === 200) {
                     const errText = 'You are already loggined!';
@@ -94,6 +100,12 @@ function createSignUp(statusText) {
     const signupHtml = window.signuptemplateTemplate({ statusText });
     root.innerHTML = signupHtml;
 
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu();
+    });
+
     const form = document.getElementById('signupForm');
 
     form.addEventListener('submit', (event) => {
@@ -109,9 +121,9 @@ function createSignUp(statusText) {
 
         if (password !== repeatPassword) {
             const errText = 'Passwords is not equals';
-            createSignup(errText);
+            createSignUp(errText);
         } if (email === '') {
-            createSignup(errText);
+            createSignUp(errText);
         }
 
         const intAge = parseInt(age, 10);
@@ -138,13 +150,13 @@ function createSignUp(statusText) {
                     createMenu();
                 } else if (res.status === 208) {
                     const errText = 'Email already exist';
-                    createSignup(errText);
+                    createSignUp(errText);
                 } else if (res.status === 400) {
                     const errText = 'Something is wrong';
-                    createSignup(errText);
+                    createSignUp(errText);
                 } else if (res.status === 409) {
                     const errText = 'StatusConflict';
-                    createSignup(errText);
+                    createSignUp(errText);
                 } else {
                     createProfile();
                 }
@@ -167,12 +179,11 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                 if (res.status > 300) {
                     const errText = 'Something is wrong';
                     createMenu(errText);
-                    return;
                 }
 
-                res.json().then(function (data) {
-                    createScoreboard(undefined, data.leaderscount)
-                })
+                res.json().then((data) => {
+                    createScoreboard(undefined, data.leaderscount);
+                });
             }
         });
     } else {
@@ -183,8 +194,8 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-                }&offset=${
-            playersOnPage * (pageIndex - 1)}`,
+            }&offset=${
+                playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
                     const errText = 'Can not get leaders';
@@ -194,12 +205,19 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
 
                     const scoreboardHtml = window.scoreboardtemplateTemplate({
                         index: pageIndex,
-                        pagesCount: pagesCount,
+                        pagesCount,
                         inputPlayers: players,
-                        statusText: statusText
+                        statusText
                     });
 
                     root.innerHTML = scoreboardHtml;
+
+
+                    const goback = document.getElementById('backtomenu');
+                    goback.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        createMenu();
+                    });
 
 
                     const pagination = document.getElementById('pagination');
@@ -210,8 +228,8 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                         const target = event.target;
                         const pageNumber = target.name;
 
-                        createScoreboard(undefined, playersCount, pageNumber)
-                    })
+                        createScoreboard(undefined, playersCount, pageNumber);
+                    });
 
                 });
             }
@@ -230,7 +248,7 @@ function createProfile(userInfo, statusText) {
                     const errText = 'You are not logged in';
                     createSignIn(errText);
                 }
-                if (res.status === 200){
+                if (res.status === 200) {
                     httpRequest.doGet({
                         url: '/profile',
                         callback(res) {
@@ -266,6 +284,12 @@ function createProfile(userInfo, statusText) {
 
         root.innerHTML = profileHtml;
 
+        const goback = document.getElementById('backtomenu');
+        goback.addEventListener('click', (event) => {
+            event.preventDefault();
+            createMenu();
+        });
+
         const form = document.getElementById('profileForm');
         const logout = document.getElementById('logout');
 
@@ -278,7 +302,6 @@ function createProfile(userInfo, statusText) {
             if (newPassword !== repeatNewPassword) {
                 const errText = 'Password are not equal';
                 createProfile(userInfo, errText);
-                return;
             }
 
             const JSONdata = {
@@ -300,7 +323,7 @@ function createProfile(userInfo, statusText) {
                         }
                         if (res.status === 200) {
                             const errText = 'Pass changed successfuly';
-                            res.json.then(function (userData) {
+                            res.json.then((userData) => {
                                 createProfile(userData, errText);
                             });
                         }
@@ -318,10 +341,10 @@ function createProfile(userInfo, statusText) {
                 fetch("/profile", {
                     method: "POST",
                     body: avatarformData
-                }).then(function (res) {
+                }).then((res) => {
                     if (res.status > 300) {
                         const errText = 'Something was wrong';
-                        createMenu()
+                        createMenu();
                     }
                     if (res.status === 200) {
                         const errText = 'New avatar uploaded';
@@ -356,6 +379,12 @@ function createProfile(userInfo, statusText) {
 function createAbout() {
     const aboutHtml = window.abouttemplateTemplate();
     root.innerHTML = aboutHtml;
+
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu();
+    });
 }
 
 createMenu();
