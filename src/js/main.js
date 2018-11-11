@@ -44,6 +44,12 @@ function createSignIn(statusText) {
     const signinHtml = window.signintemplateTemplate({ statusText });
     root.innerHTML = signinHtml;
 
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu()
+    });
+
     const form = document.getElementById('signinForm');
 
     form.addEventListener('submit', (event) => {
@@ -95,6 +101,12 @@ function createSignUp(statusText) {
 
     const signupHtml = window.signuptemplateTemplate({ statusText });
     root.innerHTML = signupHtml;
+
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu()
+    });
 
     const form = document.getElementById('signupForm');
 
@@ -207,6 +219,13 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                     root.innerHTML = scoreboardHtml;
 
 
+                    const goback = document.getElementById('backtomenu');
+                    goback.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        createMenu()
+                    });
+
+
                     const pagination = document.getElementById('pagination');
 
                     pagination.addEventListener('click', (event) => {
@@ -271,6 +290,12 @@ function createProfile(userInfo, statusText) {
         });
 
         root.innerHTML = profileHtml;
+
+        const goback = document.getElementById('backtomenu');
+        goback.addEventListener('click', (event) => {
+            event.preventDefault();
+            createMenu()
+        });
 
         const form = document.getElementById('profileForm');
         const logout = document.getElementById('logout');
@@ -365,6 +390,12 @@ function createProfile(userInfo, statusText) {
 function createAbout() {
     const aboutHtml = window.abouttemplateTemplate();
     root.innerHTML = aboutHtml;
+
+    const goback = document.getElementById('backtomenu');
+    goback.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu()
+    });
 }
 
 createMenu();
