@@ -234,14 +234,14 @@ function createProfile(userInfo, statusText) {
     let playerScore;
     let playerAge;
 
-
     if (userInfo === undefined) {
         httpRequest.doGet({
             url: '/islogged',
             callback(res) {
-                if (res.status === 400) {
+                if (res.status === 401) {
                     const errText = 'You are not logged in';
-                    createSignin(errText);
+                    createSignIn(errText);
+                    return;
                 }
             }
         });
