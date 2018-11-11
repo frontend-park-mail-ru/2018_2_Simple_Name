@@ -8,10 +8,11 @@ block header
     +pageTitle('Profile')
 
 block content
-    - var wayToAva = ''
     div
+        img.form-group.profile-pic(src='/getAvatar')
         form(method='POST')#profileForm
-            img.form-group.profile-pic(src='/getAvatar')
+            div.form-group Upload avatar:
+                input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
             div.form-group Nickname:
                 input#nickname(type='text', value= playerNickname, readonly)
             div.form-group Highscore:
@@ -22,9 +23,6 @@ block content
                 input#lastname(type='text', value= playerLastname,  readonly) 
             div.form-group Email:
                 input#email(type='email', value= playerEmail, readonly)
-
-            div.form-group Upload avatar:
-                input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
             div.form-group Change password:
                 input#newpassword(type='password', placeholder='New Password', name='newpassword')
             div.form-group
