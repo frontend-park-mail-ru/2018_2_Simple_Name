@@ -44,12 +44,10 @@ function createSignIn(statusText) {
                 if (res.status === 400) {
                     const errText = 'Wrong login or password';
                     createSignin(errText);
-                    return;
                 }
                 if (res.status === 500) {
                     const errText = 'Server error';
                     createSignin(errText);
-                    return;
                 }
                 if (res.status === 200) {
                     const errText = 'You are already loggined!';
@@ -90,10 +88,8 @@ function createSignUp(statusText) {
         if (password !== repeatPassword) {
             const errText = 'Passwords is not equals';
             createSignup(errText);
-            return;
         } if (email === '') {
             createSignup(errText);
-            return;
         }
 
         const intAge = parseInt(age, 10);
@@ -135,10 +131,11 @@ function createSignUp(statusText) {
     });
 }
 
-function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pageCount) {
+function createScoreboard(statusText) {
+    // , topPlayers, topPlayersCount, pageIndex, pageCount
     let pagesCount;
     let inputPlayers;
-    let playersCount = this.playersCount;
+    let playersCount;
     // Кол-во игроков на странице
     const playersOnPage = 5;
     // Индекс актвиной страницы при первом открытии старницы с лидерами
@@ -150,7 +147,6 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
             if (res.status > 300) {
                 const errText = 'Something is wrong';
                 createMenu(errText);
-                return;
             }
             res.json().then((data) => {
                 playersCount = data.leaderscount;
@@ -158,7 +154,7 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
         }
     });
 
-    console.log(playersCount);
+    console.warn(playersCount);
     // Заправшиваем игроков
     httpRequest.doGet({
         url: `/leaders?limit=${
@@ -169,7 +165,6 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
             if (res.status > 300) {
                 const errText = 'Can not get leaders';
                 createMenu(errText);
-                return;
             }
             res.json().then((data) => {
                 Object.entries(data).forEach(() => {
@@ -179,7 +174,7 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
         }
     });
 
-    //Получаем количество страниц для пагинации
+    // Получаем количество страниц для пагинации
     pagesCount = playersCount / playersOnPage;
 
     const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers, statusText });
@@ -204,7 +199,6 @@ function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pa
                 if (res.status > 300) {
                     const errText = 'Something wrong';
                     createMenu(errText);
-                    return;
                 }
                 // Отрисовываем новых лидеров
                 res.json().then((playersData) => {
@@ -231,21 +225,19 @@ function createProfile(userInfo, statusText) {
                 if (res.status === 401) {
                     const errText = 'You are not logged in';
                     createSignIn(errText);
-                    return;
                 }
             }
         });
-    }
+        // }
 
-    // Запрашиваем данные пользователя
-    if (userInfo === undefined) {
+        // Запрашиваем данные пользователя
+        // if (userInfo === undefined) {
         httpRequest.doGet({
             url: '/profile',
             callback(res) {
-                if (res.status > 300) {
-                    const errText = 'Something is wrong';
+                if (res.status === 500) {
+                    const errText = 'Server error';
                     createMenu(errText);
-                    return;
                 }
                 res.json().then((profileInfo) => {
                     createProfile(profileInfo);
@@ -323,6 +315,7 @@ function createProfile(userInfo, statusText) {
                 if (res.status === 200) {
                     const errText = 'New avatar uploaded';
                     createProfile(errText);
+                    return;
                 }
                 res.json().then((data) => {
                     const imgSrc = data;

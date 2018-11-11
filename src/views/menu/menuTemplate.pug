@@ -13,12 +13,16 @@ block content
             dl.menu
                 dt
                     a(href=link name=link)= item
-    div.table-menu
-        +menuList('signup', 'Sign up')
-        +menuList('signin', 'Sign in')
-        +menuList('leaders', 'Leaders')
-        +menuList('profile', 'Profile')
-        +menuList('about', 'About')
+        div.table-menu
+            +menuList('signup', 'Sign up')
+        div.table-menu
+            +menuList('signin', 'Sign in')
+        div.table-menu
+            +menuList('leaders', 'Leaders')
+        div.table-menu
+            +menuList('profile', 'Profile')
+        div.table-menu
+            +menuList('about', 'About')
 
     div.warn-title #{statusText}
 
