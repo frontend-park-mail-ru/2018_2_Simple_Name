@@ -5,6 +5,28 @@ const root = document.getElementById('root');
 function createMenu(statusText) {
     const menuHtml = window.menutemplateTemplate({ statusText });
     root.innerHTML = menuHtml;
+
+
+    const menuButtons = {
+        signin: createSignIn,
+        signup: createSignUp,
+        leaders: createScoreboard,
+        profile: createProfile,
+        about: createAbout,
+        menu: createMenu
+    };
+
+    const buttons = document.getElementById('buttons');
+
+    buttons.addEventListener('click', (event) => {
+        if (!(event.target instanceof HTMLAnchorElement)) return;
+        event.preventDefault();
+
+        const target = event.target;
+        const eventName = target.name;
+        console.log(eventName);
+        menuButtons[eventName]();
+    });
 }
 
 function createSignIn(statusText) {
@@ -53,7 +75,7 @@ function createSignIn(statusText) {
                 }
                 if (res.status === 200) {
                     const errText = 'You are already loggined!';
-                    createProfile(errText);
+                    createProfile(undefined, errText);
                 }
             }
         });
@@ -135,83 +157,73 @@ function createSignUp(statusText) {
     });
 }
 
-function createScoreboard(statusText, topPlayers, topPlayersCount, pageIndex, pageCount) {
+function createScoreboard(statusText, playersCount, pageIndex = 1) {
     let pagesCount;
-    let inputPlayers;
-    let playersCount;
     // Кол-во игроков на странице
     const playersOnPage = 5;
     // Индекс актвиной страницы при первом открытии старницы с лидерами
-    const index = 1;
     // Заправшиваем кол-во всех игроков
-    httpRequest.doGet({
-        url: '/leaderscount',
-        callback(res) {
-            if (res.status > 300) {
-                const errText = 'Something is wrong';
-                createMenu(errText);
-                return;
+
+    if (playersCount === undefined) {
+        httpRequest.doGet({
+            url: '/leaderscount',
+            callback(res) {
+                if (res.status > 300) {
+                    const errText = 'Something is wrong';
+                    createMenu(errText);
+                    return;
+                }
+
+                res.json().then(function (data) {
+                    createScoreboard(undefined, data.leaderscount)
+                })
             }
-            res.json().then((data) => {
-                playersCount = data.leaderscount;
-            });
-        }
-    });
-    // Заправшиваем игроков
-    httpRequest.doGet({
-        url: `/leaders?limit=${
-            playersOnPage
-            }&offset=${
-            playersOnPage * index}`,
-        callback(res) {
-            if (res.status > 300) {
-                const errText = 'Can not get leaders';
-                createMenu(errText);
-                return;
-            }
-            res.json().then((data) => {
-                Object.entries(data).forEach(() => {
-                    inputPlayers = data.leaders;
-                });
-            });
-        }
-    });
+        });
+    } else {
+        // Заправшиваем игроков
 
-    //Получаем количество страниц для пагинации
-    pagesCount = playersCount / playersOnPage;
+        pagesCount = playersCount / playersOnPage + 1;
 
-    const scoreboardHtml = window.scoreboardtemplateTemplate({ index, pagesCount, inputPlayers, statusText });
-    root.innerHTML = scoreboardHtml;
-
-    const pagination = document.getElementById('pagination');
-
-    pagination.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        const target = event.target;
-        const pageName = target.name;
-
-        // Отправляем limit и offset страницы на бэк и получаем новых лидеров
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
                 }&offset=${
-                playersOnPage * PageName}`,
-
+            playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
-                    const errText = 'Something wrong';
+                    const errText = 'Can not get leaders';
                     createMenu(errText);
                     return;
                 }
-                // Отрисовываем новых лидеров
-                res.json().then((playersData) => {
-                    const scoreboardHtml = window.scoreboardtemplateTemplate({ pageName, pagesCount, playersData });
+                res.json().then((players) => {
+
+                    const scoreboardHtml = window.scoreboardtemplateTemplate({
+                        index: pageIndex,
+                        pagesCount: pagesCount,
+                        inputPlayers: players,
+                        statusText: statusText
+                    });
+
                     root.innerHTML = scoreboardHtml;
+
+
+                    const pagination = document.getElementById('pagination');
+
+                    pagination.addEventListener('click', (event) => {
+                        event.preventDefault();
+
+                        const target = event.target;
+                        const pageNumber = target.name;
+
+                        createScoreboard(undefined, playersCount, pageNumber)
+                    })
+
                 });
             }
         });
-    });
+
+
+    }
 }
 
 function createProfile(userInfo, statusText) {
@@ -353,23 +365,5 @@ function createAbout() {
     const aboutHtml = window.abouttemplateTemplate();
     root.innerHTML = aboutHtml;
 }
-
-const menuButtons = {
-    signin: createSignIn,
-    signup: createSignUp,
-    leaders: createScoreboard,
-    profile: createProfile,
-    about: createAbout,
-    menu: createMenu
-};
-
-root.addEventListener('click', (event) => {
-    if (!(event.target instanceof HTMLAnchorElement)) return;
-    event.preventDefault();
-
-    const target = event.target;
-    const eventName = target.name;
-    menuButtons[eventName]();
-});
 
 createMenu();

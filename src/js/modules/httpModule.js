@@ -1,7 +1,7 @@
 (function () {
     class HttpRequest {
         dofetch({
-            url, method, data, contentType, callback = function () { }
+                    url, method, data, contentType, callback = function () { }
         } = {}) {
             fetch(url, {
                 method,
