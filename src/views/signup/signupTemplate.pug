@@ -9,7 +9,7 @@ block header
 
 block content
   div
-    form(method= 'POST' action='/signup')#signupForm
+    form#signupForm(method= 'POST' action='/signup')
       div.form-group First Name:
         input#firstname.form-control(type='text' placeholder='First name' name='firstname')
 
@@ -33,7 +33,7 @@ block content
 
         button.button(type='submit') Sign up
 
-  a.button-menu#backtomenu(name='menu' href='') Back to menu
+  a.button-menu(name='menu' href='') Back to menu
 
   div.warn-title #{statusText}
 

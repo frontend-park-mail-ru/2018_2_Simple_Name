@@ -9,7 +9,7 @@ block header
 
 block content
     div
-        form(method='POST')#signinForm
+        form#signinForm(method='POST')
             div.form-group Email:
                 input#email(type='email', placeholder='name@email.com', name='email')
 
@@ -18,7 +18,7 @@ block content
 
                 button.button(type='submit') Sign in
 
-    a.button-menu#backtomenu(name='menu' href='') Back to menu
+    a.button-menu(name='menu' href='') Back to menu
 
     div.warn-title #{statusText}
 
