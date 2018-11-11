@@ -15,10 +15,10 @@ block content
                 tr
                     each val in ['Nickname', 'Score']
                         th= val 
-                each nick, score in players
+                each user in players
                     tr
-                        td= score
-                        td= nick
+                        td= user.nick
+                        td= user.score
                 
         mixin pagination(amount, active)
             .pagination
