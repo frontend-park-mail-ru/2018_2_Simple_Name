@@ -11,7 +11,7 @@ block content
     - var wayToAva = ''
     div
         form(method='POST')#profileForm
-            img.form-group.profile-pic(src='http://127.0.0.1:8080/getAvatar')
+            img.form-group.profile-pic(src='/getAvatar')
             div.form-group Nickname:
                 input#nickname(type='text', value= playerNickname, readonly)
             div.form-group Highscore:
