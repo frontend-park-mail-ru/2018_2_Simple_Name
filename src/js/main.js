@@ -122,8 +122,11 @@ function createSignUp(statusText) {
         if (password !== repeatPassword) {
             const errText = 'Passwords is not equals';
             createSignUp(errText);
+            return;
         } if (email === '') {
+            const errText = 'Enter your email';
             createSignUp(errText);
+            return;
         }
 
         const intAge = parseInt(age, 10);
@@ -143,12 +146,7 @@ function createSignUp(statusText) {
             contentType: 'application/json',
 
             callback(res) {
-                console.log(res.status);
-                if (res.status > 300) {
-                    const errText = 'You already register';
-                    createMenu(errText);
-                    createMenu();
-                } else if (res.status === 208) {
+                if (res.status === 208) {
                     const errText = 'Email already exist';
                     createSignUp(errText);
                 } else if (res.status === 400) {
