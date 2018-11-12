@@ -127,6 +127,7 @@ function createSignUp(statusText) {
             createSignUp(errText);
             return;
         } if (email === '') {
+
             const errText = 'Enter your Email';
             createSignUp(errText);
             return;
