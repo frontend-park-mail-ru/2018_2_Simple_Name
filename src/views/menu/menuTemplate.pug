@@ -13,10 +13,11 @@ block content
             dl.menu
                 dt
                     a(href=link name=link)= item
-        div.table-menu
-            +menuList('signup', 'Sign up')
-        div.table-menu
-            +menuList('signin', 'Sign in')
+        if (!auth)
+            div.table-menu
+                +menuList('signup', 'Sign up')
+            div.table-menu
+                +menuList('signin', 'Sign in')
         div.table-menu
             +menuList('leaders', 'Leaders')
         div.table-menu

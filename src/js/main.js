@@ -22,8 +22,26 @@ root.addEventListener('click', (event) => {
 });
 
 function createMenu(statusText) {
-    const menuHtml = window.menutemplateTemplate({ statusText });
-    root.innerHTML = menuHtml;
+    httpRequest.doGet({
+        url: '/islogged',
+
+        callback(res) {
+
+            if (res.status === 200) {
+                const menuHtml = window.menutemplateTemplate({
+                    auth: true,
+                    statusText
+                });
+                root.innerHTML = menuHtml;
+            } else {
+                const menuHtml = window.menutemplateTemplate({
+                    auth: false,
+                    statusText
+                });
+                root.innerHTML = menuHtml;
+            }
+        }
+    });
 }
 
 function createSignIn(statusText) {
@@ -182,12 +200,12 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                     const errText = 'Can not get leaders';
                     createMenu(errText);
                 }
-                res.json().then((players) => {
+                res.json().then((inputPlayers) => {
 
                     const scoreboardHtml = window.scoreboardtemplateTemplate({
-                        index: pageIndex,
+                        pageIndex,
                         pagesCount,
-                        inputPlayers: players,
+                        inputPlayers,
                         statusText
                     });
 
@@ -199,7 +217,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                         event.preventDefault();
 
                         const target = event.target;
-                        const pageNumber = target.name;
+                        const pageNumber = parseInt(target.name);
 
                         createScoreboard(undefined, playersCount, pageNumber);
                     });
