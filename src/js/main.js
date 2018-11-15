@@ -64,9 +64,9 @@ function createSignIn(statusText) {
 
     const form = document.getElementById('signinForm');
 
-    const goback = document.getElementById('backtomenu');
+    const backToMenu = document.getElementById('backtomenu');
 
-    goback.addEventListener('click', (event) => {
+    backToMenu.addEventListener('click', (event) => {
         event.preventDefault();
         createMenu();
     });
@@ -106,22 +106,22 @@ function createSignIn(statusText) {
 }
 
 function createSignUp(statusText) {
-    httpRequest.doGet({
-        url: '/islogged',
-        callback(res) {
-            if (res.status === 200) {
-                const errText = 'You are already authorized';
-                createProfile(errText);
-            }
-        }
-    });
+    // httpRequest.doGet({
+    //     url: '/islogged',
+    //     callback(res) {
+    //         if (res.status === 200) {
+    //             const errText = 'You are already authorized';
+    //             createProfile(errText);
+    //         }
+    //     }
+    // });
 
     const signupHtml = window.signuptemplateTemplate({ statusText });
     root.innerHTML = signupHtml;
 
-    const goback = document.getElementById('backtomenu');
+    const backToMenu = document.getElementById('backtomenu');
 
-    goback.addEventListener('click', (event) => {
+    backToMenu.addEventListener('click', (event) => {
         event.preventDefault();
         createMenu();
     });
@@ -131,56 +131,68 @@ function createSignUp(statusText) {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const firstname = form.elements.firstname.value;
-        const lastname = form.elements.lastname.value;
-        const age = form.elements.age.value;
-        const nickname = form.elements.nickname.value;
-        const email = form.elements.email.value;
-        const password = form.elements.password.value;
-        const repeatPassword = form.elements.repeatPassword.value;
+        const frstName = form.elements.firstname.value;
+        const lstName = form.elements.lastname.value;
+        let warnText = nameValidation(frstName, lstName);
+        if(warnText) { return createSignUp(warnText); }
 
-        if (password !== repeatPassword) {
-            const errText = 'Passwords are not equal';
-            createSignUp(errText);
-            return;
-        } if (email === '') {
-
-            const errText = 'Enter your Email';
-            createSignUp(errText);
-            return;
+        const usrAge = form.elements.age.value;
+        if (!usrAge) {
+            const errText = 'Enter your age';
+            return createSignUp(errText);
         }
 
-        const intAge = parseInt(age, 10);
+        const usrNickname = form.elements.nickname.value;
+        if (!usrNickname
+            || usrNickname.match(/[#&<>\"~;$^%{}?]/)
+            || !usrNickname.match(/\S{3,20}/)) {
+            const errText = 'Enter a valid nickname';
+            return createSignUp(errText);
+        }
+
+        const usrEmail = form.elements.email.value;
+        if (!usrEmail
+            || !usrEmail.match(/[@]\S{5,50}/)) {
+            const errText = 'Enter a valid Email';
+            return createSignUp(errText);
+        }
+
+        const usrPass = form.elements.password.value;
+        const repeatPass = form.elements.repeatPassword.value;
+        warnText = passValidation(usrPass, repeatPass);
+        if(warnText) { return createSignUp(warnText); }
+
+        const intAge = parseInt(usrAge, 10);
 
         const JSONdata = {
-            'name': firstname,
-            'last_name': lastname,
+            'name': frstName,
+            'last_name': lstName,
             'age': intAge,
-            'nick': nickname,
-            'email': email,
-            'password': password
+            'nick': usrNickname,
+            'email': usrEmail,
+            'password': usrPass
         };
 
-        httpRequest.doPost({
-            url: '/signup',
-            data: JSONdata,
-            contentType: 'application/json',
+        // httpRequest.doPost({
+        //     url: '/signup',
+        //     data: JSONdata,
+        //     contentType: 'application/json',
 
-            callback(res) {
-                if (res.status === 208) {
-                    const errText = 'Email already exist';
-                    createSignUp(errText);
-                } else if (res.status === 400) {
-                    const errText = 'Something is wrong';
-                    createSignUp(errText);
-                } else if (res.status === 409) {
-                    const errText = 'StatusConflict';
-                    createSignUp(errText);
-                } else {
-                    createProfile();
-                }
-            }
-        });
+        //     callback(res) {
+        //         if (res.status === 208) {
+        //             const errText = 'Email already exist';
+        //             createSignUp(errText);
+        //         } else if (res.status === 400) {
+        //             const errText = 'Something is wrong';
+        //             createSignUp(errText);
+        //         } else if (res.status === 409) {
+        //             const errText = 'StatusConflict';
+        //             createSignUp(errText);
+        //         } else {
+        //             createProfile();
+        //         }
+        //     }
+        // });
     });
 }
 
@@ -211,7 +223,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-                }&offset=${
+            }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
@@ -229,9 +241,9 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
 
                     root.innerHTML = scoreboardHtml;
 
-                    const goback = document.getElementById('backtomenu');
+                    const backToMenu = document.getElementById('backtomenu');
 
-                    goback.addEventListener('click', (event) => {
+                    backToMenu.addEventListener('click', (event) => {
                         event.preventDefault();
                         createMenu();
                     });
@@ -242,7 +254,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
                         event.preventDefault();
 
                         const target = event.target;
-                        const pageNumber = parseInt(target.name);
+                        const pageNumber = parseInt(target.name, 10);
 
                         createScoreboard(undefined, playersCount, pageNumber);
                     });
@@ -300,9 +312,9 @@ function createProfile(userInfo, statusText) {
 
         root.innerHTML = profileHtml;
 
-        const goback = document.getElementById('backtomenu');
+        const backToMenu = document.getElementById('backtomenu');
 
-        goback.addEventListener('click', (event) => {
+        backToMenu.addEventListener('click', (event) => {
             event.preventDefault();
             createMenu();
         });
@@ -396,6 +408,45 @@ function createProfile(userInfo, statusText) {
 function createAbout() {
     const aboutHtml = window.abouttemplateTemplate();
     root.innerHTML = aboutHtml;
+}
+
+// Валидация данных для имени
+function nameValidation(fName, lName) {
+    if (!fName) {
+        const errText = 'Enter your First Name';
+        return errText;
+    }
+
+    if (!fName.match(/[a-z]{2,20}$/)) {
+        const errText = 'Enter a valid First Name';
+        return errText;
+    }
+
+    if (!lName) {
+        const errText = 'Enter your Last Name';
+        return errText;
+    }
+
+    if (!lName.match(/[a-z]{2,20}$/)) {
+        const errText = 'Enter a valid Last Name';
+        return errText;
+    }
+}
+
+function passValidation(pass1, pass2) {
+    if (!pass1.match(/\S{8,}/)) {
+        const errText = 'Password must be 8 or longer symbols';
+        return errText;
+    }
+
+    if (!pass1.match(/[A-Z]/)) {
+        const errText = 'Password must contain ta least one larger symbol';
+        return errText;
+    }
+    if (pass1 !== pass2) {
+        const errText = 'Passwords are not equal';
+        return errText;
+    }
 }
 
 createMenu();

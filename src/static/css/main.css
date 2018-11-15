@@ -10,9 +10,8 @@
 .warn-title{
     text-align: center;
     font-family: Arial;
-    margin-bottom: 30%;
-    padding-top: 30%;
     color: red;
+    margin-top: 20px;
 }
 .profile-pic{
     display: block;
@@ -96,6 +95,7 @@ body {
     /* background-image: url('image/game-background.png'); */
     color: whitesmoke;
     /* color: rgb(3, 43, 19); */
+    margin: auto;
     background-color: rgb(3, 43, 19);
 }
 
