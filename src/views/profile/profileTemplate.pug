@@ -8,7 +8,7 @@ block header
     +pageTitle('Profile')
 
 block content
-    div
+    div.info-block
         img.form-group.profile-pic(src='/getAvatar')
         form(method='POST')#profileForm
             div.form-group Upload avatar:
@@ -28,11 +28,11 @@ block content
             div.form-group
                 input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
                 
-                button.button(type='submit') Save changes
+            button.button.hvr-back-pulse(type='submit') Save changes
 
-        a.button-menu#logout(href='') Logout
+        a.button-menu.hvr-back-pulse#logout(href='') Logout
 
-    a.button-menu#backtomenu(name='menu' href='') Back to menu
+                a.button-menu.hvr-back-pulse#backtomenu(name='menu' href='') Back to menu
 
     div.warn-title #{statusText}
 

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Allerta+Stencil');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
 .table-menu{
     border: 2px solid black;
     border-radius: 10px;
@@ -10,7 +14,9 @@
 
 .warn-title{
     text-align: center;
-    font-family: Arial;
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    font: bold;
     color: red;
     margin-top: 20px;
 }
@@ -30,7 +36,7 @@
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
-    font-family: Arial;
+    font-family: 'Courier New', Courier;
 }
 
 th {
@@ -39,23 +45,64 @@ th {
 
 .button-menu{
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 7%;
+    width: 114px;
+    box-shadow: 5px 5px black;
+    margin-top: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 15px;
+    background-color: #A66F00;
+    padding: 6px;
+    text-align: center;
+    margin-left: 46%;
     margin-top: 10px;
 }
+.info-block{/* display: block; */width: 100%;margin-inline-start: 40%;}
 
 .form-group{
-    margin: auto; 
-    margin-top: 2px;
-    width:100px;
+    width: auto;
+    /* margin: auto; */
+    margin-top: 5px;
+    font-family: 'Varela Round', sans-serif;
+    /* width: 100%; */
+    align-items: center;
+    display: flex;
+    /* flex-direction: row; */
+    /* flex-grow: 2; */
+    justify-content: space-between;
+    /* justify-content: flex-start; */
+    width: 21%;
 }
+
+/* input::placeholder{
+    color: rgba(91, 91, 91, 0.132);
+} */
+
+input {
+    border: 1px solid;
+    border-radius: 5px;
+    line-height: 22px;
+    padding-left: 4px;
+    box-shadow: 3px 3px black;
+    margin: 1px;
+}
+/* 
+input[type=number]{
+    width: 74%;
+} */
+
+
+.capitalSymb{text-transform:capitalize}
+
+/* input:focus {
+    background-color: rgb(27, 53, 0);
+} */
 
 .pageTitle {
     text-align: center;
-    padding-top: 10%;
+    padding-top: 5%;
     color:#A66F00;
-    font-family: sans-serif;
+    font-family: 'Varela Round', sans-serif;
     text-shadow: 5px 5px 3px rgb(0, 0, 0);
 
 }
@@ -69,28 +116,33 @@ th {
 
 
 .about-page{
+    font-family: 'Indie Flower', cursive;
     padding: 1% 27%;
+    font-size: 20px;
     align-items: center;
 }
 
 a {
     text-decoration: none;
     color: #A60000;
-    font-family: 'Courier New', Courier, monospace;
-} 
+    font-family: 'Varela Round', sans-serif;
+}
 
 .button {
-    margin-top: 15px;
+    display: block;
+    margin-left: 6%;
+    margin-top: 3%;
+    border: 2px solid black;
+    border-radius: 10px;
     background-color: #A66F00;
-    border: none;
+    box-shadow: 5px 5px black;
     color: #A60000;
-    font-family: 'Courier New', Courier, monospace;
-    padding: 10px 46px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-weight:bold;
+    font-family: 'Varela Round', sans-serif;
     font-size: 16px;
+    font-weight: bold;
+    padding: 10px 10px;
+    width: 130px;
+    text-align: center;
 }
 
 body {
@@ -130,3 +182,42 @@ body {
 }
 
 .pagination a:hover:not(.active) {background-color: rgb(155, 139, 103)};
+
+/* Back Pulse */
+@-webkit-keyframes hvr-back-pulse {
+    50% {
+      background-color: rgb(205, 7, 26);
+    }
+  }
+  @keyframes hvr-back-pulse {
+    50% {
+      background-color: rgba(95, 157, 51, 0.75);
+    }
+  }
+  .hvr-back-pulse {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    overflow: hidden;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+  }
+  .hvr-back-pulse:hover, .hvr-back-pulse:focus, .hvr-back-pulse:active {
+    -webkit-animation-name: hvr-back-pulse;
+    animation-name: hvr-back-pulse;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1.5s;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    background-color: #7efe0761;
+    background-color: #42b559;
+    color: white;
+  }
