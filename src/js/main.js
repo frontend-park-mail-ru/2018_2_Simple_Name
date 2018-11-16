@@ -408,6 +408,13 @@ function createProfile(userInfo, statusText) {
 function createAbout() {
     const aboutHtml = window.abouttemplateTemplate();
     root.innerHTML = aboutHtml;
+
+    const backToMenu = document.getElementById('backtomenu');
+
+    backToMenu.addEventListener('click', (event) => {
+        event.preventDefault();
+        createMenu();
+    });
 }
 
 // Валидация данных для имени
