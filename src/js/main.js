@@ -106,15 +106,15 @@ function createSignIn(statusText) {
 }
 
 function createSignUp(statusText) {
-    // httpRequest.doGet({
-    //     url: '/islogged',
-    //     callback(res) {
-    //         if (res.status === 200) {
-    //             const errText = 'You are already authorized';
-    //             createProfile(errText);
-    //         }
-    //     }
-    // });
+    httpRequest.doGet({
+        url: '/islogged',
+        callback(res) {
+            if (res.status === 200) {
+                const errText = 'You are already authorized';
+                createProfile(errText);
+            }
+        }
+    });
 
     const signupHtml = window.signuptemplateTemplate({ statusText });
     root.innerHTML = signupHtml;
@@ -173,26 +173,26 @@ function createSignUp(statusText) {
             'password': usrPass
         };
 
-        // httpRequest.doPost({
-        //     url: '/signup',
-        //     data: JSONdata,
-        //     contentType: 'application/json',
+        httpRequest.doPost({
+            url: '/signup',
+            data: JSONdata,
+            contentType: 'application/json',
 
-        //     callback(res) {
-        //         if (res.status === 208) {
-        //             const errText = 'Email already exist';
-        //             createSignUp(errText);
-        //         } else if (res.status === 400) {
-        //             const errText = 'Something is wrong';
-        //             createSignUp(errText);
-        //         } else if (res.status === 409) {
-        //             const errText = 'StatusConflict';
-        //             createSignUp(errText);
-        //         } else {
-        //             createProfile();
-        //         }
-        //     }
-        // });
+            callback(res) {
+                if (res.status === 208) {
+                    const errText = 'Email already exist';
+                    createSignUp(errText);
+                } else if (res.status === 400) {
+                    const errText = 'Something is wrong';
+                    createSignUp(errText);
+                } else if (res.status === 409) {
+                    const errText = 'StatusConflict';
+                    createSignUp(errText);
+                } else {
+                    createProfile();
+                }
+            }
+        });
     });
 }
 
