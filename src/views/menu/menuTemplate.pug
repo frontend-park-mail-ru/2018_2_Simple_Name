@@ -12,17 +12,17 @@ block content
         mixin menuList(link, item)
             dl.menu
                 dt
-                    a(href=link name=link)= item
+                    a.table-menu.hvr-grow(href=link name=link)= item
         if (!auth)
-            div.table-menu
+            div
                 +menuList('signup', 'Sign up')
-            div.table-menu
+            div
                 +menuList('signin', 'Sign in')
-        div.table-menu
+        div
             +menuList('leaders', 'Leaders')
-        div.table-menu
+        div
             +menuList('profile', 'Profile')
-        div.table-menu
+        div
             +menuList('about', 'About')
 
     div.warn-title #{statusText}

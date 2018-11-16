@@ -17,8 +17,8 @@ class Application {
         app.set('views', path.join(__dirname, 'src/views/'));
         app.set('view engine', 'pug');
 
-        // app.use("*", proxy("http://127.0.0.1:8080", {
-        app.use("*", proxy("http://95.163.209.195:80", {
+        app.use("*", proxy("http://127.0.0.1:8080", {
+        // app.use("*", proxy("http://95.163.209.195:80", {
             proxyReqPathResolver: (req) => {
                 return req.originalUrl;
             }
