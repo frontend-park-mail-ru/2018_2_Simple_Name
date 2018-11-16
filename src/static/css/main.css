@@ -45,7 +45,7 @@ th {
 
 .button-menu{
     display: block;
-    width: 114px;
+    width: 116px;
     box-shadow: 5px 5px black;
     border: 2px solid black;
     border-radius: 10px;
@@ -57,14 +57,21 @@ th {
 }
 .info-block{
     display: block;
+    display: flex;
     width: 100%;
-    margin-left: 40%;
+    /* padding: 20%; */
+    /* left: 40%; */
+    flex-direction: column;
+    justify-content: flex-start;
+    /* margin-left: 40%; */
+    /* width: 50%; */
+    /* border: 3px solid green;
+    padding: 10px; */
 }
 
 .form-group{
-    width: auto;
-    /* margin: auto; */
-    margin-top: 5px;
+    /* width: auto; */
+    margin-left: 40%;
     font-family: 'Varela Round', sans-serif;
     /* width: 100%; */
     align-items: center;
@@ -121,7 +128,8 @@ input[type=number]{
     font-family: 'Indie Flower', cursive;
     padding: 1% 27%;
     font-size: 20px;
-    align-items: center;
+    /* align-items: center; */
+    text-align: center;
 }
 
 a {
@@ -131,8 +139,8 @@ a {
 }
 
 .button {
-    display: block;
-    margin-left: 6%;
+    /* display: block; */
+    margin-left: 46%;
     margin-top: 2%;
     border: 2px solid black;
     border-radius: 10px;
