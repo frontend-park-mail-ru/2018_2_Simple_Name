@@ -134,7 +134,7 @@ function createSignUp(statusText) {
         const frstName = form.elements.firstname.value;
         const lstName = form.elements.lastname.value;
         let warnText = nameValidation(frstName, lstName);
-        if(warnText) { return createSignUp(warnText); }
+        if (warnText) { return createSignUp(warnText); }
 
         const usrAge = form.elements.age.value;
         if (!usrAge) {
@@ -160,7 +160,7 @@ function createSignUp(statusText) {
         const usrPass = form.elements.password.value;
         const repeatPass = form.elements.repeatPassword.value;
         warnText = passValidation(usrPass, repeatPass);
-        if(warnText) { return createSignUp(warnText); }
+        if (warnText) { return createSignUp(warnText); }
 
         const intAge = parseInt(usrAge, 10);
 
