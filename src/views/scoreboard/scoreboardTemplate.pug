@@ -1,0 +1,53 @@
+extends ../layout/mainTemplate
+include ../modules/headerTemplate
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Leaders')
+
+block content
+
+    div
+        mixin scoreTable(players)
+            table.score-table
+                tr
+                    each val in ['Nickname', 'Score']
+                        th= val 
+                each user in players
+                    tr
+                        td= user.nick
+                        td= user.score
+                
+        mixin pagination(amount, active)
+            .pagination
+                //- prev arrow
+                if (amount > 1)
+                    a(href='' title="Prev page" name= index) ◀
+
+                    - for (var index = 1; index <= amount; index++)
+
+                        - var titleName = 'Current page ' + index;
+                        - var pageName = index;
+
+                        if (index === active)
+                            a(href='' title= titleName name= pageName).active= index
+                        else
+                            a(href='' title= b name= pageName)= index
+
+                    //- next arrow
+                    a(href='' title="Next page") ▶
+
+        +scoreTable(inputPlayers)
+
+        div#pagination
+            +pagination(pagesCount, pageIndex)
+
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='') Back to menu
+
+    div.warn-title #{statusText}
+
+
+
+

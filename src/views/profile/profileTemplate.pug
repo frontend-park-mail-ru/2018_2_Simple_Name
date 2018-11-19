@@ -1,0 +1,38 @@
+extends ../layout/mainTemplate
+include ../modules/headerTemplate
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Profile')
+
+block content
+    div.info-block
+        img.form-group.profile-pic(src='/getAvatar')
+        form(method='POST')#profileForm
+            div.form-group Upload avatar:
+                input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
+            div.form-group Nickname:
+                input#nickname(type='text', value= playerNickname, readonly)
+            div.form-group Highscore:
+                input#score(type='text', value= playerScore, readonly)
+            div.form-group Name:
+                input#firstname(type='text', value= playerFirstname, readonly) 
+            div.form-group Lastname:
+                input#lastname(type='text', value= playerLastname,  readonly) 
+            div.form-group Email:
+                input#email(type='email', value= playerEmail, readonly)
+            div.form-group Change password:
+                input#newpassword(type='password', placeholder='New Password', name='newpassword')
+            div.form-group
+                input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
+                
+            button.button.hvr-grow(type='submit') Save changes
+
+        a.button-menu.hvr-grow#logout(href='') Logout
+
+                a.button-menu.hvr-grow#backtomenu(name='menu' href='') Back to menu
+
+    div.warn-title #{statusText}
+
