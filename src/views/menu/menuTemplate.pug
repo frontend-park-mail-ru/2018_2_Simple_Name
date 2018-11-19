@@ -1,0 +1,29 @@
+extends ../layout/mainTemplate
+include ../modules/headerTemplate
+
+block title
+    | Simple Game
+
+block header
+    +pageTitle('Simple Game')
+
+block content
+    div#buttons
+        mixin menuList(link, item)
+            dl.menu
+                dt
+                    a.table-menu.hvr-grow(href=link name=link)= item
+        if (!auth)
+            div
+                +menuList('signup', 'Sign up')
+            div
+                +menuList('signin', 'Sign in')
+        div
+            +menuList('leaders', 'Leaders')
+        div
+            +menuList('profile', 'Profile')
+        div
+            +menuList('about', 'About')
+
+    div.warn-title #{statusText}
+
