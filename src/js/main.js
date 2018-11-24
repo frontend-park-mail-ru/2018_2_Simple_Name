@@ -456,13 +456,13 @@ function createAbout() {
 // }
 
 function passValidation(pass1, pass2) {
-    if (!pass1.match(/\S{8,}/)) {
-        const errText = 'Password must be 8 or longer symbols';
+    if (!pass1.match(/\S{2,128}/)) {
+        const errText = 'Password must contain 2 or > symbols';
         return errText;
     }
 
     if (!pass1.match(/[A-Z][a-z]/)) {
-        const errText = 'Password must contain at least one larger symbol and one lower symbol';
+        const errText = 'Password must contain one larger symbol and one lower symbol';
         return errText;
     }
     if (pass1 !== pass2) {
