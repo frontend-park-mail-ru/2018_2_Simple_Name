@@ -107,17 +107,19 @@
                 area: area,
             });
 
-            this.timerID = setInterval(() => {
-                const owntarget = this.owntarget;
-                const rivaltarget = this.rivaltarget;
-                const area = this.gameArea.area();
-                this.WSService.send({
-                    command: "update",
-                    owntarget: owntarget,
-                    rivaltarget: rivaltarget,
-                    area: area,
-                });
-            }, 2000).bind(this);
+            this.timerID = setInterval(this.sendUpdate(), 2000);
+        }
+
+        sendUpdate() {
+            const owntarget = this.owntarget;
+            const rivaltarget = this.rivaltarget;
+            const area = this.gameArea.area();
+            this.WSService.send({
+                command: "update",
+                owntarget: owntarget,
+                rivaltarget: rivaltarget,
+                area: area,
+            })
         }
 
         gameCallback(data) {
