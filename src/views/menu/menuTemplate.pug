@@ -18,10 +18,13 @@ block content
                 +menuList('signup', 'Sign up')
             div
                 +menuList('signin', 'Sign in')
-        div
-            +menuList('leaders', 'Leaders')
+        if(auth)
+            div
+                +menuList('startgame', 'Start Game')
         div
             +menuList('profile', 'Profile')
+        div
+            +menuList('leaders', 'Leaders')
         div
             +menuList('about', 'About')
 

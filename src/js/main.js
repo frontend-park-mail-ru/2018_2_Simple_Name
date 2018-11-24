@@ -1,25 +1,28 @@
 const httpRequest = window.httpModule;
 
 const root = document.getElementById('root');
+const Game = window.GameModule;
 
 function createMenu(statusText) {
     httpRequest.doGet({
         url: '/islogged',
 
         callback(res) {
-
-            if (res.status === 200) {
-                const menuHtml = window.menutemplateTemplate({
-                    auth: true,
-                    statusText
-                });
-                root.innerHTML = menuHtml;
-            } else {
-                const menuHtml = window.menutemplateTemplate({
-                    auth: false,
-                    statusText
-                });
-                root.innerHTML = menuHtml;
+            let menuHtml = "";
+            switch (res.status) {
+                case 200:
+                    menuHtml = window.menutemplateTemplate({
+                        auth: true,
+                        statusText
+                    });
+                    root.innerHTML = menuHtml;
+                    break;
+                default:
+                    menuHtml = window.menutemplateTemplate({
+                        auth: false,
+                        statusText
+                    });
+                    root.innerHTML = menuHtml;
             }
 
             const menuButtons = {
@@ -28,7 +31,8 @@ function createMenu(statusText) {
                 leaders: createScoreboard,
                 profile: createProfile,
                 about: createAbout,
-                menu: createMenu
+                menu: createMenu,
+                startgame: createStartgame,
             };
 
             const buttons = document.getElementById('buttons');
@@ -43,6 +47,25 @@ function createMenu(statusText) {
                 menuButtons[eventName]();
             });
 
+        }
+    });
+}
+
+function createStartgame() {
+
+    httpRequest.doGet({
+        url: '/islogged',
+        callback(res) {
+            const errText = "";
+            switch (res.status) {
+                case 401:
+                    errText = 'You are not logged in';
+                    createSignIn(errText);
+                    break;
+                case 200:
+                    root.innerHTML = "";
+                    const gameService = new Game(root, createProfile, createMenu);
+            }
         }
     });
 }
@@ -88,17 +111,20 @@ function createSignIn(statusText) {
             data: JSONdata,
 
             callback(res) {
-                if (res.status === 400) {
-                    const errText = 'Wrong login or password';
-                    createSignIn(errText);
-                }
-                if (res.status === 500) {
-                    const errText = 'Server error';
-                    createSignIn(errText);
-                }
-                if (res.status === 200) {
-                    const errText = 'You are already loggined!';
-                    createProfile(undefined, errText);
+                let errText = "";
+                switch (res.status) {
+                    case 400:
+                        errText = 'Wrong login or password';
+                        createSignIn(errText);
+                        break;
+                    case 500:
+                        errText = 'Server error';
+                        createSignIn(errText);
+                        break;
+                    case 200:
+                        errText = 'You are already loggined!';
+                        createProfile(undefined, errText);
+                        break;
                 }
             }
         });
@@ -131,17 +157,6 @@ function createSignUp(statusText) {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const frstName = form.elements.firstname.value;
-        const lstName = form.elements.lastname.value;
-        let warnText = nameValidation(frstName, lstName);
-        if (warnText) { return createSignUp(warnText); }
-
-        const usrAge = form.elements.age.value;
-        if (!usrAge) {
-            const errText = 'Enter your age';
-            return createSignUp(errText);
-        }
-
         const usrNickname = form.elements.nickname.value;
         if (!usrNickname
             || usrNickname.match(/[#&<>\"~;$^%{}?]/)
@@ -159,15 +174,10 @@ function createSignUp(statusText) {
 
         const usrPass = form.elements.password.value;
         const repeatPass = form.elements.repeatPassword.value;
-        warnText = passValidation(usrPass, repeatPass);
+        const warnText = passValidation(usrPass, repeatPass);
         if (warnText) { return createSignUp(warnText); }
 
-        const intAge = parseInt(usrAge, 10);
-
         const JSONdata = {
-            'name': frstName,
-            'last_name': lstName,
-            'age': intAge,
             'nick': usrNickname,
             'email': usrEmail,
             'password': usrPass
@@ -179,17 +189,22 @@ function createSignUp(statusText) {
             contentType: 'application/json',
 
             callback(res) {
-                if (res.status === 208) {
-                    const errText = 'Email already exist';
-                    createSignUp(errText);
-                } else if (res.status === 400) {
-                    const errText = 'Something is wrong';
-                    createSignUp(errText);
-                } else if (res.status === 409) {
-                    const errText = 'StatusConflict';
-                    createSignUp(errText);
-                } else {
-                    createProfile();
+                let errText = "";
+                switch (res.status) {
+                    case 208:
+                        errText = 'Email already exist';
+                        createSignUp(errText);
+                        break;
+                    case 400:
+                        errText = 'Something is wrong';
+                        createSignUp(errText);
+                        break;
+                    case 409:
+                        errText = 'StatusConflict';
+                        createSignUp(errText);
+                        break;
+                    default:
+                        createProfile();
                 }
             }
         });
@@ -223,7 +238,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         httpRequest.doGet({
             url: `/leaders?limit=${
                 playersOnPage
-            }&offset=${
+                }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
@@ -268,43 +283,38 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
 }
 
 function createProfile(userInfo, statusText) {
+    let errText = "";
     if (userInfo === undefined) {
         httpRequest.doGet({
             url: '/islogged',
             callback(res) {
-                if (res.status === 401) {
-                    const errText = 'You are not logged in';
-                    createSignIn(errText);
-                }
-                if (res.status === 200) {
-                    httpRequest.doGet({
-                        url: '/profile',
-                        callback(res) {
-                            if (res.status > 300) {
-                                const errText = 'Something is wrong';
-                                createMenu(errText);
+                switch (res.status) {
+                    case 401:
+                        errText = 'You are not logged in';
+                        createSignIn(errText);
+                    case 200:
+                        httpRequest.doGet({
+                            url: '/profile',
+                            callback(res) {
+                                if (res.status > 300) {
+                                    errText = 'Something is wrong';
+                                    createMenu(errText);
+                                }
+                                res.json().then((profileInfo) => {
+                                    createProfile(profileInfo, undefined);
+                                });
                             }
-                            res.json().then((profileInfo) => {
-                                createProfile(profileInfo, undefined);
-                            });
-                        }
-                    });
+                        });
                 }
             }
         });
     } else {
         const playerNickname = userInfo.nick;
         const playerScore = userInfo.score;
-        const playerAge = userInfo.age;
-        const playerFirstname = userInfo.name;
-        const playerLastname = userInfo.last_name;
         const playerEmail = userInfo.email;
 
         const profileHtml = window.profiletemplateTemplate({
             playerNickname,
-            playerAge,
-            playerFirstname,
-            playerLastname,
             playerEmail,
             playerScore,
             statusText
@@ -329,7 +339,7 @@ function createProfile(userInfo, statusText) {
             const repeatNewPassword = form.elements.repeatnewpassword.value;
 
             if (newPassword !== repeatNewPassword) {
-                const errText = 'Password are not equal';
+                errText = 'Password are not equal';
                 createProfile(userInfo, errText);
             }
 
@@ -346,15 +356,16 @@ function createProfile(userInfo, statusText) {
                     data: JSONdata,
                     contentType: 'application/json',
                     callback(res) {
-                        if (res.status > 300) {
-                            const errText = 'Something was wrong';
-                            createProfile(userInfo, errText);
-                        }
-                        if (res.status === 200) {
-                            const errText = 'Pass changed successfuly';
-                            res.json.then((userData) => {
-                                createProfile(userData, errText);
-                            });
+                        switch (res.status) {
+                            case 200:
+                                errText = 'Pass changed successfuly';
+                                res.json.then((userData) => {
+                                    createProfile(userData, errText);
+                                });
+                                break;
+                            default:
+                                errText = 'Something was wrong';
+                                createProfile(userInfo, errText);
                         }
                     }
                 });
@@ -371,14 +382,16 @@ function createProfile(userInfo, statusText) {
                     method: "POST",
                     body: avatarformData
                 }).then((res) => {
-                    if (res.status > 300) {
-                        const errText = 'Something was wrong';
-                        createMenu(errText);
+                    switch (res.status) {
+                        case 200:
+                            errText = 'New avatar uploaded';
+                            createProfile(undefined, errText);
+                            break;
+                        default:
+                            errText = 'Something was wrong';
+                            createMenu(errText);
                     }
-                    if (res.status === 200) {
-                        const errText = 'New avatar uploaded';
-                        createProfile(undefined, errText);
-                    }
+
                 });
             }
 
@@ -390,13 +403,15 @@ function createProfile(userInfo, statusText) {
             httpRequest.doGet({
                 url: '/logout',
                 callback(res) {
-                    if (res.status === 500) {
-                        const errText = 'Server error';
-                        createProfile(errText);
-                    }
-                    if (res.status === 200) {
-                        const errText = 'You are succsesfuly logouted';
-                        createMenu(errText);
+                    switch (res.status) {
+                        case 500:
+                            errText = 'Server error';
+                            createProfile(errText);
+                            break;
+                        case 200:
+                            errText = 'You are succsesfuly logouted';
+                            createMenu(errText);
+                            break;
                     }
                 }
             });
@@ -418,27 +433,27 @@ function createAbout() {
 }
 
 // Валидация данных для имени
-function nameValidation(fName, lName) {
-    if (!fName) {
-        const errText = 'Enter your First Name';
-        return errText;
-    }
+// function nameValidation(fName, lName) {
+//     if (!fName) {
+//         const errText = 'Enter your First Name';
+//         return errText;
+//     }
 
-    if (!fName.match(/[a-z]{2,20}$/)) {
-        const errText = 'Enter a valid First Name';
-        return errText;
-    }
+//     if (!fName.match(/[a-z]{2,20}$/)) {
+//         const errText = 'Enter a valid First Name';
+//         return errText;
+//     }
 
-    if (!lName) {
-        const errText = 'Enter your Last Name';
-        return errText;
-    }
+//     if (!lName) {
+//         const errText = 'Enter your Last Name';
+//         return errText;
+//     }
 
-    if (!lName.match(/[a-z]{2,20}$/)) {
-        const errText = 'Enter a valid Last Name';
-        return errText;
-    }
-}
+//     if (!lName.match(/[a-z]{2,20}$/)) {
+//         const errText = 'Enter a valid Last Name';
+//         return errText;
+//     }
+// }
 
 function passValidation(pass1, pass2) {
     if (!pass1.match(/\S{8,}/)) {
@@ -446,8 +461,8 @@ function passValidation(pass1, pass2) {
         return errText;
     }
 
-    if (!pass1.match(/[A-Z]/)) {
-        const errText = 'Password must contain ta least one larger symbol';
+    if (!pass1.match(/[A-Z][a-z]/)) {
+        const errText = 'Password must contain at least one larger symbol and one lower symbol';
         return errText;
     }
     if (pass1 !== pass2) {
