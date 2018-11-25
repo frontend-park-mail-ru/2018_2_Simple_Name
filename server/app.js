@@ -26,12 +26,12 @@ class Application {
         app.set('view engine', 'pug');
 
 
-        // app.use("*", proxy("http://127.0.0.1:8080", {
+        app.use("*", proxy("http://127.0.0.1:8080", {
         // app.use("*", proxy("http://95.163.209.195:80", {
-        //     proxyReqPathResolver: (req) => {
-        //         return req.originalUrl;
-        //     }
-        // }));
+            proxyReqPathResolver: (req) => {
+                return req.originalUrl;
+            }
+        }));
 
         // proxyServer.on('upgrade', function (req, socket, head) {
         //     proxy.ws(req, socket, head);
