@@ -219,7 +219,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
 
     if (playersCount === undefined) {
         httpRequest.doGet({
-            url: '/leaderscount',
+            url: 'http://95.163.209.195:80/leaderscount',
             callback(res) {
                 if (res.status > 300) {
                     const errText = 'Something is wrong';
@@ -236,7 +236,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         pagesCount = playersCount / playersOnPage + 1;
         // Заправшиваем игроков
         httpRequest.doGet({
-            url: `/leaders?limit=${
+            url: `http://95.163.209.195:80/leaders?limit=${
                 playersOnPage
                 }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
