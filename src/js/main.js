@@ -54,7 +54,7 @@ function createMenu(statusText) {
 function createStartgame() {
 
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: 'http://127.0.0.1:80/islogged',
         callback(res) {
             const errText = "";
             switch (res.status) {
@@ -72,7 +72,7 @@ function createStartgame() {
 
 function createSignIn(statusText) {
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: 'http://127.0.0.1:80/islogged',
 
         callback(res) {
             if (res.status === 200) {
@@ -106,7 +106,7 @@ function createSignIn(statusText) {
         };
 
         httpRequest.doPost({
-            url: 'http://95.163.209.195:80/signin',
+            url: 'http://127.0.0.1:80/signin',
             contentType: 'application/json',
             data: JSONdata,
 
@@ -133,7 +133,7 @@ function createSignIn(statusText) {
 
 function createSignUp(statusText) {
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: 'http://127.0.0.1:80/islogged',
         callback(res) {
             if (res.status === 200) {
                 const errText = 'You are already authorized';
@@ -184,7 +184,7 @@ function createSignUp(statusText) {
         };
 
         httpRequest.doPost({
-            url: 'http://95.163.209.195:80/signup',
+            url: 'http://127.0.0.1:80/signup',
             data: JSONdata,
             contentType: 'application/json',
 
@@ -286,7 +286,7 @@ function createProfile(userInfo, statusText) {
     let errText = "";
     if (userInfo === undefined) {
         httpRequest.doGet({
-            url: 'http://95.163.209.195:80/islogged',
+            url: 'http://127.0.0.1:80/islogged',
             callback(res) {
                 switch (res.status) {
                     case 401:
@@ -352,7 +352,7 @@ function createProfile(userInfo, statusText) {
 
             if (changePassword) {
                 httpRequest.doPut({
-                    url: 'http://95.163.209.195:80/profile',
+                    url: 'http://127.0.0.1:80/profile',
                     data: JSONdata,
                     contentType: 'application/json',
                     callback(res) {
@@ -378,7 +378,7 @@ function createProfile(userInfo, statusText) {
 
                 avatarformData.append("new_avatar", form.elements.newavatar.files[0], "new_avatar");
 
-                fetch("http://95.163.209.195:80/profile", {
+                fetch("http://127.0.0.1:80/profile", {
                     method: "POST",
                     body: avatarformData
                 }).then((res) => {
@@ -401,7 +401,7 @@ function createProfile(userInfo, statusText) {
         logout.addEventListener('click', (event) => {
             event.preventDefault();
             httpRequest.doGet({
-                url: 'http://95.163.209.195:80/logout',
+                url: 'http://127.0.0.1:80/logout',
                 callback(res) {
                     switch (res.status) {
                         case 500:
