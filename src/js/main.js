@@ -5,7 +5,7 @@ const Game = window.GameModule;
 
 function createMenu(statusText) {
     httpRequest.doGet({
-        url: '/islogged',
+        url: 'http://127.0.0.1/islogged',
 
         callback(res) {
             let menuHtml = "";
