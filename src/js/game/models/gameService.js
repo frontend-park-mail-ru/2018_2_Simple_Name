@@ -34,7 +34,7 @@
             this.onDone = onDoneCallback;
             this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
-            this.WSService = new WsService("95.163.209.195:80/startgame");
+            this.WSService = new WsService("127.0.0.1:80/startgame");
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
             this.WSService.subscribe(Status.StatusError, this.errorCallback.bind(this));
             this.WSService.subscribe(Status.StatusWait, this.waitCallback.bind(this));
