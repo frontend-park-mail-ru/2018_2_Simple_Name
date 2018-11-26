@@ -32,7 +32,7 @@ function createMenu(statusText) {
                 profile: createProfile,
                 about: createAbout,
                 menu: createMenu,
-                startgame: createStartgame,
+                startgame: createStartgame
             };
 
             const buttons = document.getElementById('buttons');
@@ -56,7 +56,7 @@ function createStartgame() {
     httpRequest.doGet({
         url: 'http://95.163.209.195:80/islogged',
         callback(res) {
-            const errText = "";
+            let errText = "";
             switch (res.status) {
                 case 401:
                     errText = 'You are not logged in';
@@ -65,6 +65,9 @@ function createStartgame() {
                 case 200:
                     root.innerHTML = "";
                     const gameService = new Game(root, createProfile, createMenu);
+                    break;
+                default:
+                    console.log("Default");
             }
         }
     });
@@ -125,6 +128,8 @@ function createSignIn(statusText) {
                         errText = 'You are already loggined!';
                         createProfile(undefined, errText);
                         break;
+                    default:
+                        console.log("Default");
                 }
             }
         });
@@ -238,7 +243,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         httpRequest.doGet({
             url: `http://95.163.209.195:80/leaders?limit=${
                 playersOnPage
-                }&offset=${
+            }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
@@ -292,6 +297,7 @@ function createProfile(userInfo, statusText) {
                     case 401:
                         errText = 'You are not logged in';
                         createSignIn(errText);
+                        break;
                     case 200:
                         httpRequest.doGet({
                             url: 'http://95.163.209.195:80/profile',
@@ -305,6 +311,9 @@ function createProfile(userInfo, statusText) {
                                 });
                             }
                         });
+                        break;
+                    default:
+                        console.log("Default");
                 }
             }
         });
@@ -412,7 +421,10 @@ function createProfile(userInfo, statusText) {
                             errText = 'You are succsesfuly logouted';
                             createMenu(errText);
                             break;
+                        default:
+                            console.log("Default");
                     }
+
                 }
             });
         });

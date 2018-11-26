@@ -102,9 +102,9 @@
             const area = this.gameArea.area();
             this.WSService.send({
                 command: "update",
-                owntarget: owntarget,
-                rivaltarget: rivaltarget,
-                area: area,
+                owntarget,
+                rivaltarget,
+                area
             });
 
             this.timerID = setInterval(this.sendUpdate(), 2000);
@@ -116,10 +116,10 @@
             const area = this.gameArea.area();
             this.WSService.send({
                 command: "update",
-                owntarget: owntarget,
-                rivaltarget: rivaltarget,
-                area: area,
-            })
+                owntarget,
+                rivaltarget,
+                area
+            });
         }
 
         gameCallback(data) {
@@ -131,18 +131,18 @@
         gameoverCallback(data) {
             console.log("gameover-call");
             clearInterval(this.timerId);
-            this.Status = "gameover"
+            this.Status = "gameover";
             let checkOwn = data.ownstate.hp > 0;
             let checkRival = data.rivalstate.hp > 0;
             let text = "";
             if (checkOwn && checkRival) {
-                text = "User " + data.rivalstate.nickname + " disconnected.";
+                text = `User ${data.rivalstate.nickname} disconnected.`;
                 this.onErr(text);
                 return;
             }
             this.gameroot.clearFrame();
             this.gameroot.addType("gameoverBackground");
-            const w = new SimpleObj(this.gameroot.frame, "gameover-window", "gameover-window")
+            const w = new SimpleObj(this.gameroot.frame, "gameover-window", "gameover-window");
             if (!checkOwn && !checkRival) {
                 text = "Draw =)";
             } else {
@@ -194,7 +194,7 @@
             let w = BuyPanel.area().width * koefW / 100;
             for (let id in BuyPanelElems) {
                 let obj = new SimpleObj(BuyPanel.frame, BuyPanelElems[id], BuyPanelElems[id]);
-                obj.addType("buyPanel-tab")
+                obj.addType("buyPanel-tab");
                 obj.setPositionPerc(parseInt(id * koefW), 0);
                 obj.setWidth(w);
                 obj.frame.onclick = this.buyPanelClickCallback.bind(this);
@@ -206,17 +206,17 @@
             this.gameArea = new SimpleObj(this.gameroot.frame, "gameArea", "gameArea");
 
             const own_target = new SimpleObj(this.gameArea.frame, "own-target", "target own-target");
-            this.StaticState["own_target"] = own_target;
+            this.StaticState.own_target = own_target;
             this.owntarget = {
                 area: own_target.area(),
-                pos: own_target.pos(),
+                pos: own_target.pos()
             };
 
             const rival_target = new SimpleObj(this.gameArea.frame, "rival-target", "target rival-target");
-            this.StaticState["rival_target"] = rival_target;
+            this.StaticState.rival_target = rival_target;
             this.rivaltarget = {
                 area: rival_target.area(),
-                pos: rival_target.pos(),
+                pos: rival_target.pos()
             };
         }
 
@@ -227,7 +227,7 @@
         }
 
         initMessageBox() {
-            this.messageBox = new AnimatedObj(this.gameroot.frame, "messageBox", "messageBox", 0.5)
+            this.messageBox = new AnimatedObj(this.gameroot.frame, "messageBox", "messageBox", 0.5);
             this.messageBox.addType("text-style");
         }
 
@@ -288,8 +288,7 @@
                             obj.frame.onclick = this.mobClickCallback.bind(this);
                             obj.setPositionPX(mobs[id].pos.x, mobs[id].pos.y);
                             this.DynamicState[`mob${id}`] = obj;
-                        }
-                        else {
+                        } else {
                             mob.setPositionPX(mobs[id].pos.x, mobs[id].pos.y);
                         }
                         break;
@@ -306,8 +305,8 @@
                         break;
                     case "attack":
                         if (mob) {
-                            mob.addType(mob.getTypeClass() + "-attack");
-                            mob.removeType(mob.getTypeClass())
+                            mob.addType(`${mob.getTypeClass()}-attack`);
+                            mob.removeType(mob.getTypeClass());
                             this.StaticState[`mob${id}`] = mob;
                             delete this.DynamicState[`mob${id}`];
                         }
@@ -324,14 +323,14 @@
             const owntarget = this.owntarget;
             const rivaltarget = this.rivaltarget;
             const area = this.gameArea.area();
-            const pos = { x: this.gameArea.area().width - event.clientX, y: event.clientY }
+            const pos = { x: this.gameArea.area().width - event.clientX, y: event.clientY };
             this.WSService.send({
                 command: "killmob",
                 clickpos: pos,
-                owntarget: owntarget,
-                rivaltarget: rivaltarget,
-                area: area,
-            })
+                owntarget,
+                rivaltarget,
+                area
+            });
         }
 
         buyPanelClickCallback(event) {
@@ -342,10 +341,10 @@
             this.WSService.send({
                 command: "addmob",
                 createmobtype: mobtype,
-                owntarget: owntarget,
-                rivaltarget: rivaltarget,
-                area: area,
-            })
+                owntarget,
+                rivaltarget,
+                area
+            });
         }
 
         pars_mobtype(name) {

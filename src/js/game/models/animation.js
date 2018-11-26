@@ -8,12 +8,15 @@
             this.frame.onmousedown = () => { return false; };
             this.frame.onselectstart = () => { return false; };
         }
+
         hide() {
             this.frame.classList.add("hide");
         }
+
         show() {
             this.frame.classList.remove("hide");
         }
+
         setPositionPX(x, y) {
 
             if (x + this.area().width / 2 > this.root.getBoundingClientRect().right) {
@@ -56,19 +59,21 @@
         addType(typeClass) {
             this.frame.classList.add(typeClass);
         }
+
         removeType(typeClass) {
-            this.frame.classList.remove(typeClass)
+            this.frame.classList.remove(typeClass);
         }
+
         area() {
             const width = this.frame.getBoundingClientRect().width;
             const height = this.frame.getBoundingClientRect().height;
-            return { width: width, height: height }
+            return { width, height };
         }
 
         pos() {
             const x = this.frame.getBoundingClientRect().x + this.area().width / 2;
             const y = this.frame.getBoundingClientRect().y + this.area().height / 2;
-            return { x: x, y: y };
+            return { x, y };
         }
 
         clearFrame() {
