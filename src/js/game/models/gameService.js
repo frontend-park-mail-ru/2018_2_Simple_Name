@@ -28,13 +28,15 @@
 
     SimpleObj = window.SimpleObj;
     AnimatedObj = window.AnimatedObj;
+    // const backUrl = "95.163.209.195:8082";
+    const backUrl = "127.0.0.1:8082";
 
     class GameService {
         constructor(root, onDoneCallback, onErrCallback) {
             this.onDone = onDoneCallback;
             this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
-            this.WSService = new WsService("95.163.209.195:80/startgame");
+            this.WSService = new WsService(backUrl + "/startgame");
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
             this.WSService.subscribe(Status.StatusError, this.errorCallback.bind(this));
             this.WSService.subscribe(Status.StatusWait, this.waitCallback.bind(this));

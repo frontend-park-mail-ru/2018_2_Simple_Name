@@ -2,10 +2,12 @@ const httpRequest = window.httpModule;
 
 const root = document.getElementById('root');
 const Game = window.GameModule;
+// const backUrl = "http://95.163.209.195:80";
+const backUrl = "http://127.0.0.1:8080";
 
 function createMenu(statusText) {
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: backUrl + '/islogged',
 
         callback(res) {
             let menuHtml = "";
@@ -54,7 +56,7 @@ function createMenu(statusText) {
 function createStartgame() {
 
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: backUrl + '/islogged',
         callback(res) {
             let errText = "";
             switch (res.status) {
@@ -75,7 +77,7 @@ function createStartgame() {
 
 function createSignIn(statusText) {
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: backUrl + '/islogged',
 
         callback(res) {
             if (res.status === 200) {
@@ -109,7 +111,7 @@ function createSignIn(statusText) {
         };
 
         httpRequest.doPost({
-            url: 'http://95.163.209.195:80/signin',
+            url: backUrl + '/signin',
             contentType: 'application/json',
             data: JSONdata,
 
@@ -138,7 +140,7 @@ function createSignIn(statusText) {
 
 function createSignUp(statusText) {
     httpRequest.doGet({
-        url: 'http://95.163.209.195:80/islogged',
+        url: backUrl + '/islogged',
         callback(res) {
             if (res.status === 200) {
                 const errText = 'You are already authorized';
@@ -189,7 +191,7 @@ function createSignUp(statusText) {
         };
 
         httpRequest.doPost({
-            url: 'http://95.163.209.195:80/signup',
+            url: backUrl + '/signup',
             data: JSONdata,
             contentType: 'application/json',
 
@@ -224,7 +226,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
 
     if (playersCount === undefined) {
         httpRequest.doGet({
-            url: 'http://95.163.209.195:80/leaderscount',
+            url: backUrl + '/leaderscount',
             callback(res) {
                 if (res.status > 300) {
                     const errText = 'Something is wrong';
@@ -243,7 +245,7 @@ function createScoreboard(statusText, playersCount, pageIndex = 1) {
         httpRequest.doGet({
             url: `http://95.163.209.195:80/leaders?limit=${
                 playersOnPage
-            }&offset=${
+                }&offset=${
                 playersOnPage * (pageIndex - 1)}`,
             callback(res) {
                 if (res.status > 300) {
@@ -291,7 +293,7 @@ function createProfile(userInfo, statusText) {
     let errText = "";
     if (userInfo === undefined) {
         httpRequest.doGet({
-            url: 'http://95.163.209.195:80/islogged',
+            url: backUrl + '/islogged',
             callback(res) {
                 switch (res.status) {
                     case 401:
@@ -300,7 +302,7 @@ function createProfile(userInfo, statusText) {
                         break;
                     case 200:
                         httpRequest.doGet({
-                            url: 'http://95.163.209.195:80/profile',
+                            url: backUrl + '/profile',
                             callback(res) {
                                 if (res.status > 300) {
                                     errText = 'Something is wrong';
@@ -361,7 +363,7 @@ function createProfile(userInfo, statusText) {
 
             if (changePassword) {
                 httpRequest.doPut({
-                    url: 'http://95.163.209.195:80/profile',
+                    url: backUrl + '/profile',
                     data: JSONdata,
                     contentType: 'application/json',
                     callback(res) {
@@ -410,7 +412,7 @@ function createProfile(userInfo, statusText) {
         logout.addEventListener('click', (event) => {
             event.preventDefault();
             httpRequest.doGet({
-                url: 'http://95.163.209.195:80/logout',
+                url: backUrl + '/logout',
                 callback(res) {
                     switch (res.status) {
                         case 500:
