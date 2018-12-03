@@ -9,7 +9,7 @@
 }
 
 .gameBackground {
-    background-image: url("../media/game-media/background/background.jpg");
+    background-image: url("../media/game-media/map/background.jpg");
 }
 
 .waitBackground {
@@ -18,6 +18,7 @@
 
 .text-style{
     text-align: center;
+    color: white;
     font-family: 'Varela Round', sans-serif;
 }
 
@@ -33,22 +34,52 @@
 
 .header{
     width: 100%;
-    height: 10%;
+    height: 70px;
 }
 
 .gameArea{
-    width: 100%;
-    height: 85%;   
-    padding-left: 2%;
-    padding-right: 2%;
-    background-image: url("../media/game-media/background/background.jpg");
-    background-size: 100% 100%;
+    width: 1200px;
+    height: 500px;   
+
+    background-size: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .footer{
+    height: 300px;
     text-align: center;
     font-size: 15pt;
-    height: 5%;
+    background-color: black;
+    opacity: 0;
+    color: white;
+}
+
+.footer-show{
+    opacity: .8;
+    animation-name: footer-show;
+    animation-iteration-count: 1;
+}
+@keyframes footer-show{
+    from { opacity: 0;}
+    to { opacity: .8;}
+}
+@-moz-keyframes footer-show{
+    from { opacity: 0;}
+    to { opacity: .8;}
+}
+
+.footer-hide{
+    animation-name: footer-hide;
+    animation-iteration-count: 1;
+}
+@keyframes footer-hide{
+    from { opacity: .8;}
+    to { opacity: 0;}
+}
+@-moz-keyframes footer-hide{
+    from { opacity: .8;}
+    to { opacity: 0;}
 }
 
 #weel{
@@ -73,6 +104,7 @@
 }
 
 .messageBox{
+    color: white;
     position: absolute;
     height: 50px;
     top: 85vh;
@@ -130,18 +162,19 @@
 .buyPanel-tab{
     position: absolute;
     height: 100%;
+    background-repeat: no-repeat;
 }
 
 #buyPanel-tab1{
-    background-color: darkorchid;
+    background-image: url("../media/game-media/tabs/tab_mob1.png");
 }
 
 #buyPanel-tab2{
-    background-color: gold;
+    background-image: url("../media/game-media/tabs/tab_mob2.png");
 }
 
 #buyPanel-tab3{
-    background-color: darkcyan;
+    background-image: url("../media/game-media/tabs/tab_mob3.png");
 }
 
 .nicknameBox{
@@ -150,7 +183,8 @@
     height: 4%;
 
     font-size: 15pt;
-    background-color: aquamarine;
+    background-color: black;
+    opacity: 0.7;
 }
 
 .healthBar{
@@ -158,6 +192,9 @@
     width: 20%;
     height: 5%;
     border-radius: 30%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
     background-color: brown;
 }
 
@@ -168,7 +205,8 @@
 
     text-align: center;
     font-size: 15pt;
-    background-color: lawngreen;
+    background-color: black;
+    opacity: 0.7;
 }
 
 .mob{
@@ -176,20 +214,30 @@
     width: 50px;
     height: 50px;
     animation-iteration-count:infinite;
+    background-size: 100% 100%;
 }
 
 .deadmob{
     position: absolute;
     width: 50px;
     height: 50px;
-    background-color: rgb(160, 0, 13);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image:url("../media/game-media/mobs/blood.png");
+    animation-name: mob-dead;
+    animation-iteration-count: 1;
+}
+@keyframes mob-dead{
+  
+}
+@-moz-keyframes mob-dead{
 }
 
 .target{
-    top:42vh;
+    top:295px;
     position: absolute;
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
 }
 
 .points{
@@ -212,82 +260,85 @@
 }
 
 .own-mob1{
-    background-color: rgb(106, 235, 0);
     animation-name: own-mob1-run;
 }
 @keyframes own-mob1-run{
-    from {  background-color: rgb(35, 54, 20);}
-    to {  background-color: rgb(83, 143, 37);}
+    from { background-image: url("../media/game-media/mobs/mob1/own_mob1_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob1/own_mob1_run2.png");}
 }
 @-moz-keyframes own-mob1-run{
-    from {  background-color: rgb(35, 54, 20);}
-    to {  background-color: rgb(83, 143, 37);}
+    from { background-image: url("../media/game-media/mobs/mob1/own_mob1_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob1/own_mob1_run2.png");}
 }
 
 .own-mob1-attack{
     animation-name: own-mob1-attack;
 }
 @keyframes own-mob1-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack3.png");}
 }
 @-moz-keyframes own-mob1-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob1/own_mob1_attack3.png");}
 }
 
 .own-mob2{
-    background-color: rgb(0, 227, 235);
     animation-name: own-mob2-run;
 }
 @keyframes own-mob2-run{
-    from {  background-color: rgb(32, 33, 80);}
-    to {  background-color: rgb(65, 98, 151);}
+    from { background-image: url("../media/game-media/mobs/mob2/own_mob2_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob2/own_mob2_run2.png");}
 }
 @-moz-keyframes own-mob2-run{
-    from {  background-color: rgb(32, 33, 80);}
-    to {  background-color: rgb(65, 98, 151);}
+    from { background-image: url("../media/game-media/mobs/mob2/own_mob2_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob2/own_mob2_run2.png");}
 }
 
 .own-mob2-attack{
     animation-name: own-mob2-attack;
 }
 @keyframes own-mob2-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack3.png");}
 }
 @-moz-keyframes own-mob2-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob2/own_mob2_attack3.png");}
 }
 
 .own-mob3{
-    background-color: rgb(235, 0, 204);
     animation-name: own-mob3-run;
 }
 @keyframes own-mob3-run{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    from { background-image: url("../media/game-media/mobs/mob3/own_mob3_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob3/own_mob3_run2.png");}
 }
 @-moz-keyframes own-mob3-run{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    from { background-image: url("../media/game-media/mobs/mob3/own_mob3_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob3/own_mob3_run2.png");}
 }
 
 .own-mob3-attack{
     animation-name: own-mob3-attack;
 }
 @keyframes own-mob3-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack3.png");}
 }
 @-moz-keyframes own-mob3-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob3/own_mob3_attack3.png");}
 }
 
 .own-target{
-    background-color: rgb(187, 255, 0);
+    background-image: url("../media/game-media/map/own_tar.png");
 }
 
 #rival-nickname{  
@@ -306,83 +357,86 @@
 }
 
 .rival-mob1{
-    background-color: rgb(106, 235, 0);
     animation-name: rival-mob1-run;
 }
 @keyframes rival-mob1-run{
-    from {  background-color: rgb(35, 54, 20);}
-    to {  background-color: rgb(83, 143, 37);}
+    from { background-image: url("../media/game-media/mobs/mob1/rival_mob1_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob1/rival_mob1_run2.png");}
 }
 @-moz-keyframes rival-mob1-run{
-    from {  background-color: rgb(35, 54, 20);}
-    to {  background-color: rgb(83, 143, 37);}
+    from { background-image: url("../media/game-media/mobs/mob1/rival_mob1_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob1/rival_mob1_run2.png");}
 }
 
 .rival-mob1-attack{
     animation-name: rival-mob1-attack;
 }
 @keyframes rival-mob1-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack3.png");}
 }
 @-moz-keyframes rival-mob1-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack3.png");}
 }
 
 .rival-mob2{
-    background-color: rgb(0, 227, 235);
     animation-name: rival-mob2-run;
 }
 @keyframes rival-mob2-run{
-    from {  background-color: rgb(32, 33, 80);}
-    to {  background-color: rgb(65, 98, 151);}
+    from { background-image: url("../media/game-media/mobs/mob2/rival_mob2_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob2/rival_mob2_run2.png");}
 }
 @-moz-keyframes rival-mob2-run{
-    from {  background-color: rgb(32, 33, 80);}
-    to {  background-color: rgb(65, 98, 151);}
+    from { background-image: url("../media/game-media/mobs/mob2/rival_mob2_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob2/rival_mob2_run2.png");}
 }
 
 .rival-mob2-attack{
     animation-name: rival-mob2-attack;
 }
 @keyframes rival-mob2-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack3.png");}
 }
 @-moz-keyframes rival-mob2-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack3.png");}
 }
 
 .rival-mob3{
-    background-color: rgb(235, 0, 204);
     animation-name: rival-mob3-run;
 }
 @keyframes rival-mob3-run{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    from { background-image: url("../media/game-media/mobs/mob3/rival_mob3_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob3/rival_mob3_run2.png");}
 }
 @-moz-keyframes rival-mob3-run{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    from { background-image: url("../media/game-media/mobs/mob3/rival_mob3_run1.png");}
+    to { background-image: url("../media/game-media/mobs/mob3/rival_mob3_run2.png");}
 }
 
 .rival-mob3-attack{
     animation-name: rival-mob3-attack;
 }
 @keyframes rival-mob3-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack3.png");}
 }
 @-moz-keyframes rival-mob3-attack{
-    from {  background-color: rgb(85, 23, 75);}
-    to {  background-color: rgb(160, 58, 143);}
+    0% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack1.png");}
+    50% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack2.png");}
+    100% { background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack3.png");}
 }
 
 .rival-target{
-    left:91%;
-    background-color: black;
+    left:1105px;
+    background-image: url("../media/game-media/map/rival_tar.png");
 }
 
 

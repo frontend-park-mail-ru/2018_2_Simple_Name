@@ -52,21 +52,31 @@
         }
 
         onWSClose() {
-            if (!this.Status) {
+            console.log("Wsclose-call");
+            if (this.Status != Status.StatusGameOver && this.Status != Status.StatusError) {
+                console.log(this.Status);
                 const errText = 'Server Connection problem';
                 this.onErr(errText);
             }
         }
 
         infoCallback(data) {
-            if (this.messageBox) {
+            console.log("info-call");
+
+            if (this.Status == Status.StatusWait) {
+                console.log("MessageBox-call");
                 this.updateMessageBox(data.info);
             } else {
-                this.updateFooter(data);
+                if (this.footer) {
+                    this.updateFooter(data);
+                } else
+                    console.log("no footer");
             }
         }
 
         errorCallback(data) {
+            console.log("error-call");
+            this.Status = Status.StatusError;
             this.onErr(data.info);
         }
 
@@ -92,47 +102,27 @@
 
         startgameCallback(data) {
             console.log("startgame-call");
+            this.Status = "startgame";
             this.gameroot.clearFrame();
             this.gameroot.setType("gameBackground");
+            this.baseX = 55.5;
+            this.baseY = 70;
+            this.baseW = 1200;
 
             this.initHeader(data);
             this.initGameArea(data);
             this.initFooter(data);
-
-            const owntarget = this.owntarget;
-            const rivaltarget = this.rivaltarget;
-            const area = this.gameArea.area();
-            this.WSService.send({
-                command: "update",
-                owntarget,
-                rivaltarget,
-                area
-            });
-
-            this.timerID = setInterval(this.sendUpdate(), 2000);
-        }
-
-        sendUpdate() {
-            const owntarget = this.owntarget;
-            const rivaltarget = this.rivaltarget;
-            const area = this.gameArea.area();
-            this.WSService.send({
-                command: "update",
-                owntarget,
-                rivaltarget,
-                area
-            });
         }
 
         gameCallback(data) {
-            console.log("game-call");
+            // console.log("game-call");
+            this.Status = "game";
             this.updateHeader(data);
             this.updateGameArea(data);
         }
 
         gameoverCallback(data) {
             console.log("gameover-call");
-            clearInterval(this.timerId);
             this.Status = "gameover";
             let checkOwn = data.ownstate.hp > 0;
             let checkRival = data.rivalstate.hp > 0;
@@ -245,6 +235,8 @@
             }, 7700);
         }
 
+    
+
         updateHeader(data) {
             this.StaticState.own_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.ownstate.hp);
             this.StaticState.rival_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.rivalstate.hp);
@@ -260,7 +252,7 @@
 
             let rival_mobs = data.rivalstate.mobs;
 
-            rival_mobs = this.reverse_mob_position(rival_mobs, this.gameArea.area().width);
+            rival_mobs = this.reverse_mob_position(rival_mobs, this.baseW);
             this.set_mob_types(rival_mobs, "rival-");
 
             this.updateMobs(rival_mobs);
@@ -288,10 +280,10 @@
                             let obj = new AnimatedObj(this.gameArea.frame, `mob${id}`, mobs[id].type, mobs[id].speed);
                             obj.addType("mob");
                             obj.frame.onclick = this.mobClickCallback.bind(this);
-                            obj.setPositionPX(mobs[id].pos.x, mobs[id].pos.y);
+                            obj.setPositionPX(this.baseX + mobs[id].pos.x, this.baseY + mobs[id].pos.y);
                             this.DynamicState[`mob${id}`] = obj;
                         } else {
-                            mob.setPositionPX(mobs[id].pos.x, mobs[id].pos.y);
+                            mob.setPositionPX(this.baseX + mobs[id].pos.x, this.baseY + mobs[id].pos.y);
                         }
                         break;
                     case "dead":
@@ -319,33 +311,29 @@
 
         updateFooter(data) {
             this.footer.setTextBox(data.info);
+            this.footer.addType("footer-show");
+            setTimeout(() => {
+                this.footer.addType("footer-hide");
+                this.footer.removeType("footer-show");
+            }, 7000);
+            setTimeout(() => {
+                this.footer.removeType("footer-hide");
+            }, 7700);
         }
 
         mobClickCallback(event) {
-            const owntarget = this.owntarget;
-            const rivaltarget = this.rivaltarget;
-            const area = this.gameArea.area();
-            const pos = { x: this.gameArea.area().width - event.clientX, y: event.clientY };
+            const pos = { x: this.baseW - (event.clientX - this.baseX), y: event.clientY - this.baseY };
             this.WSService.send({
                 command: "killmob",
                 clickpos: pos,
-                owntarget,
-                rivaltarget,
-                area
             });
         }
 
         buyPanelClickCallback(event) {
             const mobtype = this.pars_mobtype(event.target.name);
-            const owntarget = this.owntarget;
-            const rivaltarget = this.rivaltarget;
-            const area = this.gameArea.area();
             this.WSService.send({
                 command: "addmob",
                 createmobtype: mobtype,
-                owntarget,
-                rivaltarget,
-                area
             });
         }
 
