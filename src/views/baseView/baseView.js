@@ -1,16 +1,29 @@
+/**
+ * @class BaseView
+ * @module BaseView
+ */
 export default class BaseView {
-  constructor() {
-    this._element = element;
-    this._title
-  }
-  show() {
-    this.element.hidden = false;
-    this.render();
-  }
+    constructor (el) {
+        this.el = el;
 
-  hide() {
-    this.element.hidden = true;
-  }
+        this.el.dataset.view = this.constructor.name;
+        this.el.hidden = true;
+    }
 
-  render() { }
+    get active() {
+        return !this.el.hidden;
+    }
+
+    hide () {
+        this.el.hidden = true;
+    }
+
+    show () {
+        this.el.hidden = false;
+        this.render();
+    }
+
+    render() {
+
+    }
 }
