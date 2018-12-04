@@ -1,5 +1,5 @@
 import bus from './modules/EventBus.js';
-import Router from './modules/Router.js';
+// import Router from './modules/Router.js';
 import ScoreboardView from '../views/scoreboard/scoreboardView.js';
 import MenuView from '../views/menu/menuView.js';
 import SignIn from '../views/signin/signinView.js';
@@ -15,7 +15,9 @@ const root = document.getElementById('root');
 
 // const backUrl = "http://95.163.209.195:80";
 // const backUrl = "http://127.0.0.1:8080";
-const router = new Router(root);
+// const router = new Router(root);
+const router = window.RouterModule;
+router.setRoot(root);
 
 bus.on('fetch-users', async() => {
 

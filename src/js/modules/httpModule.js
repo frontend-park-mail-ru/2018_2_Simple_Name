@@ -25,12 +25,13 @@
         }
 
         doPost(params = {}) {
-            this.dofetch({ ...params, method: 'POST' });
+            return this.dofetch({ ...params, method: 'POST' });
         }
 
         doPut(params = {}) {
-            this.dofetch({ ...params, method: 'PUT' });
+            return this.dofetch({ ...params, method: 'PUT' });
         }
     }
+
     window.httpModule = new HttpRequest();
 }());
