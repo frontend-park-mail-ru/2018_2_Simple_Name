@@ -2,7 +2,10 @@ import bus from './modules/EventBus.js';
 import Router from './modules/Router.js';
 import ScoreboardView from '../views/scoreboard/scoreboardView.js';
 import MenuView from '../views/menu/menuView.js';
-import UsersService from "../services/UserService.js";
+import SignIn from '../views/signin/signinView.js';
+import SignUp from '../views/signup/signupView.js';
+import Profile from '../views/profile/profileView.js';
+import LeaderService from "../services/LeaderService.js";
 
 
 // const httpRequest = window.httpModule;
@@ -14,12 +17,15 @@ const root = document.getElementById('root');
 // const backUrl = "http://127.0.0.1:8080";
 const router = new Router(root);
 
-bus.on('fetch-users', function () {
+bus.on('fetch-users', async() => {
 
     console.log("fetching users now from event fetch-users");
 
-    UsersService.FetchData();
-        // .FetchCount(function (users) {
+    const data = await LeaderService.FetchData();
+
+    bus.emit("users-loaded", data);
+
+    // .FetchCount(function (users) {
         //     console.log("fetch-then");
         //     bus.emit('users-loaded', users);
         //     //bus.emit('users-loaded', users);
@@ -38,6 +44,10 @@ bus.on('fetch-users', function () {
 
 router
     .register('/', MenuView)
+    .register('/signin', SignIn)
+    .register('/signup', SignUp)
+    .register('/profile', Profile)
+    .register('/leaders/{page}', ScoreboardView)
     .register('/leaders', ScoreboardView);
 
 router.start();

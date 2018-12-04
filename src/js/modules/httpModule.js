@@ -3,7 +3,7 @@
         dofetch({
             url, method, data, contentType, callback = function () { }
         } = {}) {
-            fetch(url, {
+            return fetch(url, {
                 method,
                 mode: 'cors',
                 credentials: 'include',
@@ -21,7 +21,7 @@
         }
 
         doGet(params = {}) {
-            this.dofetch({ ...params, method: 'GET', contentType: 'text/plain' });
+            return this.dofetch({ ...params, method: 'GET', contentType: 'text/plain' });
         }
 
         doPost(params = {}) {

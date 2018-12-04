@@ -10,7 +10,7 @@ import bus from '../js/modules/EventBus.js';
 //     });
 // }
 
-export default class UsersService {
+export default class LeadersService {
     // static FetchUsers () {
     //     return httpRequest
     //         .doGet({
@@ -26,23 +26,23 @@ export default class UsersService {
 
 
 
-        const res1 = this.fetchPagesCount();
+        const res1 = await this.fetchPagesCount();
 
-        //const res2 = await this.fetchUsers();
+        const res2 = await this.fetchUsers();
 
-        //const users = await res1.json();
         const count = res1;
+        const users = res2;
 
-        //console.log(users);
-        console.log(count);
+        console.log(users);
+        console.log(count.leaderscount);
 
-        var data = {
-            //users: users,
-            count: count.leaderscount
+        const data = {
+            "users": users,
+            "count": count.leaderscount
         };
 
-        bus.emit("users-loaded", data);
-
+        //bus.emit("users-loaded", data);
+        return data
             // .then(function (data) {
             //     return JSON.parse(data.responseText);
             // });
@@ -51,12 +51,12 @@ export default class UsersService {
 
     static async fetchPagesCount() {
         const response = await httpRequest.doGet({ url: "http://127.0.0.1:8080/leaderscount" });
-        const json = await response.json();
-        return json
-
+        return await response.json()
     }
-    static fetchUsers() {
-        return httpRequest.doGet({ url: "http://127.0.0.1:8080/leaders" });
+
+    static async fetchUsers() {
+        const response = await httpRequest.doGet({ url: "http://127.0.0.1:8080/leaders" });
+        return await response.json()
     }
 
 };

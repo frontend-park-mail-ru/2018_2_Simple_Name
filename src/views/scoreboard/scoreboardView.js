@@ -8,36 +8,36 @@ export default class ScoreboardView extends BaseView {
         this.pagesCount = 0;
         this.pageIndex = 0;
 
-        bus.on('users-loaded', function (users, count) {
-            this.users = users;
-            this.pagesCount = count;
+        bus.on('users-loaded', function (data) {
+            const onPage = 5;
+            this.users = data.users;
+            this.pagesCount = data.count / onPage;
+            this.renderScoreboard(this.section);
         }.bind(this));
     }
-
-    fetchUsers () {
-        bus.emit('fetch-users');
-    }
-
-    // setUsers (users) {
-    //     this.users = users;
-    //     this.render();
-    // }
 
     render () {
         this.el.innerHTML = '';
         const menuSection = document.createElement('section');
         menuSection.dataset.sectionName = 'leaders';
 
+        this.section = menuSection;
+
         if (!this.users){
+            console.log("view go to get users");
             this.getUsers();
         }
+    }
 
+    renderScoreboard() {
         const scoreboardHtml = window.scoreboardtemplateTemplate({
-                        pageIndex: this.pageIndex,
-                        pagesCount: this.pagesCount,
-                        inputPlayers: this.users
-                        //statusText
+            pageIndex: this.pageIndex,
+            pagesCount: this.pagesCount,
+            inputPlayers: this.users
+            //statusText
         });
+
+        this.el.innerHTML = scoreboardHtml;
 
     }
 
@@ -49,6 +49,11 @@ export default class ScoreboardView extends BaseView {
        //      console.log(userData)
        //  });
     }
+
+    // show(){
+    //     console.log("show");
+    //     this.render();
+    // }
 
     // renderPage () {
     // const a = await fetch()
