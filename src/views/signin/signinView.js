@@ -22,15 +22,13 @@ export default class signinView extends BaseView {
 
     render () {
         this.el.innerHTML = '';
-        const signinSection = document.createElement('section');
-        signinSection.dataset.sectionName = 'signin';
+        // const signinSection = document.createElement('section');
+        // signinSection.dataset.sectionName = 'signin';
 
-        this.section = signinSection;
-
-        const signinHtml = window.signintemplateTemplate() ;
+        // this.section = signinSection;
 
         // this.section.innerHTML = signinHtml
-        this.el.innerHTML = signinHtml;
+        this.el.innerHTML = window.signintemplateTemplate();
 
         const signinButton = document.getElementById("signinButton");
 

@@ -44,14 +44,12 @@ export default class signupView extends BaseView {
 
     render () {
         this.el.innerHTML = '';
-        const signupSection = document.createElement('section');
-        signupSection.dataset.sectionName = 'signup';
+        // const signupSection = document.createElement('section');
+        // signupSection.dataset.sectionName = 'signup';
 
-        this.section = signupSection;
+        // this.section = signupSection;
 
-        const signupHtml = window.signuptemplateTemplate() ;
-
-        this.el.innerHTML = signupHtml;
+        this.el.innerHTML = window.signuptemplateTemplate();
 
         const signupButton = document.getElementById("signupButton");
 
