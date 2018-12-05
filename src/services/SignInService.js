@@ -25,9 +25,6 @@ export default class SignInService {
             alert("Неверный логин/пароль");
         }
         window.RouterModule.open('/');
-
-
-        // Проверка статуса ответа
     }
 
 

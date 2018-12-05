@@ -11,15 +11,6 @@ const httpRequest = window.httpModule;
 // }
 
 export default class LeadersService {
-    // static FetchUsers () {
-    //     return httpRequest
-    //         .doGet({
-    //             url: '/leaderscount'
-    //         })
-    //         .then(function (data) {
-    //             return JSON.parse(data.responseText);
-    //         });
-    // };
     static async FetchData (limit, offset) {
 
 
@@ -44,11 +35,7 @@ export default class LeadersService {
             "count": count.leaderscount
         };
 
-        //bus.emit("users-loaded", data);
         return data
-            // .then(function (data) {
-            //     return JSON.parse(data.responseText);
-            // });
     }
 
 

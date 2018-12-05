@@ -84,19 +84,6 @@ export default class ScoreboardView extends BaseView {
     getUsers(){
         console.log("Try get users from getUsers from View!");
         bus.emit("fetch-users");
-       // console.log("Get users!");
-       //  data.json.then((userData) => {
-       //      console.log(userData)
-       //  });
     }
-
-    // show(){
-    //     console.log("show");
-    //     this.render();
-    // }
-
-    // renderPage () {
-    // const a = await fetch()
-    // }
 
 }

@@ -5,14 +5,6 @@ export default class AboutView extends BaseView {
         super(el);
     }
 
-    // show() {
-    //     this._element.style.display = 'div';
-    // }
-    //
-    // hide() {
-    //     this._element.style.display = 'hide';
-    // }
-
     render() {
         this.el.innerHTML = window.abouttemplateTemplate();
     }

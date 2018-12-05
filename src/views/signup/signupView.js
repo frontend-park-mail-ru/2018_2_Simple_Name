@@ -1,12 +1,13 @@
 import BaseView from "../baseView/baseView.js";
 import SignUpService from "../../services/SignUpService.js";
 import bus from '../../js/modules/EventBus.js';
-
 export default class signupView extends BaseView {
     constructor(el){
         super(el);
         bus.on("sign-up-fetch", function () {
             const form = document.getElementById('signupForm');
+
+//todo: валидация данных здесь
 
             const usrNickname = form.elements.nickname.value;
             // if (!usrNickname
