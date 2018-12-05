@@ -1,5 +1,4 @@
 const httpRequest = window.httpModule;
-import bus from '../js/modules/EventBus.js';
 
 
 export default class SignUpService {

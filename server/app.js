@@ -37,9 +37,10 @@ class Application {
         //     proxy.ws(req, socket, head);
         //   });
 
-        app.get('/', (req, res) => {
+        app.get('*', (req, res) => {
             res.sendFile(path.resolve('src/index.html'));
         });
+
     }
 }
 

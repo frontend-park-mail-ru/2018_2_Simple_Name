@@ -1,4 +1,5 @@
 const httpRequest = window.httpModule;
+
 import bus from '../js/modules/EventBus.js';
 
 
@@ -11,18 +12,20 @@ export default class SignInService {
         await this.fetchData(data);
     }
 
-    static fetchData(data) {
-        httpRequest.doPost({
+    static async fetchData(data) {
+        const res = await httpRequest.doPost({
             url: "http://127.0.0.1:8080/signin",
             data: data,
             contentType: 'application/json'
-        }).then(function (res) {
-            if (res.status === 200) {
-                alert("Успешно авторизаван")
-            } else if (res.status === 400) {
-                alert("Неверный логин/пароль");
-            }
         });
+
+        if (res.status === 200) {
+            alert("Успешно авторизаван")
+        } else if (res.status === 400) {
+            alert("Неверный логин/пароль");
+        }
+        window.RouterModule.open('/');
+
 
         // Проверка статуса ответа
     }
