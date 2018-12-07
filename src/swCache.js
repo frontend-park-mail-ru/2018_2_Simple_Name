@@ -4,5 +4,5 @@ const pathCache = [
     '/js/modules/EventBus.js',
     '/js/modules/Router.js',
 
-    //...
+    
 ];
