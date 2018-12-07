@@ -1,5 +1,6 @@
 const httpRequest = window.httpModule;
 // import bus from '../js/modules/EventBus.js';
+import * as config from './config.js';
 
 
 // function delay (obj) {
@@ -40,13 +41,12 @@ export default class LeadersService {
 
 
     static async fetchPagesCount() {
-        const response = await httpRequest.doGet({ url: "http://127.0.0.1:8080/leaderscount" });
+        const response = await httpRequest.doGet({ url: config.url + "/leaderscount" });
         return await response.json()
     }
 
     static async fetchUsers(limit, offset) {
-        const response = await httpRequest.doGet({ url: "http://127.0.0.1:8080/leaders?limit="+limit+"&offset="+offset });
+        const response = await httpRequest.doGet({ url: config.url + "/leaders?limit="+limit+"&offset="+offset });
         return await response.json()
     }
-
 };

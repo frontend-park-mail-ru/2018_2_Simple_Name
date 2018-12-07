@@ -20,9 +20,6 @@ const root = document.getElementById('root');
 const router = window.RouterModule;
 router.setRoot(root);
 
-
-
-
 router
     .register('/', MenuView)
     .register('/signin', SignInView)
@@ -32,6 +29,16 @@ router
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);
 router.start();
+
+if ('serviceWorker' in navigator) {
+    // Весь код регистрации у нас асинхронный
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => navigator.serviceWorker.ready.then((worker) => {
+        worker.sync.register('syncdata');
+        console.log('ServiceWorker registration success');
+      }))
+      .catch((err) => console.log('ServiceWorker registration failed: ', err));
+}
 
 
 function createStartgame() {

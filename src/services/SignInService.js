@@ -1,6 +1,8 @@
 const httpRequest = window.httpModule;
 
 import bus from '../js/modules/EventBus.js';
+import * as config from './config.js';
+
 
 
 export default class SignInService {
@@ -14,7 +16,7 @@ export default class SignInService {
 
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url: "http://127.0.0.1:8080/signin",
+            url: config.url + "/signin",
             data: data,
             contentType: 'application/json'
         });

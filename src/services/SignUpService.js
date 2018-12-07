@@ -1,5 +1,5 @@
 const httpRequest = window.httpModule;
-
+import * as config from './config.js';
 
 export default class SignUpService {
 
@@ -11,7 +11,7 @@ export default class SignUpService {
     }
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url: "http://127.0.0.1:8080/signup",
+            url: config.url + "/signup",
             data: data,
             contentType: 'application/json'
         });

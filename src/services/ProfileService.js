@@ -1,5 +1,7 @@
 const httpRequest = window.httpModule;
 import bus from '../js/modules/EventBus.js';
+import * as config from './config.js';
+
 
 
 export default class ProfileService {
@@ -41,7 +43,7 @@ export default class ProfileService {
 
     static async fetchGetData() {
         const resp = await httpRequest.doGet({
-            url: "http://127.0.0.1:8080/profile",
+            url: config.url + "/profile",
         });
 
         if (resp.status === 200) {
@@ -53,7 +55,7 @@ export default class ProfileService {
 
     static async fetchSendData(data) {
         const resp = await httpRequest.doPut({
-            url: "http://127.0.0.1:8080/profile",
+            url: config.url + "/profile",
             data: data,
             contentType: 'application/json',
         });
@@ -68,14 +70,14 @@ export default class ProfileService {
 
     static async fetchLogout() {
         await httpRequest.doGet({
-            url: "http://127.0.0.1:8080/logout"
+            url: config.url + "/logout"
         });
 
         window.RouterModule.open("/");
     }
 
     static async fetchSetAvatar(avatarformData) {
-        await fetch("http://127.0.0.1:8080/profile", {
+        await fetch(config.url + "/profile", {
                     method: "POST",
                     body: avatarformData,
                     credentials: 'include',
