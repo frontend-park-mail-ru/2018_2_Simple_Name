@@ -89,15 +89,15 @@
         constructor(root, name, typeClass, speed) {
             super(root, name, typeClass);
 
-            const koefPosDur = 500;
+            const koefPosDur = 100;
             const overspeed = 4;
-            const koefAnimDur = 200;
+            const koefAnimDur = 300;
             if (speed > overspeed) { speed = overspeed - 1; }
             this.speed = speed;
 
             this.frame.style.animationDuration = `${(overspeed - this.speed) * koefAnimDur}ms`;
-            this.frame.style.transitionDuration = `${(overspeed - this.speed) * koefPosDur}ms`;
-            this.frame.style.webkitTransitionDuration = `${(overspeed - this.speed) * koefPosDur}ms`;
+            this.frame.style.transitionDuration = `${koefPosDur}ms`;
+            this.frame.style.webkitTransitionDuration = `${koefPosDur}ms`;
         }
     }
 
