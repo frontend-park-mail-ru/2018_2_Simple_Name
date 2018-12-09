@@ -1,7 +1,7 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const path = require('path');
-const proxy = require('express-http-proxy');
+// const proxy = require('express-http-proxy');
 // var proxyMiddleware = require('http-proxy-middleware');
 
 
@@ -20,7 +20,7 @@ class Application {
         // });
         // app.use(proxy)
 
-        app.use(express.static('src/'));
+        app.use(express.static('dist/'));
 
         app.set('views', path.join(__dirname, 'src/views/'));
         app.set('view engine', 'pug');
@@ -38,7 +38,7 @@ class Application {
         //   });
 
         app.get('*', (req, res) => {
-            res.sendFile(path.resolve('src/index.html'));
+            res.sendFile(path.resolve('dist/index.html'));
         });
 
     }

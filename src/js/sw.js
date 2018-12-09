@@ -8,7 +8,7 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(APP_CACHE)
       .then(function(cache) {
-        return cache.addAll([...pathCache]);
+        return cache.addAll([...pathsCache]);
       })
   );
 });
