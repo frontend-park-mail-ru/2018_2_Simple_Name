@@ -1,4 +1,5 @@
 import BaseView from '../baseView/baseView.js';
+import aboutTemplate from './aboutTemplate.pug';
 
 export default class AboutView extends BaseView {
     constructor(el) {
@@ -6,6 +7,6 @@ export default class AboutView extends BaseView {
     }
 
     render() {
-        this.el.innerHTML = window.abouttemplateTemplate();
+        this.el.innerHTML = aboutTemplate();
     }
 }

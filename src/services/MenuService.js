@@ -1,4 +1,6 @@
-const httpRequest = window.httpModule;
+// const httpRequest = window.httpModule;
+// const httpRequest = new httpRequest();
+import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
 import * as config from './config.js';
 

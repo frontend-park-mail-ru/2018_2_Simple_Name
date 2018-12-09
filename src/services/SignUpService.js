@@ -1,4 +1,4 @@
-const httpRequest = window.httpModule;
+import httpRequest from '../js/modules/httpModule.js';
 import * as config from './config.js';
 
 export default class SignUpService {

@@ -1,6 +1,7 @@
 import BaseView from "../baseView/baseView.js";
 import bus from '../../js/modules/EventBus.js';
 import ProfileService from "../../services/ProfileService.js";
+import profileTemplate from './profileTemplate.pug';
 
 
 export default class profileView extends BaseView {
@@ -60,7 +61,7 @@ export default class profileView extends BaseView {
         console.log(this.userData.nick);
         console.log(this.userData.email);
         console.log(this.userData.score);
-        this.el.innerHTML = window.profiletemplateTemplate({
+        this.el.innerHTML = profileTemplate({
             playerNickname: this.userData.nick,
             playerEmail: this.userData.email,
             playerScore: this.userData.score

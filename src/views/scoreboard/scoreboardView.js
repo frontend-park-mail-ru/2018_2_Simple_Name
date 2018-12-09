@@ -1,6 +1,7 @@
 import BaseView from "../baseView/baseView.js";
 import bus from '../../js/modules/EventBus.js';
 import LeaderService from "../../services/LeaderService.js";
+import scoreboardTemplate from './scoreboardTemplate.pug';
 
 export default class ScoreboardView extends BaseView {
     constructor(el){
@@ -39,7 +40,7 @@ export default class ScoreboardView extends BaseView {
     }
 
     renderScoreboard() {
-        const scoreboardHtml = window.scoreboardtemplateTemplate({
+        const scoreboardHtml = scoreboardTemplate({
             pageIndex: this.pageIndex,
             pagesCount: this.pagesCount,
             inputPlayers: this.users

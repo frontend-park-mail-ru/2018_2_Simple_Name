@@ -1,6 +1,9 @@
 import BaseView from "../baseView/baseView.js";
 import SignInService from "../../services/SignInService.js";
 import bus from '../../js/modules/EventBus.js';
+import signinTemplate from './signinTemplate.pug';
+
+
 
 export default class signinView extends BaseView {
     constructor(el){
@@ -28,7 +31,7 @@ export default class signinView extends BaseView {
         // this.section = signinSection;
 
         // this.section.innerHTML = signinHtml
-        this.el.innerHTML = window.signintemplateTemplate();
+        this.el.innerHTML = signinTemplate();
 
         const signinButton = document.getElementById("signinButton");
 

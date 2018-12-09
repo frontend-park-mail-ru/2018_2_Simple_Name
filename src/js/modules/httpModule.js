@@ -1,4 +1,4 @@
-(function () {
+// (function () {
     class HttpRequest {
         dofetch({
             url, method, data, contentType, callback = function () { }
@@ -33,5 +33,8 @@
         }
     }
 
-    window.httpModule = new HttpRequest();
-}());
+    // const HttpRequest = new HttpRequest();
+    // window.httpModule = new HttpRequest();
+    // export default HttpRequest;
+    export default new HttpRequest();
+// }());

@@ -1,9 +1,11 @@
 import BaseView from "../baseView/baseView.js";
 import bus from '../../js/modules/EventBus.js';
 import MenuService from "../../services/MenuService.js";
+import menuTemplate from './menuTemplate.pug';
+
 
 export default class MenuView extends BaseView {
-    constructor (el) {
+    constructor(el) {
         super(el);
         this.auth = false;
         bus.on('is-logged-fetch', async function () {
@@ -12,18 +14,20 @@ export default class MenuView extends BaseView {
         }.bind(this))
     }
 
-    renderMenu(islogged){
+    renderMenu(islogged) {
         this.el.innerHTML = '';
         const menuSection = document.createElement('section');
         menuSection.dataset.sectionName = 'menu';
-        const menuHtml = window.menutemplateTemplate({
-            auth: islogged
-        });
+        // const menuHtml = window.menutemplateTemplate({
+        //     auth: islogged
+        // });
+
+        var menuHtml = menuTemplate({auth: islogged});
 
         this.el.innerHTML = menuHtml;
     }
 
-    render () {
+    render() {
         bus.emit("is-logged-fetch");
     }
 

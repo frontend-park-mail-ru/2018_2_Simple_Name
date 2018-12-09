@@ -1,6 +1,10 @@
 import BaseView from "../baseView/baseView.js";
 import SignUpService from "../../services/SignUpService.js";
 import bus from '../../js/modules/EventBus.js';
+import signupTemplate from './signupTemplate.pug';
+
+
+
 export default class signupView extends BaseView {
     constructor(el){
         super(el);
@@ -50,7 +54,7 @@ export default class signupView extends BaseView {
 
         // this.section = signupSection;
 
-        this.el.innerHTML = window.signuptemplateTemplate();
+        this.el.innerHTML = signupTemplate();
 
         const signupButton = document.getElementById("signupButton");
 
