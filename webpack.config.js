@@ -28,6 +28,7 @@ module.exports = {
 
       {
         test: /\.pug$/,
+        exclude: /node_modules/,
         use: 'pug-loader'
       },
       {
@@ -43,8 +44,6 @@ module.exports = {
 
     ]
   },
-
-
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -54,8 +53,7 @@ module.exports = {
       filename: 'main.css' 
     }),
     new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, './src/js/sw.js')
+      entry: path.join(__dirname, '/src/sw.js')
     })
   ]
-
 };

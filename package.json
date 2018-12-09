@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "lint": "./node_modules/.bin/eslint --fix ./",
     "start": "node server"
   },
