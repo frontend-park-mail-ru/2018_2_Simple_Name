@@ -1,5 +1,3 @@
-importScripts('./swCache.js');
-
 var APP_CACHE = 'app-cache';
 // var GAME_CACHE = 'game-cache'
 
@@ -8,6 +6,10 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(APP_CACHE)
       .then(function(cache) {
+        const pathsCache = [
+            '/',
+            '/index.html'
+        ];
         return cache.addAll([...pathsCache]);
       })
   );
