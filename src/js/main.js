@@ -9,9 +9,10 @@ import SignUpView from '../views/signup/signupView.js';
 import AboutView from '../views/about/aboutView.js';
 import ProfileView from '../views/profile/profileView.js';
 
-import '../sw.js'
-
 import '../static/css/main.css';
+
+import './sw.js'
+import './swReg.js'
 
 // import './game/models/animation.js';
 // import './game/models/gameService.js';
