@@ -11,8 +11,7 @@ import ProfileView from '../views/profile/profileView.js';
 
 import '../static/css/main.css';
 
-import './sw.js'
-import './swReg.js'
+// import './sw.js'
 
 // import './game/models/animation.js';
 // import './game/models/gameService.js';
