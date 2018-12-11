@@ -4,7 +4,7 @@ node_js:
 script:
 - npm install
 - npm run build-dev
-- scp -i '~/Загрузки/Telegram Desktop/2018_2_SimName_id_rsa.pem' -r . ubuntu@95.163.209.195
+- scp -i '~/Загрузки/Telegram Desktop/2018_2_SimName_id_rsa.pem' -r . ubuntu@95.163.209.195:/home/ubuntu/Projects/2018_2_Simple_Name
 branches:
   only:
   - travis
