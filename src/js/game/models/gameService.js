@@ -32,8 +32,8 @@ import WsService from "../../modules/webSocketService.js"
 
     SimpleObj = window.SimpleObj;
     AnimatedObj = window.AnimatedObj;
-    // const backUrl = "95.163.209.195:8082";
-    const backUrl = "127.0.0.1:8082";
+    const backUrl = "simplegame.ru.com";
+    // const backUrl = "127.0.0.1:8082";
 
     class GameService {
         constructor(root, onDoneCallback, onErrCallback) {

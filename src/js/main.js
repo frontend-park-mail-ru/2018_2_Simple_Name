@@ -24,8 +24,6 @@ import '../static/css/gamestyles.css';
 const root = document.getElementById('root');
 // const Game = window.GameModule;
 
-// const backUrl = "http://95.163.209.195:80";
-// const backUrl = "http://127.0.0.1:8080";
 // const router = new Router(root);
 const router = window.RouterModule;
 router.setRoot(root);
@@ -42,24 +40,24 @@ router
 router.start();
 
 
-function createStartgame() {
-
-    httpRequest.doGet({
-        url: backUrl + '/islogged',
-        callback(res) {
-            let errText = "";
-            switch (res.status) {
-                case 401:
-                    errText = 'You are not logged in';
-                    createSignIn(errText);
-                    break;
-                case 200:
-                    root.innerHTML = "";
-                    const gameService = new Game(root, createProfile, createMenu);
-                    break;
-                default:
-                    console.log("Default");
-            }
-        }
-    });
-}
+// function createStartgame() {
+//
+//     httpRequest.doGet({
+//         url: backUrl + '/islogged',
+//         callback(res) {
+//             let errText = "";
+//             switch (res.status) {
+//                 case 401:
+//                     errText = 'You are not logged in';
+//                     createSignIn(errText);
+//                     break;
+//                 case 200:
+//                     root.innerHTML = "";
+//                     const gameService = new Game(root, createProfile, createMenu);
+//                     break;
+//                 default:
+//                     console.log("Default");
+//             }
+//         }
+//     });
+// }
