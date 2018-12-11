@@ -3,7 +3,7 @@
         dofetch({
             url, method, data, contentType, callback = function () { }
         } = {}) {
-            return fetch("https://simplegame.ru.com" + url, {
+            return fetch("https://simplegame.ru.com/api" + url, {
                 method,
                 credentials: 'include',
                 body: JSON.stringify(data),
