@@ -5,7 +5,6 @@
         } = {}) {
             return fetch(url, {
                 method,
-                mode: 'cors',
                 credentials: 'include',
                 body: JSON.stringify(data),
                 headers: {

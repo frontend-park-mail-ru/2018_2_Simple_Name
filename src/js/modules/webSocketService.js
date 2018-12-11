@@ -1,4 +1,4 @@
-class WsService {
+export default class WsService {
     constructor(url) {
         this.ws = new WebSocket(`ws://${url}`);
         this.listCommands = [];

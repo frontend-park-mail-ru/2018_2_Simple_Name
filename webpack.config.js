@@ -50,7 +50,7 @@ module.exports = {
       template: './src/index.html'
     }),
     new ExtractTextPlugin({ 
-      filename: 'main.css' 
+      filename: 'main.css'
     }),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, '/src/js/sw.js')

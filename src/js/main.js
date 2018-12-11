@@ -1,5 +1,7 @@
 import bus from './modules/EventBus.js';
 import Router from './modules/Router.js';
+import WSservise from "./modules/webSocketService.js"
+import GameAnimation from "./game/models/animation.js";
 import LeaderService from "../services/LeaderService.js";
 import Game from "./game/models/gameService.js"
 
@@ -11,6 +13,7 @@ import AboutView from '../views/about/aboutView.js';
 import ProfileView from '../views/profile/profileView.js';
 
 import '../static/css/main.css';
+import '../static/css/gamestyles.css';
 
 // import './sw.js'
 

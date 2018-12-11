@@ -1,3 +1,5 @@
+import WsService from "../../modules/webSocketService.js"
+
 (function () {
     const router = window.RouterModule;
 
