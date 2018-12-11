@@ -1,6 +1,6 @@
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-import * as config from './config.js';
+// import * as config from './config.js';
 
 
 
@@ -43,7 +43,7 @@ export default class ProfileService {
 
     static async fetchGetData() {
         const resp = await httpRequest.doGet({
-            url: config.url + "/profile",
+            url:  "/profile",
         });
 
         if (resp.status === 200) {
@@ -55,7 +55,7 @@ export default class ProfileService {
 
     static async fetchSendData(data) {
         const resp = await httpRequest.doPut({
-            url: config.url + "/profile",
+            url:  "/profile",
             data: data,
             contentType: 'application/json',
         });
@@ -70,14 +70,14 @@ export default class ProfileService {
 
     static async fetchLogout() {
         await httpRequest.doGet({
-            url: config.url + "/logout"
+            url:  "/logout"
         });
 
         window.RouterModule.open("/");
     }
 
     static async fetchSetAvatar(avatarformData) {
-        await fetch(config.url + "/profile", {
+        await fetch("https://simplegame.ru.com/profile", {
                     method: "POST",
                     body: avatarformData,
                     credentials: 'include',

@@ -1,1 +1,1 @@
-export const url = "https://simplegame.ru.com";
+// export const url = "https://simplegame.ru.com";
