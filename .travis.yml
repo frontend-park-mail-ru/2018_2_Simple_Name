@@ -1,8 +1,11 @@
 language: node_js
 node_js:
 - 10
+
+sudo: required
+
 script:
-  - ssh-keyscan -H 95.163.209.195 >> ~/.ssh/known_hosts
+- ssh-keyscan -H 95.163.209.195 >> ~/.ssh/known_hosts
 - npm install
 - npm run build-dev
 - scp -i ./2018_2_SimpleName_id_rsa.pem -r . ubuntu@95.163.209.195:/home/ubuntu/Projects/2018_2_Simple_Name
