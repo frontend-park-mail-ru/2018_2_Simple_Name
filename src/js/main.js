@@ -1,6 +1,7 @@
 import bus from './modules/EventBus.js';
 import Router from './modules/Router.js';
 import LeaderService from "../services/LeaderService.js";
+import Game from "./game/models/gameService.js"
 
 import ScoreboardView from '../views/scoreboard/scoreboardView.js';
 import MenuView from '../views/menu/menuView.js';
@@ -34,7 +35,9 @@ router
     .register('/leaders/{page}', ScoreboardView)
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);
+   // .register('/startgame', GameView);
 router.start();
+
 
 function createStartgame() {
 

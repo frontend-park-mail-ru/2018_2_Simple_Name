@@ -1,4 +1,6 @@
 (function () {
+    const router = window.RouterModule;
+
     const Status = {
         StatusError: "error",
         StatusInfo: "info",
@@ -33,8 +35,8 @@
 
     class GameService {
         constructor(root, onDoneCallback, onErrCallback) {
-            this.onDone = onDoneCallback;
-            this.onErr = onErrCallback;
+            // this.onDone = onDoneCallback;
+            // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
             this.WSService = new WsService(backUrl + "/startgame");
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
@@ -56,7 +58,8 @@
             if (this.Status != Status.StatusGameOver && this.Status != Status.StatusError) {
                 console.log(this.Status);
                 const errText = 'Server Connection problem';
-                this.onErr(errText);
+                // this.onErr(errText);
+                router.open("/");
             }
         }
 
@@ -77,7 +80,8 @@
         errorCallback(data) {
             console.log("error-call");
             this.Status = Status.StatusError;
-            this.onErr(data.info);
+            // this.onErr(data.info);
+            router.open("/");
         }
 
         waitCallback(data) {
@@ -129,7 +133,9 @@
             let text = "";
             if (checkOwn && checkRival) {
                 text = `User ${data.rivalstate.nickname} disconnected.`;
-                this.onErr(text);
+                // this.onErr(text);
+                router.open("/");
+
                 return;
             }
             this.gameroot.clearFrame();
@@ -235,7 +241,7 @@
             }, 7700);
         }
 
-    
+
 
         updateHeader(data) {
             this.StaticState.own_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.ownstate.hp);
