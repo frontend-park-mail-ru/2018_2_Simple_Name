@@ -40,7 +40,7 @@ import WsService from "../../modules/webSocketService.js"
             // this.onDone = onDoneCallback;
             // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
-            this.WSService = new WsService(backUrl + "/startgame");
+            this.WSService = new WsService(backUrl + "/api/startgame");
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
             this.WSService.subscribe(Status.StatusError, this.errorCallback.bind(this));
             this.WSService.subscribe(Status.StatusWait, this.waitCallback.bind(this));
