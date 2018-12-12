@@ -3,7 +3,7 @@ class HttpRequest {
     dofetch({
         url, method, data, contentType, callback = function () { }
     } = {}) {
-        return fetch(`https://simplegame.ru.com/api${url}`, {
+        return fetch(`https://127.0.0.1:8080/api${url}`, {
             method,
             credentials: 'include',
             body: JSON.stringify(data),

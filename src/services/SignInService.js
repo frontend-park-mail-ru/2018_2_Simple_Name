@@ -1,6 +1,6 @@
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
+import * as config from './config.js';
 
 
 export default class SignInService {
