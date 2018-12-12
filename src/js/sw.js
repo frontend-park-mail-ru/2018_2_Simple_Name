@@ -11,7 +11,7 @@ assetsToCache = assetsToCache.map(path => {
     return res;
 });
 
-this.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(APP_CACHE)
             .then((cache) => {
@@ -21,7 +21,7 @@ this.addEventListener('install', (event) => {
 });
 
 // Ответ из кэша
-this.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => {
             if (response) { // если страница нашлась в кеше
