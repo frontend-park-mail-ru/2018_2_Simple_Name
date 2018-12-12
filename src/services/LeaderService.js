@@ -1,6 +1,6 @@
 import httpRequest from '../js/modules/httpModule.js';
 // import bus from '../js/modules/EventBus.js';
-import * as config from './config.js';
+// import * as config from './config.js';
 
 
 // function delay (obj) {
@@ -40,12 +40,12 @@ export default class LeadersService {
 
 
     static async fetchPagesCount() {
-        const response = await httpRequest.doGet({ url: `${config.url}/leaderscount` });
+        const response = await httpRequest.doGet({ url: "/leaderscount" });
         return await response.json();
     }
 
     static async fetchUsers(limit, offset) {
-        const response = await httpRequest.doGet({ url: `${config.url}/leaders?limit=${limit}&offset=${offset}` });
+        const response = await httpRequest.doGet({ url: `/leaders?limit=${limit}&offset=${offset}` });
         return await response.json();
     }
 }

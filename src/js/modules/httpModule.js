@@ -3,9 +3,8 @@ class HttpRequest {
     dofetch({
         url, method, data, contentType, callback = function () { }
     } = {}) {
-        return fetch(url, {
+        return fetch(`https://simplegame.ru.com/api${url}`, {
             method,
-            mode: 'cors',
             credentials: 'include',
             body: JSON.stringify(data),
             headers: {

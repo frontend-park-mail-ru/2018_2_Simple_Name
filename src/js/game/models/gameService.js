@@ -1,3 +1,5 @@
+import WsService from "../../modules/webSocketService.js";
+
 (function () {
     const router = window.RouterModule;
 
@@ -30,15 +32,15 @@
 
     SimpleObj = window.SimpleObj;
     AnimatedObj = window.AnimatedObj;
-    // const backUrl = "95.163.209.195:8082";
-    const backUrl = "127.0.0.1:8082";
+    const backUrl = "simplegame.ru.com";
+    // const backUrl = "127.0.0.1:8082";
 
     class GameService {
         constructor(root, onDoneCallback, onErrCallback) {
             // this.onDone = onDoneCallback;
             // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
-            this.WSService = new WsService(`${backUrl}/startgame`);
+            this.WSService = new WsService(`${backUrl}/api/startgame`);
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
             this.WSService.subscribe(Status.StatusError, this.errorCallback.bind(this));
             this.WSService.subscribe(Status.StatusWait, this.waitCallback.bind(this));
@@ -55,7 +57,7 @@
 
         onWSClose() {
             console.log("Wsclose-call");
-            if (this.Status != Status.StatusGameOver && this.Status != Status.StatusError) {
+            if (this.Status !== Status.StatusGameOver && this.Status !== Status.StatusError) {
                 console.log(this.Status);
                 const errText = 'Server Connection problem';
                 // this.onErr(errText);
@@ -66,7 +68,7 @@
         infoCallback(data) {
             console.log("info-call");
 
-            if (this.Status == Status.StatusWait) {
+            if (this.Status === Status.StatusWait) {
                 console.log("MessageBox-call");
                 this.updateMessageBox(data.info);
             } else {
@@ -202,18 +204,18 @@
         initGameArea(data) {
             this.gameArea = new SimpleObj(this.gameroot.frame, "gameArea", "gameArea");
 
-            const own_target = new SimpleObj(this.gameArea.frame, "own-target", "target own-target");
-            this.StaticState.own_target = own_target;
+            const ownTarget = new SimpleObj(this.gameArea.frame, "own-target", "target own-target");
+            this.StaticState.ownTarget = ownTarget;
             this.owntarget = {
-                area: own_target.area(),
-                pos: own_target.pos()
+                area: ownTarget.area(),
+                pos: ownTarget.pos()
             };
 
-            const rival_target = new SimpleObj(this.gameArea.frame, "rival-target", "target rival-target");
-            this.StaticState.rival_target = rival_target;
+            const rivalTarget = new SimpleObj(this.gameArea.frame, "rival-target", "target rival-target");
+            this.StaticState.rivalTarget = rivalTarget;
             this.rivaltarget = {
-                area: rival_target.area(),
-                pos: rival_target.pos()
+                area: rivalTarget.area(),
+                pos: rivalTarget.pos()
             };
         }
 
@@ -250,25 +252,25 @@
         }
 
         updateGameArea(data) {
-            let own_mobs = data.ownstate.mobs;
-            this.set_mob_types(own_mobs, "own-");
-            this.updateMobs(own_mobs);
+            let ownMobs = data.ownstate.mobs;
+            this.setMobTypes(ownMobs, "own-");
+            this.updateMobs(ownMobs);
 
-            let rival_mobs = data.rivalstate.mobs;
+            let rivalMobs = data.rivalstate.mobs;
 
-            rival_mobs = this.reverse_mob_position(rival_mobs, this.baseW);
-            this.set_mob_types(rival_mobs, "rival-");
+            rivalMobs = this.reverseMobPosition(rivalMobs, this.baseW);
+            this.setMobTypes(rivalMobs, "rival-");
 
-            this.updateMobs(rival_mobs);
+            this.updateMobs(rivalMobs);
         }
 
-        set_mob_types(mobs, types) {
+        setMobTypes(mobs, types) {
             for (let id in mobs) {
                 mobs[id].type = types + mobs[id].type;
             }
         }
 
-        reverse_mob_position(mobs, dist) {
+        reverseMobPosition(mobs, dist) {
             for (let id in mobs) {
                 mobs[id].pos.x = dist - mobs[id].pos.x;
             }
@@ -334,14 +336,14 @@
         }
 
         buyPanelClickCallback(event) {
-            const mobtype = this.pars_mobtype(event.target.name);
+            const mobtype = this.parsMobtype(event.target.name);
             this.WSService.send({
                 command: "addmob",
                 createmobtype: mobtype
             });
         }
 
-        pars_mobtype(name) {
+        parsMobtype(name) {
             if (name.includes("tab1")) {
                 return "mob1";
             }

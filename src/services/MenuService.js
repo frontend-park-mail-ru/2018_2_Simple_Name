@@ -2,7 +2,7 @@
 // const httpRequest = new httpRequest();
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-import * as config from './config.js';
+// import * as config from './config.js';
 
 
 export default class SignInService {
@@ -18,7 +18,7 @@ export default class SignInService {
 
     static async fetchAuth() {
         const resp = await httpRequest.doGet({
-            url: `${config.url}/islogged`
+            url: "/islogged"
         });
 
         return resp.status === 200;
