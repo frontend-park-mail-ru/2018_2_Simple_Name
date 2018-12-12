@@ -3,25 +3,26 @@ import * as config from './config.js';
 
 export default class SignUpService {
 
-    static async FetchData (data) {
+    static async FetchData(data) {
 
         console.log("SignInService fetch");
 
         await this.fetchData(data);
     }
+
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url: config.url + "/signup",
-            data: data,
+            url: `${config.url}/signup`,
+            data,
             contentType: 'application/json'
         });
         if (res.status === 201) {
-            alert("Успешно зарегистрирован")
+            // alert("Успешно зарегистрирован");
         } else {
-            alert("Что-то пошло не так");
+            // alert("Что-то пошло не так");
         }
         window.RouterModule.open('/');
     }
 
 
-};
+}

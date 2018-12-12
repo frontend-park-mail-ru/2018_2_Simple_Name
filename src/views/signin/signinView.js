@@ -4,11 +4,10 @@ import bus from '../../js/modules/EventBus.js';
 import signinTemplate from './signinTemplate.pug';
 
 
-
 export default class signinView extends BaseView {
-    constructor(el){
+    constructor(el) {
         super(el);
-        bus.on("sign-in-fetch", function () {
+        bus.on("sign-in-fetch", () => {
             const form = document.getElementById('signinForm');
 
             const email = form.elements.email.value;
@@ -19,25 +18,19 @@ export default class signinView extends BaseView {
                 password
             };
 
-            SignInService.FetchData(JSONdata)
-        })
+            SignInService.FetchData(JSONdata);
+        });
     }
 
-    render () {
+    render() {
         this.el.innerHTML = '';
-        // const signinSection = document.createElement('section');
-        // signinSection.dataset.sectionName = 'signin';
-
-        // this.section = signinSection;
-
-        // this.section.innerHTML = signinHtml
         this.el.innerHTML = signinTemplate();
 
         const signinButton = document.getElementById("signinButton");
 
-        signinButton.addEventListener('click', function (event) {
+        signinButton.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("sign-in-fetch")
+            bus.emit("sign-in-fetch");
         });
     }
 

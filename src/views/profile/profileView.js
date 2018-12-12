@@ -5,16 +5,16 @@ import profileTemplate from './profileTemplate.pug';
 
 
 export default class profileView extends BaseView {
-    constructor(el){
+    constructor(el) {
         super(el);
         this.userData = null;
 
-        bus.on("profile-get-data", async function () {
+        bus.on("profile-get-data", async () => {
             this.userData = await ProfileService.GetUserData();
             this.renderProfile();
-        }.bind(this));
+        });
 
-        bus.on("profile-send-avatar", async function () {
+        bus.on("profile-send-avatar", async () => {
             const form = document.getElementById('profileForm');
 
             const changeAvatar = form.elements.newavatar.value !== "";
@@ -25,9 +25,9 @@ export default class profileView extends BaseView {
                 await ProfileService.SendUserAvatar(avatarformData);
             }
 
-        }.bind(this));
+        });
 
-        bus.on("profile-send-data", async function () {
+        bus.on("profile-send-data", async () => {
 
             const form = document.getElementById('profileForm');
 
@@ -35,8 +35,10 @@ export default class profileView extends BaseView {
             const repeatNewPassword = form.elements.repeatnewpassword.value;
 
             if (newPassword !== repeatNewPassword) {
-                alert("Пароли отличаются.");
-                return
+                // alert("Пароли отличаются.");
+                const errText = 'Passwordi otlichautsya';
+                inner.innerHTML = profileTemplate({statusText: errText});
+                return;
             }
 
             const JSONdata = {
@@ -50,14 +52,14 @@ export default class profileView extends BaseView {
                 const result = await ProfileService.PutUserData(JSONdata);
                 return result;
             }
-        }.bind(this));
+        });
 
-        bus.on("logout", async function () {
+        bus.on("logout", async () => {
             await ProfileService.Logout();
-        }.bind(this));
+        });
     }
 
-    renderProfile(){
+    renderProfile() {
         console.log(this.userData.nick);
         console.log(this.userData.email);
         console.log(this.userData.score);
@@ -70,27 +72,21 @@ export default class profileView extends BaseView {
         const changes = document.getElementById("profileSave");
         const logout = document.getElementById("logout");
 
-        changes.addEventListener("click", function (event) {
+        changes.addEventListener("click", (event) => {
             event.preventDefault();
             bus.emit("profile-send-data");
             bus.emit("profile-send-avatar");
         });
 
-        logout.addEventListener("click", function (event) {
+        logout.addEventListener("click", (event) => {
             event.preventDefault();
             bus.emit("logout");
         });
     }
 
-    render () {
+    render() {
         this.el.innerHTML = '';
         bus.emit("profile-get-data");
-        // const profileSection = document.createElement('section');
-        // profileSection.dataset.sectionName = 'profile';
-
-        // this.section = profileSection;
-
-        // this.section.innerHTML = signinHtml
     }
 
 }

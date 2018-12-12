@@ -12,13 +12,12 @@ import * as config from './config.js';
 // }
 
 export default class LeadersService {
-    static async FetchData (limit, offset) {
+    static async FetchData(limit, offset) {
 
 
         console.log("UserService fetchcount");
         console.log(limit);
         console.log(offset);
-
 
 
         const res1 = await this.fetchPagesCount();
@@ -36,17 +35,17 @@ export default class LeadersService {
             "count": count.leaderscount
         };
 
-        return data
+        return data;
     }
 
 
     static async fetchPagesCount() {
-        const response = await httpRequest.doGet({ url: config.url + "/leaderscount" });
-        return await response.json()
+        const response = await httpRequest.doGet({ url: `${config.url}/leaderscount` });
+        return await response.json();
     }
 
     static async fetchUsers(limit, offset) {
-        const response = await httpRequest.doGet({ url: config.url + "/leaders?limit="+limit+"&offset="+offset });
-        return await response.json()
+        const response = await httpRequest.doGet({ url: `${config.url}/leaders?limit=${limit}&offset=${offset}` });
+        return await response.json();
     }
-};
+}

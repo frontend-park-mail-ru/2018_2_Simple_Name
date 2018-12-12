@@ -3,7 +3,7 @@
  * @module BaseView
  */
 export default class BaseView {
-    constructor (el) {
+    constructor(el) {
         this.el = el;
 
         this.el.dataset.view = this.constructor.name;
@@ -14,11 +14,11 @@ export default class BaseView {
         return !this.el.hidden;
     }
 
-    hide () {
+    hide() {
         this.el.hidden = true;
     }
 
-    show () {
+    show() {
         this.el.hidden = false;
         this.render();
     }

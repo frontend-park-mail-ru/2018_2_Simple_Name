@@ -8,10 +8,10 @@ export default class MenuView extends BaseView {
     constructor(el) {
         super(el);
         this.auth = false;
-        bus.on('is-logged-fetch', async function () {
+        bus.on('is-logged-fetch', async () => {
             const auth = await MenuService.FetchAuth();
-            this.renderMenu(auth)
-        }.bind(this))
+            this.renderMenu(auth);
+        });
     }
 
     renderMenu(islogged) {
@@ -22,7 +22,7 @@ export default class MenuView extends BaseView {
         //     auth: islogged
         // });
 
-        var menuHtml = menuTemplate({auth: islogged});
+        let menuHtml = menuTemplate({auth: islogged});
 
         this.el.innerHTML = menuHtml;
     }

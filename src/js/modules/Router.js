@@ -17,7 +17,7 @@
             // console.log("registr ");
             // console.log(path);
             this.routes[path] = {
-                View: View,
+                View,
                 view: null,
                 el: null
             };
@@ -71,7 +71,7 @@
             if (!view.active) {
                 // console.log("4.2");
 
-                Object.values(this.routes).forEach(function ({view}) {
+                Object.values(this.routes).forEach(({view}) => {
                     if (view && view.active) {
                         view.hide();
                     }
@@ -86,7 +86,7 @@
         }
 
         start() {
-            this.root.addEventListener('click', function (event) {
+            this.root.addEventListener('click', (event) => {
                 if (!(event.target instanceof HTMLAnchorElement)) {
                     return;
                 }
@@ -101,16 +101,16 @@
                     root.innerHTML = "";
                     const Game = window.GameModule;
                     const gameService = new Game(root, undefined, undefined);
-                    return
+                    return;
                 }
 
                 this.open(link.pathname);
-            }.bind(this));
+            });
 
-            window.addEventListener('popstate', function () {
+            window.addEventListener('popstate', () => {
                 const currentPath = window.location.pathname;
                 this.open(currentPath);
-            }.bind(this));
+            });
 
             const currentPath = window.location.pathname;
 

@@ -7,7 +7,7 @@ import * as config from './config.js';
 
 export default class SignInService {
 
-    static async FetchAuth () {
+    static async FetchAuth() {
 
         console.log("Menu fetch");
 
@@ -18,7 +18,7 @@ export default class SignInService {
 
     static async fetchAuth() {
         const resp = await httpRequest.doGet({
-            url: config.url + "/islogged",
+            url: `${config.url}/islogged`
         });
 
         return resp.status === 200;
@@ -27,4 +27,4 @@ export default class SignInService {
     }
 
 
-};
+}

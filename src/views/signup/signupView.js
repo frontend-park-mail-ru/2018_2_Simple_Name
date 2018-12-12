@@ -4,37 +4,35 @@ import bus from '../../js/modules/EventBus.js';
 import signupTemplate from './signupTemplate.pug';
 
 
-
 export default class signupView extends BaseView {
-    constructor(el){
+    constructor(el) {
         super(el);
-        bus.on("sign-up-fetch", function () {
+        bus.on("sign-up-fetch", () => {
             const form = document.getElementById('signupForm');
 
-//todo: валидация данных здесь
+            // todo: валидация данных здесь
 
             const usrNickname = form.elements.nickname.value;
-            // if (!usrNickname
-            //     || usrNickname.match(/[#&<>\"~;$^%{}?]/)
-            //     || !usrNickname.match(/\S{3,20}/)) {
-            //     // const errText = 'Enter a valid nickname';
-            //     // return createSignUp(errText);
-            //     return
-            // }
+            if (!usrNickname
+                || usrNickname.match(/[#&<>\"~;$^%{}?]/)
+                || !usrNickname.match(/\S{3,20}/)) {
+                // const errText = 'Enter a valid nickname';
+                // return createSignUp(errText);
+                return;
+            }
 
             const usrEmail = form.elements.email.value;
-            // if (!usrEmail
-            //     || !usrEmail.match(/[@]\S{5,50}/)) {
-            //     // const errText = 'Enter a valid Email';
-            //     // return createSignUp(errText);
-            // }
+            if (!usrEmail
+                || !usrEmail.match(/[@]\S{5,50}/)) {
+                // const errText = 'Enter a valid Email';
+                // return createSignUp(errText);
+            }
 
             const usrPass = form.elements.password.value;
             const repeatPass = form.elements.repeatPassword.value;
 
-            if (usrPass !== repeatPass){
-                alert("pass != repeat");
-                return
+            if (usrPass !== repeatPass) {
+                return;
             }
 
             const JSONdata = {
@@ -43,24 +41,20 @@ export default class signupView extends BaseView {
                 'password': usrPass
             };
 
-            SignUpService.FetchData(JSONdata)
-        })
+            SignUpService.FetchData(JSONdata);
+        });
     }
 
-    render () {
+    render() {
         this.el.innerHTML = '';
-        // const signupSection = document.createElement('section');
-        // signupSection.dataset.sectionName = 'signup';
-
-        // this.section = signupSection;
 
         this.el.innerHTML = signupTemplate();
 
         const signupButton = document.getElementById("signupButton");
 
-        signupButton.addEventListener('click', function (event) {
+        signupButton.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("sign-up-fetch")
+            bus.emit("sign-up-fetch");
         });
     }
 

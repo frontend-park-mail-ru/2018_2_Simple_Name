@@ -38,7 +38,7 @@
             // this.onDone = onDoneCallback;
             // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
-            this.WSService = new WsService(backUrl + "/startgame");
+            this.WSService = new WsService(`${backUrl}/startgame`);
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
             this.WSService.subscribe(Status.StatusError, this.errorCallback.bind(this));
             this.WSService.subscribe(Status.StatusWait, this.waitCallback.bind(this));
@@ -72,8 +72,7 @@
             } else {
                 if (this.footer) {
                     this.updateFooter(data);
-                } else
-                    console.log("no footer");
+                } else console.log("no footer");
             }
         }
 
@@ -242,7 +241,6 @@
         }
 
 
-
         updateHeader(data) {
             this.StaticState.own_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.ownstate.hp);
             this.StaticState.rival_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.rivalstate.hp);
@@ -331,7 +329,7 @@
             const pos = { x: this.baseW - (event.clientX - this.baseX), y: event.clientY - this.baseY };
             this.WSService.send({
                 command: "killmob",
-                clickpos: pos,
+                clickpos: pos
             });
         }
 
@@ -339,7 +337,7 @@
             const mobtype = this.pars_mobtype(event.target.name);
             this.WSService.send({
                 command: "addmob",
-                createmobtype: mobtype,
+                createmobtype: mobtype
             });
         }
 
