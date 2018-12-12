@@ -11,12 +11,6 @@ class HttpRequest {
                 'Content-Type': contentType
             }
         });
-        // .then((res) => {
-        //     callback(res);
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        // });
     }
 
     doGet(params = {}) {

@@ -49,7 +49,6 @@ export default class ProfileService {
         if (resp.status === 200) {
             return resp;
         }
-        // alert("Неизвестная ошибка");
 
     }
 
@@ -61,10 +60,9 @@ export default class ProfileService {
         });
 
         if (resp.status === 200) {
-            // alert("Данные успешно изменены");
+
             window.RouterModule.open("/");
         } else {
-            // alert("Неизвестная ошибка");
         }
     }
 

@@ -1,15 +1,4 @@
 import httpRequest from '../js/modules/httpModule.js';
-// import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
-
-
-// function delay (obj) {
-//     return new Promise(function (resolve) {
-//         setTimeout(function () {
-//             resolve(obj);
-//         }, 1000);
-//     });
-// }
 
 export default class LeadersService {
     static async FetchData(limit, offset) {

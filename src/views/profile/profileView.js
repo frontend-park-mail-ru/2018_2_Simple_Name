@@ -60,9 +60,6 @@ export default class profileView extends BaseView {
     }
 
     renderProfile() {
-        console.log(this.userData.nick);
-        console.log(this.userData.email);
-        console.log(this.userData.score);
         this.el.innerHTML = profileTemplate({
             playerNickname: this.userData.nick,
             playerEmail: this.userData.email,
