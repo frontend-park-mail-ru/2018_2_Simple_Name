@@ -1,3 +1,4 @@
+
 (function () {
     class Router {
         constructor() {
@@ -93,9 +94,15 @@
                 event.preventDefault();
                 const link = event.target;
 
-                console.log({
-                    pathname: link.pathname
-                });
+                console.log("pathname = ", link.pathname);
+
+                if (link.pathname === "/startgame") {
+                    const root = document.getElementById('root');
+                    root.innerHTML = "";
+                    const Game = window.GameModule;
+                    const gameService = new Game(root, undefined, undefined);
+                    return
+                }
 
                 this.open(link.pathname);
             }.bind(this));
