@@ -15,14 +15,13 @@ import ProfileView from '../views/profile/profileView.js';
 import '../static/css/main.css';
 import '../static/css/gamestyles.css';
 
-import './swReg.js';
-// import './sw.js'
+import '../swReg.js';
 
 // import './game/models/animation.js';
 // import './game/models/gameService.js';
 
-
 const root = document.getElementById('root');
+
 // const Game = window.GameModule;
 
 // const router = new Router(root);
