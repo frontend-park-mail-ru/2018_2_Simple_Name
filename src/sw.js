@@ -8,7 +8,7 @@ assetsToCache = assetsToCache.map(path => {
     return res;
 });
 
-// При установке воркера мы должны закешировать часть данных (статику).
+// При установке воркера мы должны закешировать часть данных (статику)
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE).then((cache) => {
@@ -25,28 +25,20 @@ self.addEventListener('fetch', function (event) {
 });
 
 function fromCache(request) {
-    // if (request.method === 'GET' ||
-    // request.method === 'POST' ||
-    // request.method === 'PUT'){
-    //     return
-    // } else {
         return caches.open(CACHE)
             .then((cache) =>
                 cache.match(request)
                     .then((matching) =>
                         matching || Promise.reject('no-match')
                     ));
-    // }
 }
 
 function update(request) {
-    // if (request.method === 'GET'){
-    //     return
-    // } else {
+    if (request.method !== 'POST'){ //post unsupported
     return caches.open(CACHE).then((cache) =>
         fetch(request).then((response) =>
             cache.put(request, response)
         )
     );
-// }
+}
 }
