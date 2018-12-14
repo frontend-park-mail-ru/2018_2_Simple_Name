@@ -12,33 +12,42 @@ assetsToCache = assetsToCache.map(path => {
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE).then((cache) => {
-            return cache.addAll([...assetsToCache, '/']);
+            return cache.addAll([...assetsToCache]);
         })
     );
 });
 
 self.addEventListener('fetch', function (event) {
     // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера
-    event.respondWith(fromCache(event.request));
+    if (event.request.url !== 'POST') {
+        event.respondWith(fromCache(event.request));
+    }
     // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновится
-    event.waitUntil(update(event.request));
+    // event.waitUntil(update(event.request));
 });
 
 function fromCache(request) {
-        return caches.open(CACHE)
-            .then((cache) =>
-                cache.match(request)
-                    .then((matching) =>
-                        matching || Promise.reject('no-match')
-                    ));
-}
-
-function update(request) {
-    if (request.method !== 'POST'){ //post unsupported
     return caches.open(CACHE).then((cache) =>
-        fetch(request).then((response) =>
-            cache.put(request, response)
-        )
+        cache.match(request)
+            .then((matching) => matching || Promise.reject('no-match'))
     );
 }
-}
+
+// function fromCache(request) {
+//     return caches.open(CACHE)
+//         .then((cache) =>
+//             cache.match(request)
+//                 .then((matching) =>
+//                     matching || Promise.reject('no-match')
+//                 ));
+// }
+
+// function update(request) {
+//     // if (request.method !== 'POST'){ //post unsupported
+//     return caches.open(CACHE).then((cache) =>
+//         fetch(request).then((response) =>
+//             cache.put(request, response)
+//         )
+//     );
+// }
+// }
