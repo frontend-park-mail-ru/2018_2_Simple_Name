@@ -1,6 +1,6 @@
 const CACHE = 'cache-only-v1';
 const { assets } = global.serviceWorkerOption;
-let assetsToCache = [...assets, '/'];
+let assetsToCache = [...assets];
 
 assetsToCache = assetsToCache.map(path => {
     const res = new URL(path, global.location).toString();
@@ -19,35 +19,27 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', function (event) {
     // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера
-    if (event.request.url !== 'POST') {
+    if (event.request.method !== 'POST') { //post unsuported
+        // event.request.method !== 'GET') {
         event.respondWith(fromCache(event.request));
+        // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновится
+        if (event.request.url !== 'http://127.0.0.1:3002/islogged') {
+            event.waitUntil(update(event.request));
+        }
     }
-    // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновится
-    // event.waitUntil(update(event.request));
 });
 
 function fromCache(request) {
     return caches.open(CACHE).then((cache) =>
         cache.match(request)
             .then((matching) => matching || Promise.reject('no-match'))
-    );
+    )
 }
 
-// function fromCache(request) {
-//     return caches.open(CACHE)
-//         .then((cache) =>
-//             cache.match(request)
-//                 .then((matching) =>
-//                     matching || Promise.reject('no-match')
-//                 ));
-// }
-
-// function update(request) {
-//     // if (request.method !== 'POST'){ //post unsupported
-//     return caches.open(CACHE).then((cache) =>
-//         fetch(request).then((response) =>
-//             cache.put(request, response)
-//         )
-//     );
-// }
-// }
+function update(request) {
+    return caches.open(CACHE).then((cache) =>
+        fetch(request).then((response) =>
+            cache.put(request, response)
+        )
+    );
+}
