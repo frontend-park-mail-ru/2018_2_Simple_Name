@@ -5,9 +5,10 @@ import signinTemplate from './signinTemplate.pug';
 
 
 export default class signinView extends BaseView {
-    constructor(el) {
+    constructor(el, router) {
         super(el);
-        bus.on("sign-in-fetch", () => {
+        this.RouterModule = router;
+        bus.on("sign-in-fetch", async () => {
             const form = document.getElementById('signinForm');
 
             const email = form.elements.email.value;
@@ -18,7 +19,10 @@ export default class signinView extends BaseView {
                 password
             };
 
-            SignInService.FetchData(JSONdata);
+            await SignInService.FetchData(JSONdata);
+
+            this.RouterModule.open('/');
+
         });
     }
 

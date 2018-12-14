@@ -5,8 +5,9 @@ import profileTemplate from './profileTemplate.pug';
 
 
 export default class profileView extends BaseView {
-    constructor(el) {
+    constructor(el, router) {
         super(el);
+        this.RouterModule = router;
         this.userData = null;
 
         bus.on("profile-get-data", async () => {
@@ -23,6 +24,8 @@ export default class profileView extends BaseView {
                 const avatarformData = new FormData();
                 avatarformData.append("new_avatar", form.elements.newavatar.files[0], "new_avatar");
                 await ProfileService.SendUserAvatar(avatarformData);
+
+                this.RouterModule.open("/profile");
             }
 
         });
@@ -56,6 +59,7 @@ export default class profileView extends BaseView {
 
         bus.on("logout", async () => {
             await ProfileService.Logout();
+            this.RouterModule.open("/");
         });
     }
 

@@ -60,9 +60,9 @@ export default class ProfileService {
         });
 
         if (resp.status === 200) {
-
-            window.RouterModule.open("/");
+            // window.RouterModule.open("/");
         } else {
+
         }
     }
 
@@ -71,7 +71,7 @@ export default class ProfileService {
             url: "/logout"
         });
 
-        window.RouterModule.open("/");
+        // window.RouterModule.open("/");
     }
 
     static async fetchSetAvatar(avatarformData) {
@@ -81,6 +81,6 @@ export default class ProfileService {
             credentials: 'include'
         });
 
-        window.RouterModule.open("/profile");
+        // window.RouterModule.open("/profile");
     }
 }

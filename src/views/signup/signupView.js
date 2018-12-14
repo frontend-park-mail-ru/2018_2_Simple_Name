@@ -5,9 +5,12 @@ import signupTemplate from './signupTemplate.pug';
 
 
 export default class signupView extends BaseView {
-    constructor(el) {
+    constructor(el, router) {
         super(el);
-        bus.on("sign-up-fetch", () => {
+
+        this.RouterModule = router;
+
+        bus.on("sign-up-fetch", async () => {
             const form = document.getElementById('signupForm');
 
             // todo: валидация данных здесь
@@ -41,7 +44,9 @@ export default class signupView extends BaseView {
                 'password': usrPass
             };
 
-            SignUpService.FetchData(JSONdata);
+            await SignUpService.FetchData(JSONdata);
+
+            this.RouterModule.open('/');
         });
     }
 

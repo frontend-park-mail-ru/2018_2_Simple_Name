@@ -24,7 +24,7 @@ export default class SignInService {
         } else if (res.status === 400) {
             // alert("Неверный логин/пароль");
         }
-        window.RouterModule.open('/');
+        // window.RouterModule.open('/');
     }
 
 

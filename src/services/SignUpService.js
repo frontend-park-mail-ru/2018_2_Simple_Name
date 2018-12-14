@@ -21,7 +21,7 @@ export default class SignUpService {
         } else {
             // alert("Что-то пошло не так");
         }
-        window.RouterModule.open('/');
+        // window.RouterModule.open('/');
     }
 
 

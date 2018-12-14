@@ -1,19 +1,20 @@
 
-(function () {
-    class Router {
-        constructor() {
+    export default class Router {
+        constructor(root) {
             this.routes = {};
-        }
-
-        setRoot(root) {
             this.root = root;
         }
 
-        register(path, View) {
+        // setRoot(root) {
+        //     this.root = root;
+        // }
+
+        register(path, View, router) {
             this.routes[path] = {
                 View,
                 view: null,
-                el: null
+                el: null,
+                router: router
             };
 
             return this;
@@ -35,7 +36,7 @@
                 );
             }
 
-            let {View, view, el} = route;
+            let {View, view, el, router} = route;
 
             if (!el) {
 
@@ -44,7 +45,7 @@
             }
 
             if (!view) {
-                view = new View(el);
+                view = new View(el, router);
             }
 
             if (!view.active) {
@@ -89,6 +90,4 @@
         }
     }
 
-    window.RouterModule = new Router();
-
-}());
+    // window.RouterModule = new Router();

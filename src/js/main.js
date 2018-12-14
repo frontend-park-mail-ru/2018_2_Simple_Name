@@ -15,7 +15,7 @@ import ProfileView from '../views/profile/profileView.js';
 import '../static/css/main.css';
 import '../static/css/gamestyles.css';
 
-import '../swReg.js';
+// import '../swReg.js';
 
 // import './game/models/animation.js';
 // import './game/models/gameService.js';
@@ -25,14 +25,16 @@ const root = document.getElementById('root');
 // const Game = window.GameModule;
 
 // const router = new Router(root);
-const router = window.RouterModule;
-router.setRoot(root);
+// const router = window.RouterModule;
 
+// router.setRoot(root);
+const router = new Router(root);
+console.log(router);
 router
     .register('/', MenuView)
-    .register('/signin', SignInView)
-    .register('/signup', SignUpView)
-    .register('/profile', ProfileView)
+    .register('/signin', SignInView, router)
+    .register('/signup', SignUpView, router)
+    .register('/profile', ProfileView, router)
     .register('/leaders/{page}', ScoreboardView)
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);

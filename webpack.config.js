@@ -51,9 +51,9 @@ module.exports = {
         }),
         new ExtractTextPlugin({
             filename: 'main.css'        
-        }),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js')
-          })
+        })//,
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, './src/sw.js')
+        //   })
     ]
 };
