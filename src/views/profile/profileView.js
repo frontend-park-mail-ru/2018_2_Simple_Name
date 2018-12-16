@@ -10,9 +10,9 @@ export default class profileView extends BaseView {
         this.RouterModule = router;
         this.userData = null;
 
-        bus.on("profile-get-data", async () => {
+        bus.on("profile-get-data", async (text) => {
             this.userData = await ProfileService.GetUserData();
-            this.renderProfile();
+            this.renderProfile(text);
         });
 
         bus.on("profile-send-avatar", async () => {
@@ -38,8 +38,7 @@ export default class profileView extends BaseView {
             const repeatNewPassword = form.elements.repeatnewpassword.value;
 
             if (newPassword !== repeatNewPassword) {
-                // alert("Пароли отличаются.");
-                const errText = 'Passwordi otlichautsya';
+                const errText = 'Пароли отличаются.';
                 inner.innerHTML = profileTemplate({statusText: errText});
                 return;
             }
@@ -63,11 +62,12 @@ export default class profileView extends BaseView {
         });
     }
 
-    renderProfile() {
+    renderProfile(text) {
         this.el.innerHTML = profileTemplate({
             playerNickname: this.userData.nick,
             playerEmail: this.userData.email,
-            playerScore: this.userData.score
+            playerScore: this.userData.score,
+            statusText: text
         });
 
         const changes = document.getElementById("profileSave");
@@ -85,9 +85,9 @@ export default class profileView extends BaseView {
         });
     }
 
-    render() {
+    render(text) {
         this.el.innerHTML = '';
-        bus.emit("profile-get-data");
+        bus.emit("profile-get-data", text);
     }
 
 }
