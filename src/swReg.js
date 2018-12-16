@@ -1,6 +1,5 @@
 // Регистрируем sw
 if ('serviceWorker' in navigator) {
-    // console.log('Зашёл в навигатор');
     navigator.serviceWorker.register('/sw.js')
         .then(() => navigator.serviceWorker.ready.then((reg) => {
             reg.sync.register('data');
@@ -11,7 +10,7 @@ if ('serviceWorker' in navigator) {
               } else if(reg.active) {
                 console.log('Service worker active');
               }
-            console.log('ServiceWorker reg success ');
+            console.log('ServiceWorker registration success ');
         }))
         .catch((err) => console.log('ServiceWorker registration failed: ', err));
 }

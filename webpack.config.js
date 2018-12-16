@@ -53,7 +53,11 @@ module.exports = {
             filename: 'main.css'        
         }),
         new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js')
+            entry: path.join(__dirname, './src/sw.js'),
+            excludes: [
+				'**/.*'
+				// '**/*.map'
+			],
           })
     ]
 };
