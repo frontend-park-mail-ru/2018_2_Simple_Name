@@ -12,9 +12,7 @@ assetsToCache = assetsToCache.map(path => {
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE).then((cache) => {
-            // return cache.addAll([...assetsToCache], '/');
-            return cache.addAll([...assetsToCache]);
-
+            return cache.addAll([...assetsToCache, '/']);
         })
     );
 });
@@ -37,9 +35,9 @@ self.addEventListener('fetch', function (event) {
                     // создаём новый запрос
                     return fetch(fetchRequest).then(function (response) {
                         // при неудаче всегда можно выдать ресурс из кэша
-                        // if (!response || response.status !== 200) {
-                        //     return cachedResponse;
-                        // }
+                        if (!response || response.status !== 200) {
+                            return cachedResponse;
+                        }
                         // обновляем кэш
                             caches.open(CACHE).then(function (cache) {
                                 cache.put(event.request, response.clone());

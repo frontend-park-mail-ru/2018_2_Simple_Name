@@ -10,7 +10,7 @@ module.exports = {
 
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist/static')
     },
 
     module: {
@@ -33,14 +33,14 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/
-                // use: {
-                //     loader: 'babel-loader',
-                //     options: {
-                //         presets: ['@babel/preset-env']
-                //     }
-                // }
-            }
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
 
         ]
     },
@@ -55,8 +55,8 @@ module.exports = {
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, './src/sw.js'),
             excludes: [
-				'**/.*'
-				// '**/*.map'
+				'**/.*',
+				'**/*.map'
 			],
           })
     ]
