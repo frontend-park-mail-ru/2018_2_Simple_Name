@@ -10,7 +10,7 @@ export default class Router {
     //     this.root = root;
     // }
 
-    register(path, View, option) {
+    register(path, View, option, text = null) {
         // console.log("Registr: ", path);
         // console.log("Type: ", typeof View);
 
@@ -27,14 +27,15 @@ export default class Router {
             view,
             el,
             router: this,
-            option
+            option,
+            text
         };
 
 
         return this;
     }
 
-    open(path) {
+    open(path, text = null) {
         console.log("Open: ", path);
 
 
@@ -83,6 +84,8 @@ export default class Router {
             );
         }
 
+
+
         let {View, view, el, router, option} = route;
 
         if (!el) {
@@ -96,14 +99,20 @@ export default class Router {
 
         console.log("Active: ", view.active);
 
-        if (view.active){
+        if (view.active && text !== null) {
+            view.hide();
+        }
+
+        console.log("Active: ", view.active);
+
+        if (view.active) {
         } else {
             Object.values(this.routes).forEach(({view}) => {
                 if (view && view.active) {
                     view.hide();
                 }
             });
-            view.show();
+            view.show(text);
         }
 
         this.routes[path] = {View, view, el, router, option};

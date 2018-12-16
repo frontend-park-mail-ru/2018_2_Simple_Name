@@ -19,16 +19,25 @@ export default class signinView extends BaseView {
                 password
             };
 
-            await SignInService.FetchData(JSONdata);
+            const responseCode = await SignInService.FetchData(JSONdata);
 
-            this.RouterModule.open('/');
+            console.log("Status CODE = ", responseCode);
 
+            if (responseCode === 200) {
+                this.RouterModule.open("/", "Успешно авторизован!");
+            } else if (responseCode === 400) {
+                this.render("Не верный логин или пароль.");
+            } else {
+                this.RouterModule.open("/", "Что-то пошло не так!");
+            }
         });
     }
 
-    render() {
+    render(text) {
+        console.log("Render signIN!");
+
         this.el.innerHTML = '';
-        this.el.innerHTML = signinTemplate();
+        this.el.innerHTML = signinTemplate({statusText: text});
 
         const signinButton = document.getElementById("signinButton");
 

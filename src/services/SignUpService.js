@@ -7,7 +7,9 @@ export default class SignUpService {
 
         console.log("SignInService fetch");
 
-        await this.fetchData(data);
+        const responseCode = await this.fetchData(data);
+
+        return responseCode;
     }
 
     static async fetchData(data) {
@@ -16,12 +18,7 @@ export default class SignUpService {
             data,
             contentType: 'application/json'
         });
-        if (res.status === 201) {
-            // alert("Успешно зарегистрирован");
-        } else {
-            // alert("Что-то пошло не так");
-        }
-        // window.RouterModule.open('/');
+        return res.status;
     }
 
 

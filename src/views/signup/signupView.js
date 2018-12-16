@@ -11,30 +11,37 @@ export default class signupView extends BaseView {
         this.RouterModule = router;
 
         bus.on("sign-up-fetch", async () => {
+            console.log("sign-up-fetch");
+
             const form = document.getElementById('signupForm');
 
             // todo: валидация данных здесь
 
             const usrNickname = form.elements.nickname.value;
+
+            let errText = "";
+
             if (!usrNickname
                 || usrNickname.match(/[#&<>\"~;$^%{}?]/)
                 || !usrNickname.match(/\S{3,20}/)) {
-                // const errText = 'Enter a valid nickname';
-                // return createSignUp(errText);
-                return;
+                errText += 'Введите корректный ник.';
             }
 
             const usrEmail = form.elements.email.value;
             if (!usrEmail
                 || !usrEmail.match(/[@]\S{5,50}/)) {
-                // const errText = 'Enter a valid Email';
-                // return createSignUp(errText);
+                errText += 'Введите корректный email.';
             }
 
             const usrPass = form.elements.password.value;
             const repeatPass = form.elements.repeatPassword.value;
 
             if (usrPass !== repeatPass) {
+                errText += "Пароли не совпадают.";
+            }
+
+            if (errText !== "") {
+                this.render(errText);
                 return;
             }
 
@@ -44,16 +51,22 @@ export default class signupView extends BaseView {
                 'password': usrPass
             };
 
-            await SignUpService.FetchData(JSONdata);
+            const responseCode = await SignUpService.FetchData(JSONdata);
 
-            this.RouterModule.open('/');
+            if (responseCode === 201) {
+                this.RouterModule.open("/", "Успешно зарегистрирован!");
+            } else if (responseCode === 400) {
+                this.render("Пожалуйста, введите корректные данные.");
+            } else {
+                this.RouterModule.open("/", "Что-то пошло не так!");
+            }
         });
     }
 
-    render() {
+    render(text) {
         this.el.innerHTML = '';
 
-        this.el.innerHTML = signupTemplate();
+        this.el.innerHTML = signupTemplate({statusText: text});
 
         const signupButton = document.getElementById("signupButton");
 

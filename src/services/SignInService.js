@@ -9,7 +9,8 @@ export default class SignInService {
 
         console.log("SignInService fetch");
 
-        await this.fetchData(data);
+        const responseCode = await this.fetchData(data);
+        return responseCode;
     }
 
     static async fetchData(data) {
@@ -19,11 +20,8 @@ export default class SignInService {
             contentType: 'application/json'
         });
 
-        if (res.status === 200) {
-            // alert("Успешно авторизаван");
-        } else if (res.status === 400) {
-            // alert("Неверный логин/пароль");
-        }
+        return res.status;
+
         // window.RouterModule.open('/');
     }
 
