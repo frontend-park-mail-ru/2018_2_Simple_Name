@@ -32,10 +32,11 @@ const router = new Router(root);
 console.log(router);
 router
     .register('/', MenuView)
-    .register('/signin', SignInView, router)
-    .register('/signup', SignUpView, router)
-    .register('/profile', ProfileView, router)
-    .register('/leaders/{page}', ScoreboardView)
+    .register('/signin', SignInView)
+    .register('/signup', SignUpView)
+    .register('/profile', ProfileView)
+    // .register(new RegExp('/leaders\/([0-9]+)'), ScoreboardView)
+    // .register('/leaders/{page}', ScoreboardView)
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);
 // .register('/startgame', GameView);
