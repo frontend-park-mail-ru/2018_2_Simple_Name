@@ -18,9 +18,9 @@ export default class BaseView {
         this.el.hidden = true;
     }
 
-    show() {
+    show(text = null) {
         this.el.hidden = false;
-        this.render();
+        this.render(text);
     }
 
     render() {

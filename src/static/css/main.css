@@ -166,7 +166,8 @@ a {
 body {
     /* background-color: gray; */
     /* background-image: url('image/game-background.png'); */
-    background-image: url('../media/game-background.png');
+    /*background-image: url('../media/game-background.png');*/
+    background-image: url('/static/b3f5e82c46a8e0cd2d7a8b5dce47a084.png');
     color: whitesmoke;
     /* color: rgb(3, 43, 19); */
     margin: auto;

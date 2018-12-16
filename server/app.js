@@ -20,7 +20,8 @@ class Application {
         // });
         // app.use(proxy)
 
-        app.use(express.static('dist/'));
+        // app.use(express.static('dist/'));
+        app.use('/static', express.static('dist/'));
 
         app.set('views', path.join(__dirname, 'src/views/'));
         app.set('view engine', 'pug');
@@ -38,6 +39,7 @@ class Application {
         //   });
 
         app.get('*', (req, res) => {
+            console.log(req.url);
             res.sendFile(path.resolve('dist/index.html'));
         });
 
