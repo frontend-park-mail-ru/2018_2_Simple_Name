@@ -118,7 +118,7 @@ export default class Router {
         this.routes[path] = {View, view, el, router, option};
     }
 
-    start() {
+    start(router) {
         this.root.addEventListener('click', (event) => {
             if (!(event.target instanceof HTMLAnchorElement)) {
                 return;
@@ -133,7 +133,7 @@ export default class Router {
                 const root = document.getElementById('root');
                 root.innerHTML = "";
                 const Game = window.GameModule;
-                const gameService = new Game(root, undefined, undefined);
+                const gameService = new Game(root, router);
                 return;
             }
 
