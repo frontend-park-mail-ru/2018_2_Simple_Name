@@ -18,13 +18,14 @@ self.addEventListener('install', (event) => {
 });
 
 // период обновления кэша - одни сутки
-var MAX_AGE = 86400000;
+let MAX_AGE = 86400000;
 
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', (event) => {
     event.respondWith(
         // ищем запрошенный ресурс среди закэшированных
-        caches.match(event.request).then(function (cachedResponse) {
-            var lastModified, fetchRequest;
+        caches.match(event.request).then((cachedResponse) => {
+            let lastModified,
+                fetchRequest;
             // если ресурс есть в кэше
             if (cachedResponse) {
                 // получаем дату последнего обновления
@@ -33,18 +34,18 @@ self.addEventListener('fetch', function (event) {
                 if (lastModified && (Date.now() - lastModified.getTime()) > MAX_AGE) {
                     fetchRequest = event.request.clone();
                     // создаём новый запрос
-                    return fetch(fetchRequest).then(function (response) {
+                    return fetch(fetchRequest).then((response) => {
                         // при неудаче всегда можно выдать ресурс из кэша
                         if (!response || response.status !== 200) {
                             return cachedResponse;
                         }
                         // обновляем кэш
-                            caches.open(CACHE).then(function (cache) {
-                                cache.put(event.request, response.clone());
-                            });
+                        caches.open(CACHE).then((cache) => {
+                            cache.put(event.request, response.clone());
+                        });
                         // возвращаем свежий ресурс
                         return response.clone();
-                    }).catch(function () {
+                    }).catch(() => {
                         return cachedResponse;
                     });
                 }
