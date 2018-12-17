@@ -24,27 +24,31 @@ block content
             .pagination
                 //- prev arrow
                 if (amount > 1)
-                    a(href='' title="Prev page" name= index) ◀
+                    - var next = active;
+                    - var prev = active - 2;
+                    if (prev + 1 > 0)
+                        a(title="Prev page" name= index href='/leaders/'+prev) ◀
 
                     - for (var index = 1; index <= amount; index++)
 
                         - var titleName = 'Current page ' + index;
-                        - var pageName = index;
+                        - var pageName = index -1;
 
                         if (index === active)
-                            a(href='' title= titleName name= pageName).active= index
+                            a.active.button-ref(title= titleName name= pageName href='/leaders/' + pageName)=index
                         else
-                            a(href='' title= b name= pageName)= index
+                            a.button-ref(title= b name= pageName href = '/leaders/' + pageName)= index
 
                     //- next arrow
-                    a(href='' title="Next page") ▶
+                    if (next < amount)
+                        a(title="Next page" href='/leaders/'+next) ▶
 
         +scoreTable(inputPlayers)
 
         div#pagination
             +pagination(pagesCount, pageIndex)
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='') Back to menu
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
 
     div.warn-title #{statusText}
 

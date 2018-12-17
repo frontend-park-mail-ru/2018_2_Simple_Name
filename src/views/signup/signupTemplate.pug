@@ -10,15 +10,6 @@ block header
 block content
   div
     form#signupForm.info-block(method= 'POST')
-      div.form-group First Name:
-        input#firstname.form-control.capitalSymb(type='text' placeholder='First name' name='firstname')
-
-      div.form-group Last Name:
-        input#lastname.form-control.capitalSymb(type='text' placeholder='Last name' name='lastname')
-
-      div.form-group Age:
-        input#age.form-control(type='number' placeholder='21' min='1' max='125' name='age')
-
       div.form-group Nickname:
         input#nickname.form-control(type='text' placeholder='Nickname' name='nickname')
 
@@ -31,9 +22,9 @@ block content
       div.form-group Confirm Password:
         input#repeatPassword.form-control(type='password' placeholder='Repeat password', name='repeatPassword')
 
-      button.button.hvr-grow(type='submit') Sign up
+      button#signupButton.button.hvr-grow(type='submit') Sign up
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='') Back to menu
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
 
   div.warn-title #{statusText}
 
