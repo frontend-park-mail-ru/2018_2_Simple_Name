@@ -1,7 +1,7 @@
 import WsService from "../../modules/webSocketService.js";
 
 (function () {
-    const router = window.RouterModule;
+    // const router = window.RouterModule;
 
     const Status = {
         StatusError: "error",
@@ -36,7 +36,8 @@ import WsService from "../../modules/webSocketService.js";
     const backUrl = "127.0.0.1:8082";
 
     class GameService {
-        constructor(root, onDoneCallback, onErrCallback) {
+        constructor(root, router) {
+            this.router = router;
             // this.onDone = onDoneCallback;
             // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
@@ -61,7 +62,7 @@ import WsService from "../../modules/webSocketService.js";
                 console.log(this.Status);
                 const errText = 'Server Connection problem';
                 // this.onErr(errText);
-                router.open("/");
+                this.router.open("/");
             }
         }
 
@@ -82,7 +83,7 @@ import WsService from "../../modules/webSocketService.js";
             console.log("error-call");
             this.Status = Status.StatusError;
             // this.onErr(data.info);
-            router.open("/");
+            this.router.open("/");
         }
 
         waitCallback(data) {
@@ -135,7 +136,7 @@ import WsService from "../../modules/webSocketService.js";
             if (checkOwn && checkRival) {
                 text = `User ${data.rivalstate.nickname} disconnected.`;
                 // this.onErr(text);
-                router.open("/");
+                this.router.open("/");
 
                 return;
             }

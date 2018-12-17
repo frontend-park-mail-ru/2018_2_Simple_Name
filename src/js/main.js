@@ -40,4 +40,4 @@ router
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);
 // .register('/startgame', GameView);
-router.start();
+router.start(router);
