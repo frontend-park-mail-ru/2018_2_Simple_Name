@@ -13,7 +13,8 @@ module.exports = {
 
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist/static')
+        publicPath: '/static/',
+        path: path.resolve(__dirname, 'dist')
     },
 
     module: {
@@ -41,14 +42,14 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
+                exclude: /node_modules/
+                // use: {
+                //     loader: 'babel-loader',
+                //     options: {
+                //         presets: ['@babel/preset-env']
+                //     }
+                // }
+            }
 
         ]
     },
