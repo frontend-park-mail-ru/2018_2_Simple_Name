@@ -1,6 +1,7 @@
 // Регистрируем sw
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/sw.js')
+    console.log("SW");
+    navigator.serviceWorker.register('/static/sw.js', {scope: './'})
         .then(() => navigator.serviceWorker.ready.then((reg) => {
             reg.sync.register('data');
             if(reg.installing) {
@@ -12,5 +13,6 @@ if ('serviceWorker' in navigator) {
             }
             console.log('ServiceWorker registration success ');
         }))
-        .catch((err) => console.log('ServiceWorker registration failed: ', err));
+        .catch((err) => console.log('ServiceWorker registration failed: ', err, "  NEW NEW NEW NEW "));
+
 }

@@ -18,9 +18,6 @@ export default class MenuView extends BaseView {
         this.el.innerHTML = '';
         const menuSection = document.createElement('section');
         menuSection.dataset.sectionName = 'menu';
-        // const menuHtml = window.menutemplateTemplate({
-        //     auth: islogged
-        // });
 
         let menuHtml = menuTemplate({auth, statusText: text});
 

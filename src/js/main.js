@@ -17,17 +17,7 @@ import '../static/css/gamestyles.sass';
 
 import '../swReg.js';
 
-// import './game/models/animation.js';
-// import './game/models/gameService.js';
-
 const root = document.getElementById('root');
-
-// const Game = window.GameModule;
-
-// const router = new Router(root);
-// const router = window.RouterModule;
-
-// router.setRoot(root);
 const router = new Router(root);
 
 router
@@ -35,9 +25,6 @@ router
     .register('/signin', SignInView)
     .register('/signup', SignUpView)
     .register('/profile', ProfileView)
-    // .register(new RegExp('/leaders\/([0-9]+)'), ScoreboardView)
-    // .register('/leaders/{page}', ScoreboardView)
     .register('/leaders', ScoreboardView)
     .register('/about', AboutView);
-// .register('/startgame', GameView);
 router.start(router);

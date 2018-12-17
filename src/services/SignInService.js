@@ -7,8 +7,6 @@ export default class SignInService {
 
     static async FetchData(data) {
 
-        console.log("SignInService fetch");
-
         const responseCode = await this.fetchData(data);
         return responseCode;
     }
@@ -21,8 +19,6 @@ export default class SignInService {
         });
 
         return res.status;
-
-        // window.RouterModule.open('/');
     }
 
 

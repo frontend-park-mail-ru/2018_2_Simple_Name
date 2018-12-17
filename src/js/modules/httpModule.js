@@ -1,4 +1,3 @@
-// (function () {
 class HttpRequest {
     dofetch({
         url, method, data, contentType, callback = function () { }
@@ -25,9 +24,4 @@ class HttpRequest {
         return this.dofetch({ ...params, method: 'PUT' });
     }
 }
-
-// const HttpRequest = new HttpRequest();
-// window.httpModule = new HttpRequest();
-// export default HttpRequest;
 export default new HttpRequest();
-// }());

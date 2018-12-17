@@ -1,7 +1,3 @@
-/**
- * @class BaseView
- * @module BaseView
- */
 export default class BaseView {
     constructor(el) {
         this.el = el;

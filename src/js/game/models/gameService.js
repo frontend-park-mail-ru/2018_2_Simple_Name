@@ -1,8 +1,6 @@
 import WsService from "../../modules/webSocketService.js";
 
 (function () {
-    // const router = window.RouterModule;
-
     const Status = {
         StatusError: "error",
         StatusInfo: "info",
@@ -32,14 +30,11 @@ import WsService from "../../modules/webSocketService.js";
 
     SimpleObj = window.SimpleObj;
     AnimatedObj = window.AnimatedObj;
-    // const backUrl = "simplegame.ru.com";
     const backUrl = "127.0.0.1:8082";
 
     class GameService {
         constructor(root, router) {
             this.router = router;
-            // this.onDone = onDoneCallback;
-            // this.onErr = onErrCallback;
             this.gameroot = new SimpleObj(root, "gameroot", "gameroot");
             this.WSService = new WsService(`${backUrl}/api/startgame`);
             this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
@@ -57,38 +52,26 @@ import WsService from "../../modules/webSocketService.js";
         }
 
         onWSClose() {
-            console.log("Wsclose-call");
             if (this.Status !== Status.StatusGameOver && this.Status !== Status.StatusError) {
-                console.log(this.Status);
                 const errText = 'Server Connection problem';
-                // this.onErr(errText);
                 this.router.open("/");
             }
         }
 
         infoCallback(data) {
-            console.log("info-call");
-
             if (this.Status === Status.StatusWait) {
-                console.log("MessageBox-call");
                 this.updateMessageBox(data.info);
-            } else {
-                if (this.footer) {
+            } else if (this.footer){
                     this.updateFooter(data);
-                } else console.log("no footer");
             }
         }
 
         errorCallback(data) {
-            console.log("error-call");
             this.Status = Status.StatusError;
-            // this.onErr(data.info);
             this.router.open("/");
         }
 
         waitCallback(data) {
-            console.log("wait-call");
-
             this.gameroot.clearFrame();
             this.gameroot.addType("waitBackground");
             this.gameroot.addType("background");
@@ -96,18 +79,12 @@ import WsService from "../../modules/webSocketService.js";
 
             let weel = new AnimatedObj(this.gameroot.frame, "weel", "weel", 2);
             let box = new SimpleObj(this.gameroot.frame, "box", "box");
-            // window.onresize = (event) => {
-            //     weel.style.left = (this.gameroot.clientWidth - weel.width) / 2 + "px";
-            //     weel.style.top = (this.gameroot.clientHeight - weel.height) / 2 + "px";
-            // }
-
             this.gameroot.frame.onclick = (event) => {
                 weel.setPositionPX(event.clientX, event.clientY);
             };
         }
 
         startgameCallback(data) {
-            console.log("startgame-call");
             this.Status = "startgame";
             this.gameroot.clearFrame();
             this.gameroot.setType("gameBackground");
@@ -121,21 +98,18 @@ import WsService from "../../modules/webSocketService.js";
         }
 
         gameCallback(data) {
-            // console.log("game-call");
             this.Status = "game";
             this.updateHeader(data);
             this.updateGameArea(data);
         }
 
         gameoverCallback(data) {
-            console.log("gameover-call");
             this.Status = "gameover";
             let checkOwn = data.ownstate.hp > 0;
             let checkRival = data.rivalstate.hp > 0;
             let text = "";
             if (checkOwn && checkRival) {
                 text = `User ${data.rivalstate.nickname} disconnected.`;
-                // this.onErr(text);
                 this.router.open("/");
 
                 return;
@@ -195,7 +169,7 @@ import WsService from "../../modules/webSocketService.js";
             for (let id in BuyPanelElems) {
                 let obj = new SimpleObj(BuyPanel.frame, BuyPanelElems[id], BuyPanelElems[id]);
                 obj.addType("buyPanel-tab");
-                obj.setPositionPerc(parseInt(id * koefW), 0);
+                obj.setPositionPerc(parseInt((id * koefW), 10), 0);
                 obj.setWidth(w);
                 obj.frame.onclick = this.buyPanelClickCallback.bind(this);
                 this.StaticState[BuyPanelElems[id].replace("-", "_")] = obj;
@@ -312,6 +286,7 @@ import WsService from "../../modules/webSocketService.js";
                             delete this.DynamicState[`mob${id}`];
                         }
                         break;
+                    default: break;
                 }
             }
         }

@@ -1,13 +1,9 @@
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
-
 
 export default class ProfileService {
 
     static async GetUserData() {
-
-        console.log("GetUserData fetch");
 
         const data = await this.fetchGetData();
 
@@ -17,26 +13,15 @@ export default class ProfileService {
     }
 
     static async SendUserAvatar(data) {
-
-        console.log("SendUserAvatar fetch");
-
         await this.fetchSetAvatar(data);
-
-        // Обработка ответа тут?
     }
 
     static async PutUserData(data) {
-
-        console.log("PutUserData fetch");
-
         await this.fetchSendData(data);
 
     }
 
     static async Logout() {
-
-        console.log("Logout fetch");
-
         await this.fetchLogout();
 
     }
@@ -58,20 +43,12 @@ export default class ProfileService {
             data,
             contentType: 'application/json'
         });
-
-        if (resp.status === 200) {
-            // window.RouterModule.open("/");
-        } else {
-
-        }
     }
 
     static async fetchLogout() {
         await httpRequest.doGet({
             url: "/logout"
         });
-
-        // window.RouterModule.open("/");
     }
 
     static async fetchSetAvatar(avatarformData) {
@@ -80,7 +57,5 @@ export default class ProfileService {
             body: avatarformData,
             credentials: 'include'
         });
-
-        // window.RouterModule.open("/profile");
     }
 }

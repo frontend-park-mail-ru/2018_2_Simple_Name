@@ -21,8 +21,6 @@ export default class signinView extends BaseView {
 
             const responseCode = await SignInService.FetchData(JSONdata);
 
-            console.log("Status CODE = ", responseCode);
-
             if (responseCode === 200) {
                 this.RouterModule.open("/", "Успешно авторизован!");
             } else if (responseCode === 400) {
@@ -34,8 +32,6 @@ export default class signinView extends BaseView {
     }
 
     render(text) {
-        console.log("Render signIN!");
-
         this.el.innerHTML = '';
         this.el.innerHTML = signinTemplate({statusText: text});
 

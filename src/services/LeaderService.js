@@ -1,22 +1,13 @@
-/* eslint-disable no-return-await */
 import httpRequest from '../js/modules/httpModule.js';
 
 export default class LeadersService {
     static async FetchData(limit, offset) {
-
-
-        console.log("UserService fetchcount");
-
-
         const res1 = await this.fetchPagesCount();
 
         const res2 = await this.fetchUsers(limit, offset);
 
         const count = res1;
         const users = res2;
-
-        // console.log(users);
-        // console.log(count.leaderscount);
 
         const data = {
             "users": users,

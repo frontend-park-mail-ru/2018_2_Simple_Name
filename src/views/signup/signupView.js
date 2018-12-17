@@ -11,11 +11,8 @@ export default class signupView extends BaseView {
         this.RouterModule = router;
 
         bus.on("sign-up-fetch", async () => {
-            console.log("sign-up-fetch");
 
             const form = document.getElementById('signupForm');
-
-            // todo: валидация данных здесь
 
             const usrNickname = form.elements.nickname.value;
 

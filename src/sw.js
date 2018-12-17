@@ -34,10 +34,6 @@ self.addEventListener('fetch', (event) => {
                     fetchRequest = event.request.clone();
                     // создаём новый запрос
                     return fetch(fetchRequest).then((response) => {
-                        // при неудаче всегда можно выдать ресурс из кэша
-                        if (!response || response.status !== 200) {
-                            return cachedResponse;
-                        }
                         // обновляем кэш
                         caches.open(CACHE).then((cache) => {
                             cache.put(event.request, response.clone());

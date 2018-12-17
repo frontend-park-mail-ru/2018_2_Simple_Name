@@ -4,9 +4,6 @@ import * as config from './config.js';
 export default class SignUpService {
 
     static async FetchData(data) {
-
-        console.log("SignInService fetch");
-
         const responseCode = await this.fetchData(data);
 
         return responseCode;
