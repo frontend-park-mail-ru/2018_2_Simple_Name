@@ -29,7 +29,7 @@ const root = document.getElementById('root');
 
 // router.setRoot(root);
 const router = new Router(root);
-console.log(router);
+
 router
     .register('/', MenuView)
     .register('/signin', SignInView)
@@ -41,26 +41,3 @@ router
     .register('/about', AboutView);
 // .register('/startgame', GameView);
 router.start();
-
-
-// function createStartgame() {
-//
-//     httpRequest.doGet({
-//         url: backUrl + '/islogged',
-//         callback(res) {
-//             let errText = "";
-//             switch (res.status) {
-//                 case 401:
-//                     errText = 'You are not logged in';
-//                     createSignIn(errText);
-//                     break;
-//                 case 200:
-//                     root.innerHTML = "";
-//                     const gameService = new Game(root, createProfile, createMenu);
-//                     break;
-//                 default:
-//                     console.log("Default");
-//             }
-//         }
-//     });
-// }
