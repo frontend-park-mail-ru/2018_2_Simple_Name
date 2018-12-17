@@ -2,13 +2,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-// const CssNano = require('cssnano');
-// const Autoprefixer = require('autoprefixer');
-const CssExtractPlugin = require('mini-css-extract-plugin');
+
+const extractSASS = new ExtractTextPlugin({
+    filename: '[name].css'
+});
 
 module.exports = {
     entry: {
-        main: './src/js/main.js'
+        main: [
+            'babel-polyfill',
+            './src/static/css/main.sass',
+            './src/js/main.js'
+        ]
     },
 
     output: {
@@ -20,13 +25,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                use: ['style-loader', 'css-loader', "postcss-loader"]
-            },
-            {
-                test: /\.scss$/,
-                use: [CssExtractPlugin.loader, 'css-loader', 'sass-loader']
+                test: /\.sass$/,
+                use: extractSASS.extract({
+                    use: ['css-loader', 'postcss-loader', 'sass-loader'],
+                    fallback: 'style-loader'
+                })
             },
 
             {
@@ -43,30 +46,22 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/
-                // use: {
-                //     loader: 'babel-loader',
-                //     options: {
-                //         presets: ['@babel/preset-env']
-                //     }
-                // }
             }
 
         ]
     },
     plugins: [
+        extractSASS,
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
-        }),
-        new ExtractTextPlugin({
-            filename: 'main.css'
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, './src/sw.js'),
             excludes: [
                 '**/.*',
                 '**/*.map'
-            ],
+            ]
         })
     ]
 };

@@ -1,4 +1,3 @@
-// const CACHE = 'cache-only-v1';
 const CACHE = new Date().toISOString();
 const { assets } = global.serviceWorkerOption;
 let assetsToCache = [...assets];
@@ -55,28 +54,3 @@ self.addEventListener('fetch', function (event) {
         })
     );
 });
-
-
-// self.addEventListener('fetch', function (event) {
-//     // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера
-//     if (event.request.method !== 'POST') {
-//         event.respondWith(fromCache(event.request));
-//         // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновится
-//         event.waitUntil(update(event.request));
-//     }
-// });
-
-// function fromCache(request) {
-//     return caches.open(CACHE).then((cache) =>
-//         cache.match(request)
-//             .then((matching) => matching || Promise.reject('no-match'))
-//     )
-// }
-
-// function update(request) {
-//     return caches.open(CACHE).then((cache) =>
-//         fetch(request).then((response) =>
-//             cache.put(request, response)
-//         )
-//     );
-// }

@@ -12,8 +12,8 @@ import SignUpView from '../views/signup/signupView.js';
 import AboutView from '../views/about/aboutView.js';
 import ProfileView from '../views/profile/profileView.js';
 
-import '../static/css/main.css';
-import '../static/css/gamestyles.css';
+import '../static/css/main.sass';
+import '../static/css/gamestyles.sass';
 
 import '../swReg.js';
 
