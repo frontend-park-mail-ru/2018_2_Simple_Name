@@ -1,0 +1,162 @@
+.table-menu
+  display: block
+  padding: 5px
+  border: 2px solid black
+  border-radius: 10px
+  box-shadow: 8px 10px 10px rgba(14, 14, 14, 0.5)
+  background: #ffb600
+  margin: auto
+  margin-top: 5px
+  width: 15%
+
+.warn-title
+  text-align: center
+  font-family: 'Indie Flower', cursive
+  font-size: 20px
+  font: bold
+  color: red
+  margin-top: 20px
+
+.profile-pic
+  display: block
+  width: 75px
+  height: 75px
+  margin-bottom: 15px
+  margin-top: 5px
+  border-radius: 10px
+  box-shadow: 0 0 5px #666
+
+.score-table, th, td
+  width: 50%
+  border: 1px solid black
+  margin-left: auto
+  margin-right: auto
+  border-collapse: collapse
+  font-family: 'Courier New', Courier
+
+th
+  color: #A60000
+
+.button-menu
+  display: block
+  width: 116px
+  box-shadow: 5px 5px black
+  border: 2px solid black
+  border-radius: 10px
+  background-color: #ffb600
+  padding: 6px
+  text-align: center
+  margin-left: 46%
+  margin-top: 15px
+
+.info-block
+  display: block
+  display: flex
+  width: 100%
+  flex-direction: column
+  justify-content: flex-start
+
+.form-group
+  margin-left: 40%
+  font-family: 'Varela Round', sans-serif
+  align-items: center
+  display: flex
+  justify-content: space-between
+  width: 21%
+
+input
+  border: 1px solid
+  border-radius: 5px
+  line-height: 22px
+  padding-left: 4px
+  box-shadow: 3px 3px black
+  margin: 1px
+
+.capitalSymb
+  text-transform: capitalize
+
+.pageTitle
+  text-align: center
+  padding-top: 5%
+  color: #ffb600
+  font-family: 'Varela Round', sans-serif
+  text-shadow: 5px 5px 3px rgb(0, 0, 0)
+
+.menu
+  text-align: center
+  font-size: 30px
+  width: auto
+  margin: 10px
+
+.about-page
+  font-family: 'Indie Flower', cursive
+  padding: 1% 27%
+  font-size: 20px
+  text-align: center
+
+a
+  text-decoration: none
+  color: #A60000
+  font-family: 'Varela Round', sans-serif
+
+.button-ref
+  margin-top: 5px
+  text-decoration: none
+  color: #A60000
+  font-family: 'Varela Round', sans-serif
+
+.button
+  margin-left: 46%
+  margin-top: 2%
+  border: 2px solid black
+  border-radius: 10px
+  background-color: #ffb600
+  box-shadow: 5px 5px black
+  color: #A60000
+  font-family: 'Varela Round', sans-serif
+  font-size: 16px
+  font-weight: bold
+  padding: 10px 10px
+  width: 130px
+  text-align: center
+
+body
+  background-image: url('/static/b3f5e82c46a8e0cd2d7a8b5dce47a084.png')
+  color: whitesmoke
+  margin: auto
+
+#text-color
+  color: red
+
+.pagination
+  display: inline-block
+  position: relative
+  margin-top: 10px
+  left: 42%
+  a
+    color: red
+    float: left
+    padding: 8px 10px
+    text-decoration: none
+    border-radius: 5px
+    transition: background-color .3s
+    &.active
+      background-color: #ffb600
+      color: white
+      border-radius: 5px
+    &:hover:not(.active)
+      background-color: rgb(155, 139, 103)
+
+.hvr-grow
+  display: inline-block
+  vertical-align: middle
+  -webkit-transform: perspective(1px) translateZ(0)
+  transform: perspective(1px) translateZ(0)
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+  -webkit-transition-duration: 0.3s
+  transition-duration: 0.3s
+  -webkit-transition-property: transform
+  transition-property: transform
+  &:hover, &:focus, &:active
+    -webkit-transform: scale(1.1)
+    transform: scale(1.1)

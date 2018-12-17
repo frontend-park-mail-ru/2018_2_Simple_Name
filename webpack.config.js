@@ -2,6 +2,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+// const CssNano = require('cssnano');
+// const Autoprefixer = require('autoprefixer');
+const CssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
@@ -19,8 +22,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader', "postcss-loader"]
             },
+            {
+                test: /\.scss$/,
+                use: [CssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            },
+
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg|jpeg|jpg)$/,
                 exclude: /node_modules/,
@@ -54,7 +62,11 @@ module.exports = {
             filename: 'main.css'
         }),
         new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js')
+            entry: path.join(__dirname, './src/sw.js'),
+            excludes: [
+                '**/.*',
+                '**/*.map'
+            ],
         })
     ]
 };
