@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- 10
+
+sudo: required
+
+script:
+- ssh-keyscan -H 95.163.209.195 >> ~/.ssh/known_hosts
+- chmod 600 ./2018_2_SimpleName_id_rsa.pem
+- npm install
+- npm run build-dev
+- scp -i ./2018_2_SimpleName_id_rsa.pem -r ./src ./dist ubuntu@95.163.209.195:/home/ubuntu/Projects/2018_2_Simple_Name
+branches:
+  only:
+  - travis
+before_install:
+- openssl aes-256-cbc -K $encrypted_d64d844671c1_key -iv $encrypted_d64d844671c1_iv
+  -in 2018_2_SimpleName_id_rsa.pem.enc -out ./2018_2_SimpleName_id_rsa.pem -d

@@ -4,7 +4,7 @@
 + [Сонк Кирилл](https://github.com/kirillsonk)
 + [Жарких Гриша](https://github.com/grisha23)
 + [Попов Сергей](https://github.com/ownperception) 
-* (ментор) [Пряхин Владимир](https://github.com/pryahin)
+* [Пряхин Владимир](https://github.com/pryahin) (ментор)
 
 ## Описание
 ### [Backend](https://github.com/go-park-mail-ru/2018_2_Simple_Name)
