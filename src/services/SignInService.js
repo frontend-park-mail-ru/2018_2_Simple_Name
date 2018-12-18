@@ -13,7 +13,7 @@ export default class SignInService {
 
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url: "/signin",
+            url: '/signin',
             data,
             contentType: 'application/json'
         });

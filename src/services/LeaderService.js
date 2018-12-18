@@ -10,8 +10,8 @@ export default class LeadersService {
         const users = res2;
 
         const data = {
-            "users": users,
-            "count": count.leaderscount
+            'users': users,
+            'count': count.leaderscount
         };
 
         return data;
@@ -19,7 +19,7 @@ export default class LeadersService {
 
 
     static async fetchPagesCount() {
-        const response = await httpRequest.doGet({ url: "/leaderscount" });
+        const response = await httpRequest.doGet({ url: '/leaderscount' });
         return await response.json();
     }
 

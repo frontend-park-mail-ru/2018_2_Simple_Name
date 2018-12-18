@@ -11,7 +11,7 @@ export default class SignUpService {
 
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url: "/signup",
+            url: '/signup',
             data,
             contentType: 'application/json'
         });

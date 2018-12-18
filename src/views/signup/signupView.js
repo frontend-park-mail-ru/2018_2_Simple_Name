@@ -1,5 +1,5 @@
-import BaseView from "../baseView/baseView.js";
-import SignUpService from "../../services/SignUpService.js";
+import BaseView from '../baseView/baseView.js';
+import SignUpService from '../../services/SignUpService.js';
 import bus from '../../js/modules/EventBus.js';
 import signupTemplate from './signupTemplate.pug';
 
@@ -10,13 +10,13 @@ export default class signupView extends BaseView {
 
         this.RouterModule = router;
 
-        bus.on("sign-up-fetch", async () => {
+        bus.on('sign-up-fetch', async () => {
 
             const form = document.getElementById('signupForm');
 
             const usrNickname = form.elements.nickname.value;
 
-            let errText = "";
+            let errText = '';
 
             if (!usrNickname
                 || usrNickname.match(/[#&<>\"~;$^%{}?]/)
@@ -34,10 +34,10 @@ export default class signupView extends BaseView {
             const repeatPass = form.elements.repeatPassword.value;
 
             if (usrPass !== repeatPass) {
-                errText += "Пароли не совпадают.";
+                errText += 'Пароли не совпадают.';
             }
 
-            if (errText !== "") {
+            if (errText !== '') {
                 this.render(errText);
                 return;
             }
@@ -51,11 +51,11 @@ export default class signupView extends BaseView {
             const responseCode = await SignUpService.FetchData(JSONdata);
 
             if (responseCode === 201) {
-                this.RouterModule.open("/", "Успешно зарегистрирован!");
+                this.RouterModule.open('/', 'Успешно зарегистрирован!');
             } else if (responseCode === 400) {
-                this.render("Пожалуйста, введите корректные данные.");
+                this.render('Пожалуйста, введите корректные данные.');
             } else {
-                this.RouterModule.open("/", "Что-то пошло не так!");
+                this.RouterModule.open('/', 'Что-то пошло не так!');
             }
         });
     }
@@ -65,11 +65,11 @@ export default class signupView extends BaseView {
 
         this.el.innerHTML = signupTemplate({statusText: text});
 
-        const signupButton = document.getElementById("signupButton");
+        const signupButton = document.getElementById('signupButton');
 
         signupButton.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("sign-up-fetch");
+            bus.emit('sign-up-fetch');
         });
     }
 

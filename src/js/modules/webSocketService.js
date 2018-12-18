@@ -10,11 +10,11 @@ export default class WsService {
 
     onclose(callback) {
         this.ws.onclose = (event) => {
-            let statusText = "";
+            let statusText = '';
             if (event.wasClean) {
-                statusText = "Connection was closed by server.";
+                statusText = 'Connection was closed by server.';
             } else {
-                statusText = "Something is bad. Check your connection.";
+                statusText = 'Something is bad. Check your connection.';
             }
             callback(statusText);
         };

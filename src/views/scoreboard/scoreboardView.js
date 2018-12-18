@@ -1,6 +1,6 @@
-import BaseView from "../baseView/baseView.js";
+import BaseView from '../baseView/baseView.js';
 import bus from '../../js/modules/EventBus.js';
-import LeaderService from "../../services/LeaderService.js";
+import LeaderService from '../../services/LeaderService.js';
 import scoreboardTemplate from './scoreboardTemplate.pug';
 
 export default class ScoreboardView extends BaseView {

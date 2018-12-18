@@ -1,9 +1,9 @@
 import bus from './modules/EventBus.js';
 import Router from './modules/Router.js';
-import WSservise from "./modules/webSocketService.js";
-import GameAnimation from "./game/models/animation.js";
-import LeaderService from "../services/LeaderService.js";
-import Game from "./game/models/gameService.js";
+import WSservise from './modules/webSocketService.js';
+import GameAnimation from './game/models/animation.js';
+import LeaderService from '../services/LeaderService.js';
+import Game from './game/models/gameService.js';
 
 import ScoreboardView from '../views/scoreboard/scoreboardView.js';
 import MenuView from '../views/menu/menuView.js';

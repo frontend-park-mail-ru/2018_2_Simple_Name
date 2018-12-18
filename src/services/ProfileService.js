@@ -28,7 +28,7 @@ export default class ProfileService {
 
     static async fetchGetData() {
         const resp = await httpRequest.doGet({
-            url: "/profile"
+            url: '/profile'
         });
 
         if (resp.status === 200) {
@@ -39,7 +39,7 @@ export default class ProfileService {
 
     static async fetchSendData(data) {
         const resp = await httpRequest.doPut({
-            url: "/profile",
+            url: '/profile',
             data,
             contentType: 'application/json'
         });
@@ -47,13 +47,13 @@ export default class ProfileService {
 
     static async fetchLogout() {
         await httpRequest.doGet({
-            url: "/logout"
+            url: '/logout'
         });
     }
 
     static async fetchSetAvatar(avatarformData) {
-        await fetch("http://127.0.0.1:8080/api/profile", {
-            method: "POST",
+        await fetch('http://127.0.0.1:8080/api/profile', {
+            method: 'POST',
             body: avatarformData,
             credentials: 'include'
         });

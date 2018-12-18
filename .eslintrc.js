@@ -17,7 +17,6 @@ module.exports = {
         "no-extend-native": ["error", { "exceptions": ["Object"] }],
         "no-useless-escape": 0,
         "consistent-return": 0,
-        "quotes": 0,
         "one-var": 0,
         "import/no-unresolved": 0,
         "import/extensions": 0,

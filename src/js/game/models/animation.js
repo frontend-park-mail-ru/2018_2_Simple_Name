@@ -10,11 +10,11 @@
         }
 
         hide() {
-            this.frame.classList.add("hide");
+            this.frame.classList.add('hide');
         }
 
         show() {
-            this.frame.classList.remove("hide");
+            this.frame.classList.remove('hide');
         }
 
         setPositionPX(x, y) {
@@ -77,7 +77,7 @@
         }
 
         clearFrame() {
-            this.frame.innerHTML = "";
+            this.frame.innerHTML = '';
         }
 
         getTypeClass() {

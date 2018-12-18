@@ -1,6 +1,6 @@
-import BaseView from "../baseView/baseView.js";
+import BaseView from '../baseView/baseView.js';
 import bus from '../../js/modules/EventBus.js';
-import MenuService from "../../services/MenuService.js";
+import MenuService from '../../services/MenuService.js';
 import menuTemplate from './menuTemplate.pug';
 
 
@@ -25,7 +25,7 @@ export default class MenuView extends BaseView {
     }
 
     render(text) {
-        bus.emit("is-logged-fetch", text);
+        bus.emit('is-logged-fetch', text);
     }
 
 }
