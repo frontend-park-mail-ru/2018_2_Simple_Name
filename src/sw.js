@@ -3,8 +3,8 @@ const { assets } = global.serviceWorkerOption;
 let assetsToCache = [...assets];
 
 assetsToCache = assetsToCache.map(path => {
-    const url = '/static';
-    const res = new URL(url + path, global.location).toString();
+    // const url = '/static';
+    const res = new URL(path, global.location).toString();
     return res;
 });
 
@@ -19,6 +19,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(
+
         // ищем запрашиваемый ресурс в хранилище кэша
         caches.match(event.request).then((cachedResponse) => {
             // выдаём кэш, если он есть

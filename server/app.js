@@ -11,9 +11,7 @@ class Application {
     attachRoutes() {
         const app = this.express;
 
-        app.use('/static', express.static('dist', {setHeaders(res, path, stat) {
-            res.set('Service-Worker-Allowed', '/');
-        }}));
+        app.use(express.static('dist/'));
 
         app.set('views', path.join(__dirname, 'src/views/'));
         app.set('view engine', 'pug');

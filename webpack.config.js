@@ -18,7 +18,7 @@ module.exports = {
 
     output: {
         filename: 'index.js',
-        publicPath: '/static/',
+        publicPath: '/',
         path: path.resolve(__dirname, 'dist')
     },
 
@@ -67,7 +67,6 @@ module.exports = {
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, './src/sw.js')
-
         })
     ]
 };
