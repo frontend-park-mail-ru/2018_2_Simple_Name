@@ -37,7 +37,6 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'url-loader?limit=10000'
             },
-
             {
                 test: /\.pug$/,
                 exclude: /node_modules/,
@@ -61,10 +60,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
-        })//,
-        // new ServiceWorkerWebpackPlugin({
-        //     entry: path.join(__dirname, './src/sw.js')
+        }),
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, './src/sw.js')
 
-        // })
+        })
     ]
 };
