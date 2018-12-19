@@ -55,13 +55,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
-        }),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js'),
-            excludes: [
-                '**/.*',
-                '**/*.map'
-            ]
-        })
+        })//,
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, './src/sw.js'),
+        //     excludes: [
+        //         '**/.*',
+        //         '**/*.map'
+        //     ]
+        // })
     ]
 };
