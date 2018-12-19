@@ -18,7 +18,6 @@ export default class GameService {
         this.WSService.onclose(this.onWSClose.bind(this));
         this.WSService.onerror(this.onWSClose.bind(this));
 
-
         this.StaticState = {};
         this.DynamicState = {};
     }
