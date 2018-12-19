@@ -10,6 +10,8 @@ class HttpRequest {
             headers: {
                 'Content-Type': contentType
             }
+        }).catch(() => {
+            console.log('error');
         });
     }
 
