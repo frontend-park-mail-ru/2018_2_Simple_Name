@@ -33,9 +33,9 @@ module.exports = {
             },
 
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg|jpeg|jpg)$/,
+                test: /\.(png|svg|jpeg|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader?limit=100000'
+                loader: 'url-loader?limit=10000'
             },
 
             {
@@ -61,10 +61,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
-        }),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js')
+        })//,
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, './src/sw.js')
 
-        })
+        // })
     ]
 };

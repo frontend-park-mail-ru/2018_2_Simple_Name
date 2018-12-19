@@ -10,7 +10,7 @@ import ProfileView from '../views/profile/profileView.js';
 import '../static/css/main.sass';
 import '../static/css/gamestyles.sass';
 
-import '../swReg.js';
+// import '../swReg.js';
 
 const root = document.getElementById('root');
 const router = new Router(root);

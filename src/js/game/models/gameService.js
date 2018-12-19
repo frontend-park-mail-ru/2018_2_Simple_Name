@@ -2,7 +2,7 @@ import WsService from '../../modules/webSocketService.js';
 import SimpleObj from './SimpleObj.js';
 import AnimatedObj from './AnimatedObj.js';
 
-const backUrl = '127.0.0.1:8082';
+const backUrl = 'simplegame.ru.com';
 
 export default class GameService {
     constructor(root, router, singleFlag) {
