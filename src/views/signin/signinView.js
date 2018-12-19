@@ -42,5 +42,4 @@ export default class signinView extends BaseView {
             bus.emit('sign-in-fetch');
         });
     }
-
 }
