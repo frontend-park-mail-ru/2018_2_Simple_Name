@@ -1,10 +1,10 @@
-// const CACHE = new Date().toISOString();
 const CACHE = 'cache-v1-simplegame';
 const { assets } = global.serviceWorkerOption;
 let assetsToCache = [...assets];
 
 assetsToCache = assetsToCache.map(path => {
-    const res = new URL(path, global.location).toString();
+    const url = '/static';
+    const res = new URL(url + path, global.location).toString();
     return res;
 });
 
@@ -12,47 +12,42 @@ assetsToCache = assetsToCache.map(path => {
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE).then((cache) => {
-            return cache.addAll([...assetsToCache, '/']);
+            return cache.addAll([
+                ...assetsToCache,
+                '/static/b3f5e82c46a8e0cd2d7a8b5dce47a084.png',
+                '/static/sw.js'
+            ]);
         })
     );
 });
-
-// период обновления кэша - одни сутки
-let MAX_AGE = 86400000;
 
 self.addEventListener('fetch', (event) => {
+    // иначе добавляем в кэш и запрашиваем из сети как обычно
+    // if (event.request.url !== 'http://127.0.0.1:8080/api/islogged') {
+    // }
     event.respondWith(
-        // ищем запрошенный ресурс среди закэшированных
+        // ищем запрашиваемый ресурс в хранилище кэша
         caches.match(event.request).then((cachedResponse) => {
-            let lastModified,
-                fetchRequest;
-            // если ресурс есть в кэше
+            // выдаём кэш, если он есть
             if (cachedResponse) {
-                // получаем дату последнего обновления
-                lastModified = new Date(cachedResponse.headers.get('last-modified'));
-                // и если мы считаем ресурс устаревшим
-                if (lastModified && (Date.now() - lastModified.getTime()) > MAX_AGE) {
-                    fetchRequest = event.request.clone();
-                    // создаём новый запрос
-                    return fetch(fetchRequest).then((response) => {
-                        // при неудаче всегда можно выдать ресурс из кэша
-                        if (!response || response.status !== 200) {
-                            return cachedResponse;
-                        }
-                        // обновляем кэш
-                        caches.open(CACHE).then((cache) => {
-                            cache.put(event.request, response.clone());
-                        });
-                        // возвращаем свежий ресурс
-                        return response;
-                    }).catch(() => {
-                        return cachedResponse;
-                    });
-                }
-                return cachedResponse;
+                return fromCache(event.request);
             }
-            // запрашиваем из сети как обычно
             return fetch(event.request);
+
         })
     );
+    event.waitUntil(update(event.request));
+
 });
+
+function fromCache(request) {
+    return caches.open(CACHE)
+        .then((cache) => cache.match(request)
+            .then((matching) => matching));
+}
+
+function update(request) {
+    caches.open(CACHE)
+        .then((cache) => fetch(request)
+            .then((response) => cache.put(request, response)));
+}

@@ -20,11 +20,13 @@ export default class LeadersService {
 
     static async fetchPagesCount() {
         const response = await httpRequest.doGet({ url: '/leaderscount' });
-        return await response.json();
+        const res = await response.json();
+        return res;
     }
 
     static async fetchUsers(limit, offset) {
         const response = await httpRequest.doGet({ url: `/leaders?limit=${limit}&offset=${offset}` });
-        return await response.json();
+        const res = await response.json();
+        return res;
     }
 }
