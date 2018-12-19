@@ -1,5 +1,5 @@
 import ScoreboardView from '../../views/scoreboard/scoreboardView.js';
-
+import GameService from '../game/models/gameService.js';
 export default class Router {
     constructor(root) {
         this.routes = {};
@@ -96,16 +96,14 @@ export default class Router {
             if (link.pathname === '/startgame') {
                 const root = document.getElementById('root');
                 root.innerHTML = '';
-                const Game = window.GameModule;
-                const gameService = new Game(root, router, false);
+                const gameService = new GameService(root, router, false);
                 return;
             }
 
             if (link.pathname === '/singleplayer') {
                 const root = document.getElementById('root');
                 root.innerHTML = '';
-                const Game = window.GameModule;
-                const gameService = new Game(root, router, true);
+                const gameService = new GameService(root, router, true);
                 return;
             }
 

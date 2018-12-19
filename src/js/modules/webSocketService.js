@@ -2,14 +2,14 @@ export default class WsService {
     constructor(url) {
         this.ws = new WebSocket(`ws://${url}`);
         this.listCommands = [];
-        this.ws.onmessage = (event) => {
+        this.ws.addEventListener('message',(event) => {
             const msg = JSON.parse(event.data);
             this.listCommands[msg.status](msg);
-        };
+        });
     }
 
     onclose(callback) {
-        this.ws.onclose = (event) => {
+        this.ws.addEventListener('close', (event) => {
             let statusText = '';
             if (event.wasClean) {
                 statusText = 'Connection was closed by server.';
@@ -17,14 +17,14 @@ export default class WsService {
                 statusText = 'Something is bad. Check your connection.';
             }
             callback(statusText);
-        };
+        });
     }
 
     onerror(callback) {
-        this.ws.onerror = (event) => {
+        this.ws.addEventListener('error',(event) => {
             const statusText = event;
             callback(statusText);
-        };
+        });
     }
 
     send(data) {

@@ -4,7 +4,7 @@ class HttpRequest {
     } = {}) {
         return fetch(`http://127.0.0.1:8080/api${url}`, {
             method,
-            mode: 'no-cors',
+            // mode: 'no-cors',
             credentials: 'include',
             body: JSON.stringify(data),
             headers: {
