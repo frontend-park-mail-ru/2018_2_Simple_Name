@@ -54,7 +54,7 @@ module.exports = {
         extractSASS,
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.html'
+            template: './src/index.html',
         })//,
         // new ServiceWorkerWebpackPlugin({
         //     entry: path.join(__dirname, './src/sw.js'),
@@ -63,5 +63,11 @@ module.exports = {
         //         '**/*.map'
         //     ]
         // })
-    ]
+    ],
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),
+        stats: 'errors-only',
+        compress: true,
+        open: true
+    }
 };

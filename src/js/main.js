@@ -14,7 +14,6 @@ import '../static/css/gamestyles.sass';
 
 const root = document.getElementById('root');
 const router = new Router(root);
-
 router
     .register('/', MenuView)
     .register('/signin', SignInView)
