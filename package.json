@@ -5,6 +5,7 @@
   "scripts": {
     "build-dev": "webpack --mode development --watch",
     "build": "webpack --mode production",
+    "start-dev-server": "webpack-dev-server --mode development --port 3000",
     "lint": "./node_modules/.bin/eslint --fix ./",
     "start": "node server"
   },
