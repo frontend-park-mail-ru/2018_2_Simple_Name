@@ -31,13 +31,16 @@ module.exports = {
                     fallback: 'style-loader'
                 })
             },
-
+            {
+                test: /\.(png|svg|jpeg|jpg)$/,
+                loader: 'image-webpack-loader',
+                enforce: 'pre'
+            },
             {
                 test: /\.(png|svg|jpeg|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader?limit=10000'
+                loader: 'url-loader?limit=1000'
             },
-
             {
                 test: /\.pug$/,
                 exclude: /node_modules/,
