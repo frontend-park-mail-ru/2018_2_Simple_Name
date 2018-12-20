@@ -12,9 +12,7 @@ export default class profileView extends BaseView {
 
         bus.on('profile-get-data', async (text) => {
             const userData = await ProfileService.GetUserData();
-            console.log('profile-get-data valid', userData.valid);
-            console.log('data', userData);
-            if (!userData.valid){
+            if (!userData.valid) {
                 this.hide();
                 this.RouterModule.open('/', 'Не получается загрузить данные');
                 return;
