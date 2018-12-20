@@ -24,9 +24,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
     if (navigator.onLine) {
         const req = event.request;
-        const compareSign = req.url.match('signin') || req.url.match('signup');
-        const compareGet = req.method === 'GET' && compareSign;
-        const compareFinal = (compareGet || req.url.match('about')) || req.url.match('leaders');
+        const compareFinal = req.url.match('about') || req.url.match('leaders');
 
         if (compareFinal) {
             return fetch(event.request).then((response) => {
