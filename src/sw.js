@@ -10,6 +10,10 @@ assetsToCache = assetsToCache.map(path => {
     return res;
 });
 
+assetsToCache.push('/about');
+assetsToCache.push('/signin');
+assetsToCache.push('/signup');
+
 // При установке воркера мы должны закешировать часть данных (статику)
 self.addEventListener('install', (event) => {
     event.waitUntil(
@@ -23,9 +27,13 @@ self.addEventListener('fetch', (event) => {
     console.log('EVENT', event.request.url);
     if (navigator.onLine) {
         console.log('Ты онлайн');
+        const req = event.request;
         // const regex = /leaders\/([0-9]+)/;
-        const leaders = event.request.url.match('leaders');
-        if (leaders) {
+        const someMethods = (req.method === 'GET' && (req.url.match('signin') || req.url.match('signup'))
+            || req.url.match('about'))
+            || req.url.match('leaders');
+
+        if (someMethods) {
             return fetch(event.request).then((response) => {
                 return caches.open(CACHE).then((cache) => {
 
@@ -42,7 +50,7 @@ self.addEventListener('fetch', (event) => {
             });
         }
         // });
-        console.log("Не кладем в кеш");
+        console.log('Не кладем в кеш');
         return fetch(event.request);
 
     }

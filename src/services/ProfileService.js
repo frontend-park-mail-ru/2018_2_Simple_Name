@@ -6,10 +6,7 @@ export default class ProfileService {
     static async GetUserData() {
 
         const data = await this.fetchGetData();
-
-        const jsonData = await data.json();
-
-        return jsonData;
+        return data;
     }
 
     static async SendUserAvatar(data) {
@@ -32,8 +29,16 @@ export default class ProfileService {
         });
 
         if (resp.status === 200) {
-            return resp;
+            const jsonData = await resp.json();
+            return {
+                'valid': true,
+                jsonData
+            };
         }
+        return {
+            'valid': false
+        };
+
 
     }
 
@@ -46,9 +51,11 @@ export default class ProfileService {
     }
 
     static async fetchLogout() {
-        await httpRequest.doGet({
+        const resp = await httpRequest.doGet({
             url: '/logout'
         });
+
+        return resp.ok;
     }
 
     static async fetchSetAvatar(avatarformData) {
