@@ -1,124 +1,123 @@
+import ScoreboardView from '../../views/scoreboard/scoreboardView.js';
+import GameService from '../game/models/gameService.js';
 
-(function () {
-    class Router {
-        constructor() {
-            this.routes = {};
+export default class Router {
+    constructor(root) {
+        this.routes = {};
+        this.root = root;
+    }
+
+    register(path, View, option, text = null) {
+
+        let view = null;
+        let el = null;
+
+        if (typeof View === 'object') {
+            view = View;
+            el = View.el;
         }
 
-        setRoot(root) {
-            this.root = root;
+        this.routes[path] = {
+            View,
+            view,
+            el,
+            router: this,
+            option,
+            text
+        };
+
+
+        return this;
+    }
+
+    open(path, text = null) {
+        let route = this.routes[path];
+
+        if (!route) {
+            const regex = /leaders\/([0-9]+)/;
+            const res = path.match(regex);
+            if (res) {
+                this.register(path, ScoreboardView, res[1]);
+                route = this.routes[path];
+            }
         }
 
-        /**
-         * @param {string} path
-         * @param {BaseView} View
-         */
-        register(path, View) {
-            // console.log("registr ");
-            // console.log(path);
-            this.routes[path] = {
-                View: View,
-                view: null,
-                el: null
-            };
-
-            return this;
+        if (!route) {
+            this.open('/');
+            return;
         }
 
-        /**
-         * @param {string} path
-         */
-        open(path) {
-            console.log("open");
-            console.log(path);
+        if (window.location.pathname !== path) {
+            window.history.pushState(
+                null,
+                '',
+                path
+            );
+        }
 
-            const route = this.routes[path];
 
-            if (!route) {
-                // console.log("0");
-                this.open('/');
+        let { View, view, el, router, option } = route;
+
+        if (!el) {
+            el = document.createElement('section');
+            this.root.appendChild(el);
+        }
+
+        if (!view) {
+            view = new View(el, router, option);
+        }
+
+        if (view.active && text !== null) {
+            view.hide();
+        }
+
+        if (view.active) {
+            return;
+        }
+        Object.values(this.routes).forEach(({ view }) => {
+            if (view && view.active) {
+                view.hide();
+            }
+        });
+        view.show(text);
+
+
+        this.routes[path] = { View, view, el, router, option };
+    }
+
+    start(router) {
+        this.root.addEventListener('click', (event) => {
+            if (!(event.target instanceof HTMLAnchorElement)) {
                 return;
             }
-            // console.log("1");
 
-            if (window.location.pathname !== path) {
-                // console.log("1.5");
-                window.history.pushState(
-                    null,
-                    '',
-                    path
-                );
+            event.preventDefault();
+            const link = event.target;
+
+            if (link.pathname === '/startgame') {
+                const root = document.getElementById('root');
+                root.innerHTML = '';
+                const gameService = new GameService(root, router, false);
+                return;
             }
-            // console.log("2");
 
-            let {View, view, el} = route;
-
-            if (!el) {
-                // console.log("2.5");
-
-                el = document.createElement('section');
-                this.root.appendChild(el);
+            if (link.pathname === '/singleplayer') {
+                const root = document.getElementById('root');
+                root.innerHTML = '';
+                const gameService = new GameService(root, router, true);
+                return;
             }
-            // console.log("3");
 
-            if (!view) {
-                // console.log("3.5");
+            this.open(link.pathname);
+        });
 
-                view = new View(el);
-            }
-            // console.log("4");
-
-            if (!view.active) {
-                // console.log("4.2");
-
-                Object.values(this.routes).forEach(function ({view}) {
-                    if (view && view.active) {
-                        view.hide();
-                    }
-                });
-                // console.log("4.5");
-
-                view.show();
-            }
-            // console.log("5");
-
-            this.routes[path] = {View, view, el};
-        }
-
-        start() {
-            this.root.addEventListener('click', function (event) {
-                if (!(event.target instanceof HTMLAnchorElement)) {
-                    return;
-                }
-
-                event.preventDefault();
-                const link = event.target;
-
-                console.log("pathname = ", link.pathname);
-
-                if (link.pathname === "/startgame") {
-                    const root = document.getElementById('root');
-                    root.innerHTML = "";
-                    const Game = window.GameModule;
-                    const gameService = new Game(root, undefined, undefined);
-                    return
-                }
-
-                this.open(link.pathname);
-            }.bind(this));
-
-            window.addEventListener('popstate', function () {
-                const currentPath = window.location.pathname;
-                this.open(currentPath);
-            }.bind(this));
-
+        window.addEventListener('popstate', () => {
             const currentPath = window.location.pathname;
-
             this.open(currentPath);
-        }
+        });
+
+        const currentPath = window.location.pathname;
+
+        this.open(currentPath);
     }
-    // const root = document.getElementById('root');
-
-    window.RouterModule = new Router();
-
-}());
+}

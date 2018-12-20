@@ -1,33 +1,42 @@
-import BaseView from "../baseView/baseView.js";
+import BaseView from '../baseView/baseView.js';
 import bus from '../../js/modules/EventBus.js';
-import ProfileService from "../../services/ProfileService.js";
+import ProfileService from '../../services/ProfileService.js';
 import profileTemplate from './profileTemplate.pug';
 
 
 export default class profileView extends BaseView {
-    constructor(el){
+    constructor(el, router) {
         super(el);
+        this.RouterModule = router;
         this.userData = null;
 
-        bus.on("profile-get-data", async function () {
-            this.userData = await ProfileService.GetUserData();
-            this.renderProfile();
-        }.bind(this));
+        bus.on('profile-get-data', async (text) => {
+            const userData = await ProfileService.GetUserData();
+            if (!userData.valid) {
+                this.hide();
+                this.RouterModule.open('/', 'Не получается загрузить данные');
+                return;
+            }
+            this.userData = userData.jsonData;
+            this.renderProfile(text);
+        });
 
-        bus.on("profile-send-avatar", async function () {
+        bus.on('profile-send-avatar', async () => {
             const form = document.getElementById('profileForm');
 
-            const changeAvatar = form.elements.newavatar.value !== "";
+            const changeAvatar = form.elements.newavatar.value !== '';
 
             if (changeAvatar) {
                 const avatarformData = new FormData();
-                avatarformData.append("new_avatar", form.elements.newavatar.files[0], "new_avatar");
+                avatarformData.append('new_avatar', form.elements.newavatar.files[0], 'new_avatar');
                 await ProfileService.SendUserAvatar(avatarformData);
+
+                this.RouterModule.open('/profile');
             }
 
-        }.bind(this));
+        });
 
-        bus.on("profile-send-data", async function () {
+        bus.on('profile-send-data', async () => {
 
             const form = document.getElementById('profileForm');
 
@@ -35,8 +44,9 @@ export default class profileView extends BaseView {
             const repeatNewPassword = form.elements.repeatnewpassword.value;
 
             if (newPassword !== repeatNewPassword) {
-                alert("Пароли отличаются.");
-                return
+                const errText = 'Пароли отличаются.';
+                inner.innerHTML = profileTemplate({statusText: errText});
+                return;
             }
 
             const JSONdata = {
@@ -44,53 +54,46 @@ export default class profileView extends BaseView {
             };
 
             // Смена пароля пользователем
-            const changePassword = newPassword !== "";
+            const changePassword = newPassword !== '';
 
             if (changePassword) {
                 const result = await ProfileService.PutUserData(JSONdata);
                 return result;
             }
-        }.bind(this));
+        });
 
-        bus.on("logout", async function () {
+        bus.on('logout', async () => {
             await ProfileService.Logout();
-        }.bind(this));
+            this.RouterModule.open('/');
+        });
     }
 
-    renderProfile(){
-        console.log(this.userData.nick);
-        console.log(this.userData.email);
-        console.log(this.userData.score);
+    renderProfile(text) {
         this.el.innerHTML = profileTemplate({
             playerNickname: this.userData.nick,
             playerEmail: this.userData.email,
-            playerScore: this.userData.score
+            playerScore: this.userData.score,
+            statusText: text
         });
 
-        const changes = document.getElementById("profileSave");
-        const logout = document.getElementById("logout");
+        const changes = document.getElementById('profileSave');
+        const logout = document.getElementById('logout');
 
-        changes.addEventListener("click", function (event) {
+        changes.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("profile-send-data");
-            bus.emit("profile-send-avatar");
+            bus.emit('profile-send-data');
+            bus.emit('profile-send-avatar');
         });
 
-        logout.addEventListener("click", function (event) {
+        logout.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("logout");
+            bus.emit('logout');
         });
     }
 
-    render () {
+    render(text) {
         this.el.innerHTML = '';
-        bus.emit("profile-get-data");
-        // const profileSection = document.createElement('section');
-        // profileSection.dataset.sectionName = 'profile';
-
-        // this.section = profileSection;
-
-        // this.section.innerHTML = signinHtml
+        bus.emit('profile-get-data', text);
     }
 
 }

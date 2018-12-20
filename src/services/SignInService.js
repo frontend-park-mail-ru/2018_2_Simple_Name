@@ -1,32 +1,24 @@
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
-
 
 
 export default class SignInService {
 
-    static async FetchData (data) {
+    static async FetchData(data) {
 
-        console.log("SignInService fetch");
-
-        await this.fetchData(data);
+        const responseCode = await this.fetchData(data);
+        return responseCode;
     }
 
     static async fetchData(data) {
         const res = await httpRequest.doPost({
-            url:  "/signin",
-            data: data,
+            url: '/signin',
+            data,
             contentType: 'application/json'
         });
 
-        if (res.status === 200) {
-            alert("Успешно авторизаван")
-        } else if (res.status === 400) {
-            alert("Неверный логин/пароль");
-        }
-        window.RouterModule.open('/');
+        return res.status;
     }
 
 
-};
+}

@@ -1,40 +1,49 @@
-import BaseView from "../baseView/baseView.js";
-import SignUpService from "../../services/SignUpService.js";
+import BaseView from '../baseView/baseView.js';
+import SignUpService from '../../services/SignUpService.js';
 import bus from '../../js/modules/EventBus.js';
 import signupTemplate from './signupTemplate.pug';
 
 
-
 export default class signupView extends BaseView {
-    constructor(el){
+    constructor(el, router) {
         super(el);
-        bus.on("sign-up-fetch", function () {
+
+        this.RouterModule = router;
+
+        bus.on('sign-up-fetch', async () => {
+
             const form = document.getElementById('signupForm');
 
-//todo: валидация данных здесь
-
             const usrNickname = form.elements.nickname.value;
-            // if (!usrNickname
-            //     || usrNickname.match(/[#&<>\"~;$^%{}?]/)
-            //     || !usrNickname.match(/\S{3,20}/)) {
-            //     // const errText = 'Enter a valid nickname';
-            //     // return createSignUp(errText);
-            //     return
-            // }
+
+            let errText = '';
+            let nicknameError,
+                emailError = false;
+
+            if (!usrNickname
+                || usrNickname.match(/[#&<>\"~;$^%{}?]/)
+                || !usrNickname.match(/\S{3,20}/)) {
+                errText += 'Введите корректный ник.';
+                nicknameError = true;
+            }
 
             const usrEmail = form.elements.email.value;
-            // if (!usrEmail
-            //     || !usrEmail.match(/[@]\S{5,50}/)) {
-            //     // const errText = 'Enter a valid Email';
-            //     // return createSignUp(errText);
-            // }
+            if (!usrEmail
+                || !usrEmail.match(/[@]\S{5,50}/)) {
+                errText += 'Введите корректный email.';
+                emailError = true;
+            }
 
             const usrPass = form.elements.password.value;
             const repeatPass = form.elements.repeatPassword.value;
 
-            if (usrPass !== repeatPass){
-                alert("pass != repeat");
-                return
+            if (usrPass !== repeatPass) {
+                errText += 'Пароли не совпадают.';
+            }
+
+            if (errText !== '') {
+                this.renderErrorForm(errText, nicknameError, emailError);
+                return;
             }
 
             const JSONdata = {
@@ -43,25 +52,44 @@ export default class signupView extends BaseView {
                 'password': usrPass
             };
 
-            SignUpService.FetchData(JSONdata)
-        })
+            const responseCode = await SignUpService.FetchData(JSONdata);
+
+            if (responseCode === 201) {
+                this.RouterModule.open('/', 'Успешно зарегистрирован!');
+            } else if (responseCode === 400) {
+                this.renderErrorForm('Пожалуйста, введите корректные данные.');
+            } else {
+                this.RouterModule.open('/', 'Что-то пошло не так!');
+            }
+        });
     }
 
-    render () {
+    render(text) {
         this.el.innerHTML = '';
-        // const signupSection = document.createElement('section');
-        // signupSection.dataset.sectionName = 'signup';
 
-        // this.section = signupSection;
+        this.el.innerHTML = signupTemplate({statusText: text});
 
-        this.el.innerHTML = signupTemplate();
+        const signupButton = document.getElementById('signupButton');
 
-        const signupButton = document.getElementById("signupButton");
-
-        signupButton.addEventListener('click', function (event) {
+        signupButton.addEventListener('click', (event) => {
             event.preventDefault();
-            bus.emit("sign-up-fetch")
+            bus.emit('sign-up-fetch');
         });
+    }
+
+    renderErrorForm(text, nicknameError, emailError) {
+        const errorText = document.getElementById('signUpErrorText');
+
+        errorText.innerText = text;
+
+        if (nicknameError) {
+            document.getElementById('nickname').value = '';
+        }
+        if (emailError) {
+            document.getElementById('email').value = '';
+        }
+
+
     }
 
 }

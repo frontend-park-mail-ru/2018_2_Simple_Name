@@ -1,16 +1,9 @@
-// const httpRequest = window.httpModule;
-// const httpRequest = new httpRequest();
 import httpRequest from '../js/modules/httpModule.js';
 import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
-
 
 export default class SignInService {
 
-    static async FetchAuth () {
-
-        console.log("Menu fetch");
-
+    static async FetchAuth() {
         const auth = await this.fetchAuth();
 
         return auth;
@@ -18,13 +11,16 @@ export default class SignInService {
 
     static async fetchAuth() {
         const resp = await httpRequest.doGet({
-            url: "/islogged",
+            url: '/islogged'
         });
 
-        return resp.status === 200;
-
         // Проверка статуса ответа
+        if (resp.ok) {
+            return resp.status === 200;
+        }
+        return false;
+
     }
 
 
-};
+}

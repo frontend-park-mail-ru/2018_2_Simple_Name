@@ -24,20 +24,24 @@ block content
             .pagination
                 //- prev arrow
                 if (amount > 1)
-                    button(title="Prev page" name= index) ◀
+                    - var next = active;
+                    - var prev = active - 2;
+                    if (prev + 1 > 0)
+                        a(title="Prev page" name= index href='/leaders/'+prev) ◀
 
                     - for (var index = 1; index <= amount; index++)
 
                         - var titleName = 'Current page ' + index;
-                        - var pageName = index - 1;
+                        - var pageName = index -1;
 
                         if (index === active)
-                            button.button-ref(title= titleName name= pageName).active= index
+                            a.active.button-ref(title= titleName name= pageName href='/leaders/' + pageName)=index
                         else
-                            button.button-ref(title= b name= pageName)= index
+                            a.button-ref(title= b name= pageName href = '/leaders/' + pageName)= index
 
                     //- next arrow
-                    button(title="Next page") ▶
+                    if (next < amount)
+                        a(title="Next page" href='/leaders/'+next) ▶
 
         +scoreTable(inputPlayers)
 

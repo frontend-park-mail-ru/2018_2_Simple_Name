@@ -20,11 +20,13 @@ block content
                 +menuList('signin', 'Sign in')
         if(auth)
             div
-                +menuList('startgame', 'Start Game')
+                +menuList('singleplayer', 'Singleplayer')
+            div
+                +menuList('startgame', 'Multiplayer')
             div
                 +menuList('profile', 'Profile')
         div
-            +menuList('leaders', 'Leaders')
+            +menuList('leaders/0', 'Leaders')
         div
             +menuList('about', 'About')
 

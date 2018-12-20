@@ -1,52 +1,56 @@
 import httpRequest from '../js/modules/httpModule.js';
-// import bus from '../js/modules/EventBus.js';
-// import * as config from './config.js';
-
-
-// function delay (obj) {
-//     return new Promise(function (resolve) {
-//         setTimeout(function () {
-//             resolve(obj);
-//         }, 1000);
-//     });
-// }
 
 export default class LeadersService {
-    static async FetchData (limit, offset) {
-
-
-        console.log("UserService fetchcount");
-        console.log(limit);
-        console.log(offset);
-
-
-
+    static async FetchData(limit, offset) {
         const res1 = await this.fetchPagesCount();
+
+        if (res1 === false) {
+            return {
+                'valid': false
+            };
+        }
+
+        const count = res1;
 
         const res2 = await this.fetchUsers(limit, offset);
 
-        const count = res1;
+        if (res2 === false) {
+            return {
+                'valid': false
+            };
+        }
+
         const users = res2;
 
-        console.log(users);
-        console.log(count.leaderscount);
-
         const data = {
-            "users": users,
-            "count": count.leaderscount
+            'valid': true,
+            'users': users,
+            'count': count.leaderscount
         };
 
-        return data
+        return data;
     }
 
 
     static async fetchPagesCount() {
-        const response = await httpRequest.doGet({ url: "/leaderscount" });
-        return await response.json()
+        const response = await httpRequest.doGet({ url: '/leaderscount' });
+        let res = {};
+        if (response.ok) {
+            res = await response.json();
+            return res;
+        }
+
+        return false;
     }
 
     static async fetchUsers(limit, offset) {
-        const response = await httpRequest.doGet({ url: "/leaders?limit="+limit+"&offset="+offset });
-        return await response.json()
+        const response = await httpRequest.doGet({ url: `/leaders?limit=${limit}&offset=${offset}` });
+        let res;
+        if (response.ok) {
+            res = await response.json();
+            return res;
+        }
+
+        return false;
     }
-};
+}

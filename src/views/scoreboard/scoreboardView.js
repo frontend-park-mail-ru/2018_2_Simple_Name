@@ -1,38 +1,37 @@
-import BaseView from "../baseView/baseView.js";
+import BaseView from '../baseView/baseView.js';
 import bus from '../../js/modules/EventBus.js';
-import LeaderService from "../../services/LeaderService.js";
+import LeaderService from '../../services/LeaderService.js';
 import scoreboardTemplate from './scoreboardTemplate.pug';
 
 export default class ScoreboardView extends BaseView {
-    constructor(el){
+    constructor(el, router, option) {
         super(el);
         this.users = null;
         this.pagesCount = 0;
-        this.pageIndex = 0;
+        this.pageIndex = option || 0;
         this.onPage = 5;
+        this.RouterModule = router;
 
-        bus.on('users-loaded', function (data) {
-            this.users = data.users;
-            this.pagesCount = Math.ceil(data.count / this.onPage);
-            this.renderScoreboard(this.section);
-        }.bind(this));
+        bus.on(`users-loaded-${this.pageIndex}`, (data) => {
+            if (data.valid) {
+                this.users = data.users;
+                this.pagesCount = Math.ceil(data.count / this.onPage);
+            } else {
+                this.RouterModule.open('/', 'Отсутствует интернет :(');
+                return;
+            }
+            this.renderScoreboard();
+        });
 
-        bus.on('fetch-users', async function() {
-            console.log("fetching users: limit="+this.onPage, " offset=", this.pageIndex);
+        bus.on(`fetch-users-${this.pageIndex}`, async () => {
             const data = await LeaderService.FetchData(this.onPage, this.pageIndex * this.onPage);
-            bus.emit("users-loaded", data);
-        }.bind(this));
+            await bus.emit(`users-loaded-${this.pageIndex}`, data);
+        });
     }
 
-    render () {
+    render() {
         this.el.innerHTML = '';
-        // const menuSection = document.createElement('section');
-        // menuSection.dataset.sectionName = 'leaders';
-        //
-        // this.section = menuSection;
-
-        if (!this.users){
-            console.log("view go to get users");
+        if (!this.users) {
             this.getUsers();
         } else {
             this.renderScoreboard();
@@ -40,51 +39,18 @@ export default class ScoreboardView extends BaseView {
     }
 
     renderScoreboard() {
-        const scoreboardHtml = scoreboardTemplate({
-            pageIndex: this.pageIndex,
+
+        const realPage = parseInt(this.pageIndex, 10) + 1;
+        this.el.innerHTML = scoreboardTemplate({
             pagesCount: this.pagesCount,
-            inputPlayers: this.users
-            //statusText
+            pageIndex: realPage,
+            inputPlayers: this.users,
+            active: this.pageIndex
         });
-
-        this.el.innerHTML = scoreboardHtml;
-
-        const paginationButtons = document.getElementById("pagination").querySelectorAll("button");
-
-        console.log(paginationButtons);
-
-        for (let i = 1; i <= this.pagesCount; i++) {
-            paginationButtons[i].addEventListener("click", function (event) {
-                event.preventDefault();
-                this.pageIndex = paginationButtons[i].name;
-                bus.emit('fetch-users');
-            }.bind(this))
-        }
-
-        paginationButtons[0].addEventListener("click", function (event) {
-            event.preventDefault();
-            if (this.pageIndex > 0) {
-                this.pageIndex--;
-                bus.emit('fetch-users');
-            }
-        }.bind(this));
-        console.log("count ", this.pagesCount);
-        // console.log(paginationButtons[this.pagesCount]);
-
-        paginationButtons[(this.pagesCount+1) | 0].addEventListener("click", function (event) {
-            event.preventDefault();
-            if (this.pageIndex + 1 < this.pagesCount) {
-                this.pageIndex++;
-                // console.log("index ", this.pageIndex);
-                bus.emit('fetch-users');
-            }
-        }.bind(this));
-
     }
 
-    getUsers(){
-        console.log("Try get users from getUsers from View!");
-        bus.emit("fetch-users");
+    getUsers() {
+        bus.emit(`fetch-users-${this.pageIndex}`);
     }
 
 }

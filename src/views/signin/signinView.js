@@ -1,14 +1,14 @@
-import BaseView from "../baseView/baseView.js";
-import SignInService from "../../services/SignInService.js";
+import BaseView from '../baseView/baseView.js';
+import SignInService from '../../services/SignInService.js';
 import bus from '../../js/modules/EventBus.js';
 import signinTemplate from './signinTemplate.pug';
 
 
-
 export default class signinView extends BaseView {
-    constructor(el){
+    constructor(el, router) {
         super(el);
-        bus.on("sign-in-fetch", function () {
+        this.RouterModule = router;
+        bus.on('sign-in-fetch', async () => {
             const form = document.getElementById('signinForm');
 
             const email = form.elements.email.value;
@@ -19,26 +19,27 @@ export default class signinView extends BaseView {
                 password
             };
 
-            SignInService.FetchData(JSONdata)
-        })
-    }
+            const responseCode = await SignInService.FetchData(JSONdata);
 
-    render () {
-        this.el.innerHTML = '';
-        // const signinSection = document.createElement('section');
-        // signinSection.dataset.sectionName = 'signin';
-
-        // this.section = signinSection;
-
-        // this.section.innerHTML = signinHtml
-        this.el.innerHTML = signinTemplate();
-
-        const signinButton = document.getElementById("signinButton");
-
-        signinButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            bus.emit("sign-in-fetch")
+            if (responseCode === 200) {
+                this.RouterModule.open('/', 'Успешно авторизован!');
+            } else if (responseCode === 400) {
+                this.render('Не верный логин или пароль.');
+            } else {
+                this.RouterModule.open('/', 'Что-то пошло не так!');
+            }
         });
     }
 
+    render(text) {
+        this.el.innerHTML = '';
+        this.el.innerHTML = signinTemplate({statusText: text});
+
+        const signinButton = document.getElementById('signinButton');
+
+        signinButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            bus.emit('sign-in-fetch');
+        });
+    }
 }
