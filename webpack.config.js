@@ -37,7 +37,7 @@ module.exports = {
                 enforce: 'pre'
             },
             {
-                test: /\.(png|svg|jpeg|jpg)$/,
+                test: /\.(png|svg|jpeg|jpg|eot|svg|ttf|woff|woff2)$/,
                 exclude: /node_modules/,
                 loader: 'url-loader?limit=1000&name=img/[hash].[ext]'
             },
@@ -56,7 +56,6 @@ module.exports = {
                     }
                 }
             }
-
         ]
     },
     plugins: [
