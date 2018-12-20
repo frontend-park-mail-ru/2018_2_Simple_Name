@@ -21,7 +21,7 @@ export default class WsService {
     }
 
     onerror(callback) {
-        this.ws.addEventListener('error',(event) => {
+        this.ws.addEventListener('error', (event) => {
             const statusText = event;
             callback(statusText);
         });

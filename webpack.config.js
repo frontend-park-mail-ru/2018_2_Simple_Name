@@ -39,7 +39,7 @@ module.exports = {
             {
                 test: /\.(png|svg|jpeg|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader?limit=1000'
+                loader: 'url-loader?limit=1000&name=img/[hash].[ext]'
             },
             {
                 test: /\.pug$/,

@@ -13,13 +13,13 @@ export default class SignInService {
         const resp = await httpRequest.doGet({
             url: '/islogged'
         });
+
         // Проверка статуса ответа
-        // console.log(resp);
         if (resp.ok) {
             return resp.status === 200;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
 

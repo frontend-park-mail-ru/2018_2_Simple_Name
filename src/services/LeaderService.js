@@ -35,7 +35,6 @@ export default class LeadersService {
     static async fetchPagesCount() {
         const response = await httpRequest.doGet({ url: '/leaderscount' });
         let res = {};
-        console.log('response.ok: ', response.ok);
         if (response.ok) {
             res = await response.json();
             return res;
@@ -47,7 +46,6 @@ export default class LeadersService {
     static async fetchUsers(limit, offset) {
         const response = await httpRequest.doGet({ url: `/leaders?limit=${limit}&offset=${offset}` });
         let res;
-        console.log('response.ok: ', response.ok);
         if (response.ok) {
             res = await response.json();
             return res;

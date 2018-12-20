@@ -15,4 +15,3 @@ export default class AnimatedObj extends SimpleObj {
         this.frame.style.webkitTransitionDuration = `${koefPosDur}ms`;
     }
 }
-

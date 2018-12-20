@@ -1,5 +1,6 @@
 import ScoreboardView from '../../views/scoreboard/scoreboardView.js';
 import GameService from '../game/models/gameService.js';
+
 export default class Router {
     constructor(root) {
         this.routes = {};
