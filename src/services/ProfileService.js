@@ -60,6 +60,7 @@ export default class ProfileService {
 
     static async fetchSetAvatar(avatarformData) {
         await fetch('https://simplegame.ru.com/api/profile', {
+        // await fetch('https://simplegame.ru.com/api/profile', {
             method: 'POST',
             body: avatarformData,
             credentials: 'include'
