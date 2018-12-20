@@ -1,3 +1,7 @@
+@font-face
+  font-family: 'Varela Round'
+  src: url('../fonts/VarelaRound-Regular.ttf') format('truetype')
+
 .table-menu
   display: block
   padding: 5px
@@ -5,12 +9,15 @@
   border-radius: 10px
   background: #ffb600
   margin: auto
+  overflow: hidden
+  word-break: keep-all
+  font-size: 30px
   margin-top: 5px
-  width: 15%
+  width: 200px
 
 .warn-title
   text-align: center
-  font-family: 'Indie Flower', cursive
+  font-family: Varela Round, sans-serif
   font-size: 20px
   font: bold
   color: red
@@ -40,13 +47,14 @@ th
 .button-menu
   display: block
   width: 116px
+  margin-left: auto
+  margin-right: auto
   box-shadow: 5px 5px black
   border: 2px solid black
   border-radius: 10px
   background-color: #ffb600
   padding: 6px
   text-align: center
-  margin-left: 46%
   margin-top: 15px
 
 .info-block
@@ -62,9 +70,11 @@ th
 .form-group
     display: flex
     padding: 1px
-    width: 21%
+    word-break: break-all
+    overflow: hidden
+    width: 270px
     margin: auto
-    font-family: Varela Round,sans-serif
+    font-family: Varela Round, sans-serif
     -webkit-box-align: center
     -ms-flex-align: center
     align-items: center
@@ -88,6 +98,9 @@ input
 .pageTitle
   text-align: center
   padding-top: 5%
+  overflow: hidden
+  word-break: keep-all
+  font-size: 40px
   color: #ffb600
   font-family: 'Varela Round', sans-serif
   text-shadow: 5px 5px 3px rgb(0, 0, 0)
@@ -99,7 +112,7 @@ input
   margin: 10px
 
 .about-page
-  font-family: 'Indie Flower', cursive
+  font-family: 'Varela Round', sans-serif
   padding: 1% 27%
   font-size: 20px
   text-align: center
@@ -116,7 +129,9 @@ a
   font-family: 'Varela Round', sans-serif
 
 .button
-  margin-left: 46%
+  display: block
+  margin-left: auto
+  margin-right: auto
   margin-top: 2%
   border: 2px solid black
   border-radius: 10px
@@ -125,6 +140,8 @@ a
   color: #A60000
   font-family: 'Varela Round', sans-serif
   font-size: 16px
+  overflow: hidden
+  word-break: break-all
   font-weight: bold
   padding: 10px 10px
   width: 130px

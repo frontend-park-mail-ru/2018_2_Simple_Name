@@ -42,12 +42,6 @@ self.addEventListener('fetch', (event) => {
             }
         }));
     }
-
-    // return fetch(event.request).then((response) => {
-    //     return response;
-    // });
-
-
 });
 
 function fromCache(request) {
