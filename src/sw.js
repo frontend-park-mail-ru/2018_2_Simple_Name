@@ -2,8 +2,10 @@ const CACHE = 'cache-v1-simplegame';
 const { assets } = global.serviceWorkerOption;
 let assetsToCache = [...assets];
 
+console.log('Assets :', assetsToCache);
+
 assetsToCache = assetsToCache.map(path => {
-    // const url = '/static';
+    if (path === '/index.html') return new URL('/', global.location).toString();
     const res = new URL(path, global.location).toString();
     return res;
 });
@@ -18,18 +20,47 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
+    console.log('EVENT', event.request.url);
+    if (navigator.onLine) {
+        console.log('Ты онлайн');
+        // const regex = /leaders\/([0-9]+)/;
+        const leaders = event.request.url.match('leaders');
+        if (leaders) {
+            return fetch(event.request).then((response) => {
+                return caches.open(CACHE).then((cache) => {
 
-        // ищем запрашиваемый ресурс в хранилище кэша
-        caches.match(event.request).then((cachedResponse) => {
-            // выдаём кэш, если он есть
-            if (cachedResponse) {
-                return fromCache(event.request);
-            }
-                // иначе запрашиваем из сети как обычно
-                return fetch(event.request);
-        })
-    );
+                    // if (event.request.url === "https://simplegame.ru.com/api/signin" ||
+                    //     event.request.url === "https://simplegame.ru.com/api/signup" ||
+                    //     event.request.url === "https://simplegame.ru.com/api/logout") {
+                    //
+                    // }
+
+                    cache.put(event.request, response.clone());
+                    console.log('Положили в кеш ', event.request.url);
+                    return response;
+                });
+            });
+        }
+        // });
+        console.log("Не кладем в кеш");
+        return fetch(event.request);
+
+    }
+    console.log('не онлайн, ищем в кеше');
+
+    event.respondWith(caches.match(event.request).then((cachedResponse) => {
+        // выдаём кэш, если он есть
+        if (cachedResponse) {
+            return fromCache(event.request);
+        }
+        console.log(event.request.url, ' Нет в кеше((');
+
+
+    }));
+
+    return fetch(event.request);
+
+
 });
 
 function fromCache(request) {

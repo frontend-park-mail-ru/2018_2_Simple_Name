@@ -11,6 +11,7 @@ class HttpRequest {
                 'Content-Type': contentType
             }
         }).catch((error) => {
+            console.log("Ошибка полуена: ", error);
             return error;
         });
     }

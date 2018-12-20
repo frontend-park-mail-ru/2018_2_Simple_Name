@@ -14,8 +14,12 @@ export default class SignInService {
             url: '/islogged'
         });
         // Проверка статуса ответа
-        console.log(resp);
-        return resp.status === 200;
+        // console.log(resp);
+        if (resp.ok) {
+            return resp.status === 200;
+        } else {
+            return false;
+        }
     }
 
 

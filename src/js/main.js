@@ -19,6 +19,6 @@ router
     .register('/signin', SignInView)
     .register('/signup', SignUpView)
     .register('/profile', ProfileView)
-    .register('/leaders', ScoreboardView)
+    .register('/leaders/0', ScoreboardView, 0)
     .register('/about', AboutView);
 router.start(router);
