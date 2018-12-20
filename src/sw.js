@@ -34,18 +34,19 @@ self.addEventListener('fetch', (event) => {
                 });
             });
         }
-        return fetch(event.request);
 
+    } else {
+        event.respondWith(caches.match(event.request).then((cachedResponse) => {
+            // выдаём кэш, если он есть
+            if (cachedResponse) {
+                return fromCache(event.request);
+            }
+        }));
     }
 
-    event.respondWith(caches.match(event.request).then((cachedResponse) => {
-        // выдаём кэш, если он есть
-        if (cachedResponse) {
-            return fromCache(event.request);
-        }
-    }));
-
-    return fetch(event.request);
+    return fetch(event.request).then((response) => {
+        return response;
+    });
 
 
 });
