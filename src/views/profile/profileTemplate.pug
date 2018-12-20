@@ -9,7 +9,7 @@ block header
 
 block content
     div.info-block
-        img.form-group.profile-pic(src="http://127.0.0.1:3004/"+playerEmail)
+        img.profile-pic(src="https://simplegame.ru.com/"+playerEmail)
         form(method='POST')#profileForm
             div.form-group Upload avatar:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
@@ -20,9 +20,9 @@ block content
             div.form-group Email:
                 input#email(type='email', value= playerEmail, readonly)
             div.form-group Change password:
-                input#newpassword(type='password', placeholder='New Password', name='newpassword')
-            div.form-group
-                input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
+                input#newpassword(type='password', placeholder='New Pass', name='newpassword')
+            div.form-group Repeat password:
+                input#repeatnewpassword(type='password', placeholder='Repeat New Pass', name='repeatnewpassword')
                 
             button.button.hvr-grow#profileSave(type='submit') Save changes
 

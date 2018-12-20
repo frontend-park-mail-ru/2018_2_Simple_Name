@@ -3,7 +3,7 @@
   padding: 5px
   border: 2px solid black
   border-radius: 10px
-  box-shadow: 8px 10px 10px rgba(14, 14, 14, 0.5)
+  // box-shadow: 8px 10px 10px rgba(14, 14, 14, 0.5)
   background: #ffb600
   margin: auto
   margin-top: 5px
@@ -18,7 +18,8 @@
   margin-top: 20px
 
 .profile-pic
-  display: block
+  display: flex
+  margin: auto
   width: 75px
   height: 75px
   margin-bottom: 15px
@@ -50,27 +51,38 @@ th
   margin-top: 15px
 
 .info-block
-  display: block
-  display: flex
-  width: 100%
-  flex-direction: column
-  justify-content: flex-start
+    //  width: 100%
+    width: auto
+    -webkit-box-orient: vertical
+    -webkit-box-direction: normal
+    -ms-flex-direction: column
+    flex-direction: column
+    -webkit-box-pack: start
+    -ms-flex-pack: start
+    justify-content: flex-start
 
 .form-group
-  margin-left: 40%
-  font-family: 'Varela Round', sans-serif
-  align-items: center
-  display: flex
-  justify-content: space-between
-  width: 21%
+    display: flex
+    padding: 1px
+    width: 21%
+    margin: auto
+    font-family: Varela Round,sans-serif
+    -webkit-box-align: center
+    -ms-flex-align: center
+    align-items: center
+    -webkit-box-pack: justify
+    -ms-flex-pack: justify
+    justify-content: space-between
 
 input
-  border: 1px solid
-  border-radius: 5px
-  line-height: 22px
-  padding-left: 4px
-  box-shadow: 3px 3px black
-  margin: 1px
+    border: 1px solid
+    width: 105px
+    border-radius: 5px
+    line-height: 22px
+    padding-left: 4px
+    -webkit-box-shadow: 3px 3px #000
+    box-shadow: 3px 3px #000
+    margin: 1px
 
 .capitalSymb
   text-transform: capitalize
@@ -148,7 +160,7 @@ body
       background-color: rgb(155, 139, 103)
 
 .hvr-grow
-  display: inline-block
+  // display: inline-block
   vertical-align: middle
   -webkit-transform: perspective(1px) translateZ(0)
   transform: perspective(1px) translateZ(0)
