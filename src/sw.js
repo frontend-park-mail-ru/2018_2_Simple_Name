@@ -25,7 +25,6 @@ self.addEventListener('fetch', (event) => {
     if (navigator.onLine) {
         const req = event.request;
         const compareFinal = req.url.match('about') || req.url.match('leaders');
-
         if (compareFinal) {
             return fetch(event.request).then((response) => {
                 return caches.open(CACHE).then((cache) => {
@@ -44,9 +43,9 @@ self.addEventListener('fetch', (event) => {
         }));
     }
 
-    return fetch(event.request).then((response) => {
-        return response;
-    });
+    // return fetch(event.request).then((response) => {
+    //     return response;
+    // });
 
 
 });
