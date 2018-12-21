@@ -1,12 +1,12 @@
-import WsService from '../../modules/webSocketService.js';
+import WsService from '../js/modules/webSocketService.js';
 import SimpleObj from './SimpleObj.js';
 import AnimatedObj from './AnimatedObj.js';
 
 const backUrl = '127.0.0.1:8082';
 
 export default class GameService {
-    constructor(root, router, singleFlag) {
-        this.router = router;
+    constructor(root, backFunc, singleFlag) {
+        this.backFunc = backFunc;
         this.gameroot = new SimpleObj(root, 'gameroot', 'gameroot');
         this.WSService = new WsService(`${backUrl}/api/startgame?single=${singleFlag}`);
         this.WSService.subscribe(Status.StatusInfo, this.infoCallback.bind(this));
@@ -18,14 +18,26 @@ export default class GameService {
         this.WSService.onclose(this.onWSClose.bind(this));
         this.WSService.onerror(this.onWSClose.bind(this));
 
-        this.StaticState = {};
-        this.DynamicState = {};
+        window.addEventListener('resize', this.updateSize.bind(this));
+        this.HeaderState = {};
+        this.MobState = {}
     }
+    updateSize() {
+        if (this.initKey) {
 
+            this.realX = this.gameArea.docPos().x;
+            this.realY = this.gameArea.docPos().y;
+            this.realH = this.gameArea.area().height;
+            this.realW = this.gameArea.area().width;
+
+
+            this.koefX = this.realW / this.baseW;
+            this.koefY = this.realH / this.baseH;
+        }
+    }
     onWSClose() {
         if (this.Status !== Status.StatusGameOver && this.Status !== Status.StatusError) {
-            const errText = 'Server Connection problem';
-            this.router.open('/');
+            this.backFunc('Server Connection problem');
         }
     }
 
@@ -39,7 +51,7 @@ export default class GameService {
 
     errorCallback(data) {
         this.Status = Status.StatusError;
-        this.router.open('/');
+        this.backFunc();
     }
 
     waitCallback(data) {
@@ -49,23 +61,32 @@ export default class GameService {
         this.initMessageBox();
 
         let weel = new AnimatedObj(this.gameroot.frame, 'weel', 'weel', 2);
-        let box = new SimpleObj(this.gameroot.frame, 'box', 'box');
-        this.gameroot.frame.onclick = (event) => {
+        weel.addType('background');
+        this.gameroot.frame.addEventListener('click', (event) => {
             weel.setPositionPX(event.clientX, event.clientY);
-        };
+        });
     }
 
     startgameCallback(data) {
         this.Status = 'startgame';
         this.gameroot.clearFrame();
-        this.gameroot.setType('gameBackground');
-        this.baseX = 55.5;
-        this.baseY = 70;
-        this.baseW = 1200;
+        this.gameroot.setType('gameBackground background');
 
         this.initHeader(data);
         this.initGameArea(data);
         this.initFooter(data);
+
+        this.baseW = 1200;
+        this.baseH = 500;
+
+        this.realX = this.gameArea.docPos().x;
+        this.realY = this.gameArea.docPos().y;
+        this.realH = this.gameArea.area().height;
+        this.realW = this.gameArea.area().width;
+
+        this.koefX = this.realW / this.baseW;
+        this.koefY = this.realH / this.baseH;
+        this.initKey = true;
     }
 
     gameCallback(data) {
@@ -81,8 +102,7 @@ export default class GameService {
         let text = '';
         if (checkOwn && checkRival) {
             text = `User ${data.rivalstate.nickname} disconnected.`;
-            this.router.open('/');
-
+            this.backFunc(text);
             return;
         }
         this.gameroot.clearFrame();
@@ -100,6 +120,7 @@ export default class GameService {
             }
         }
         w.setTextBox(text);
+        setTimeout(this.backFunc, 5000);
     }
 
     initHeader(data) {
@@ -107,62 +128,57 @@ export default class GameService {
         this.header.addType('text-style');
         for (let id in HeaderElems) {
             let obj = new SimpleObj(this.header.frame, HeaderElems[id], HeaderElems[id]);
-            this.StaticState[HeaderElems[id].replace('-', '_')] = obj;
+            this.HeaderState[HeaderElems[id].replace('-', '_')] = obj;
         }
-        this.StaticState.room.setTextBox(`Room ${data.room}`);
+        this.HeaderState.own_nickname.setTextBox(data.ownstate.nickname);
+        this.HeaderState.own_nickname.addType('nicknameBox');
+        this.HeaderState.own_nickname.addType('border');
 
-        this.StaticState.own_nickname.setTextBox(data.ownstate.nickname);
-        this.StaticState.own_nickname.addType('nicknameBox');
+        this.HeaderState.own_healthVal.setTextBox(data.ownstate.hp);
+        this.HeaderState.own_healthVal.addType('healthVal');
+        this.HeaderState.own_healthVal.addType('border');
 
-        this.StaticState.own_healthVal.setTextBox(data.ownstate.hp);
-        this.StaticState.own_healthVal.addType('healthVal');
+        this.HeaderState.own_healthBar.addType('healthBar');
+        this.HeaderState.own_healthBar.addType('border');
 
-        this.StaticState.own_healthBar.addType('healthBar');
+        this.HeaderState.rival_nickname.setTextBox(data.rivalstate.nickname);
+        this.HeaderState.rival_nickname.addType('nicknameBox');
+        this.HeaderState.rival_nickname.addType('border');
 
-        this.StaticState.rival_nickname.setTextBox(data.rivalstate.nickname);
-        this.StaticState.rival_nickname.addType('nicknameBox');
+        this.HeaderState.rival_healthVal.setTextBox(data.rivalstate.hp);
+        this.HeaderState.rival_healthVal.addType('healthVal');
+        this.HeaderState.rival_healthVal.addType('border');
 
-        this.StaticState.rival_healthVal.setTextBox(data.rivalstate.hp);
-        this.StaticState.rival_healthVal.addType('healthVal');
+        this.HeaderState.rival_healthBar.addType('healthBar');
+        this.HeaderState.rival_healthBar.addType('border');
 
-        this.StaticState.rival_healthBar.addType('healthBar');
+        this.HeaderState.points.setTextBox(data.ownstate.points);
+        this.HeaderState.points.addType('border');
 
-        this.StaticState.points.setTextBox(data.ownstate.points);
-
-        this.baseHealthBarW = this.StaticState.own_healthBar.area().width;
         this.initBuyPanel();
     }
 
     initBuyPanel() {
         let koefW = 100 / BuyPanelElems.length;
-        let BuyPanel = this.StaticState.buyPanel;
-        let w = BuyPanel.area().width * koefW / 100;
+        let BuyPanel = this.HeaderState.buyPanel;
         for (let id in BuyPanelElems) {
             let obj = new SimpleObj(BuyPanel.frame, BuyPanelElems[id], BuyPanelElems[id]);
             obj.addType('buyPanel-tab');
+            obj.addType('background');
             obj.setPositionPerc(parseInt((id * koefW), 10), 0);
-            obj.setWidth(w);
-            obj.frame.onclick = this.buyPanelClickCallback.bind(this);
-            this.StaticState[BuyPanelElems[id].replace('-', '_')] = obj;
+            obj.setWidthPer(koefW / 2);
+            obj.frame.addEventListener('click', this.buyPanelClickCallback.bind(this));
+            this.HeaderState[BuyPanelElems[id].replace('-', '_')] = obj;
         }
     }
 
     initGameArea(data) {
         this.gameArea = new SimpleObj(this.gameroot.frame, 'gameArea', 'gameArea');
 
-        const ownTarget = new SimpleObj(this.gameArea.frame, 'own-target', 'target own-target');
-        this.StaticState.ownTarget = ownTarget;
-        this.owntarget = {
-            area: ownTarget.area(),
-            pos: ownTarget.pos()
-        };
+        const ownTarget = new SimpleObj(this.gameArea.frame, 'own-target', 'target own-target background');
 
-        const rivalTarget = new SimpleObj(this.gameArea.frame, 'rival-target', 'target rival-target');
-        this.StaticState.rivalTarget = rivalTarget;
-        this.rivaltarget = {
-            area: rivalTarget.area(),
-            pos: rivalTarget.pos()
-        };
+        const rivalTarget = new SimpleObj(this.gameArea.frame, 'rival-target', 'target rival-target background');
+
     }
 
     initFooter(data) {
@@ -190,11 +206,11 @@ export default class GameService {
 
 
     updateHeader(data) {
-        this.StaticState.own_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.ownstate.hp);
-        this.StaticState.rival_healthBar.setWidth(this.baseHealthBarW * 0.01 * data.rivalstate.hp);
-        this.StaticState.own_healthVal.setTextBox(data.ownstate.hp);
-        this.StaticState.rival_healthVal.setTextBox(data.rivalstate.hp);
-        this.StaticState.points.setTextBox(data.ownstate.points);
+        this.HeaderState.own_healthBar.setWidthPer(0.2 * data.ownstate.hp);
+        this.HeaderState.rival_healthBar.setWidthPer(0.2 * data.rivalstate.hp);
+        this.HeaderState.own_healthVal.setTextBox(data.ownstate.hp + "HP");
+        this.HeaderState.rival_healthVal.setTextBox(data.rivalstate.hp + "HP");
+        this.HeaderState.points.setTextBox(data.ownstate.points + "₽");
     }
 
     updateGameArea(data) {
@@ -225,39 +241,32 @@ export default class GameService {
 
     updateMobs(mobs) {
         for (let id in mobs) {
-            const mob = this.DynamicState[`mob${id}`];
-            switch (mobs[id].status) {
-                case 'run':
-                    if (!mob) {
-                        let obj = new AnimatedObj(this.gameArea.frame, `mob${id}`, mobs[id].type, mobs[id].speed);
-                        obj.addType('mob');
-                        obj.frame.onclick = this.mobClickCallback.bind(this);
-                        obj.setPositionPX(this.baseX + mobs[id].pos.x, this.baseY + mobs[id].pos.y);
-                        this.DynamicState[`mob${id}`] = obj;
-                    } else {
-                        mob.setPositionPX(this.baseX + mobs[id].pos.x, this.baseY + mobs[id].pos.y);
-                    }
-                    break;
-                case 'dead':
-                    if (!this.StaticState[`mob${id}`]) {
-                        if (mob) {
+            const mob = this.MobState[`mob${id}`];
+            if (!mob) {
+                let obj = new AnimatedObj(this.gameArea.frame, `mob${id}`, mobs[id].type, mobs[id].speed);
+                obj.addType('mob');
+                obj.addType('background');
+                obj.frame.addEventListener('click', this.mobClickCallback.bind(this));
+                obj.setPositionPX(this.realX + this.koefX * mobs[id].pos.x, this.realY + this.koefY * mobs[id].pos.y);
+                this.MobState[`mob${id}`] = obj;
+            } else {
+                switch (mobs[id].status) {
+                    case 'dead':
+                        if (mob.getTypeClass().indexOf("deadmob") == -1) {
                             mob.setType('deadmob');
-                            this.StaticState[`mob${id}`] = mob;
-                            delete this.DynamicState[`mob${id}`];
+                            mob.addType('background');
                         }
-                    } else {
-                        this.StaticState[`mob${id}`].setType('deadmob');
-                    }
-                    break;
-                case 'attack':
-                    if (mob) {
-                        mob.addType(`${mob.getTypeClass()}-attack`);
-                        mob.removeType(mob.getTypeClass());
-                        this.StaticState[`mob${id}`] = mob;
-                        delete this.DynamicState[`mob${id}`];
-                    }
-                    break;
-                default: break;
+                        break;
+                    case 'attack':
+                        if (mob) {
+                            if (mob.getTypeClass().indexOf("attack") == -1)
+                                mob.addType(`${mob.getTypeClass()}-attack`);
+                                mob.removeType(mob.getTypeClass());
+                        }
+                        break;
+                    default: break;
+                }
+                mob.setPositionPX(this.realX + this.koefX * mobs[id].pos.x, this.realY + this.koefY * mobs[id].pos.y);
             }
         }
     }
@@ -275,7 +284,8 @@ export default class GameService {
     }
 
     mobClickCallback(event) {
-        const pos = { x: this.baseW - (event.clientX - this.baseX), y: event.clientY - this.baseY };
+        console.log(this.baseW - (event.clientX / this.koefX - this.realX));
+        const pos = { x: this.baseW - (event.clientX / this.koefX - this.realX), y: event.clientY / this.koefY - this.realY };
         this.WSService.send({
             command: 'killmob',
             clickpos: pos
@@ -320,7 +330,6 @@ let HeaderElems = [
     'rival-healthBar',
     'rival-healthVal',
     'rival-nickname',
-    'room',
     'buyPanel'
 ];
 

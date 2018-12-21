@@ -6,6 +6,8 @@ import SignInView from '../views/signin/signinView.js';
 import SignUpView from '../views/signup/signupView.js';
 import AboutView from '../views/about/aboutView.js';
 import ProfileView from '../views/profile/profileView.js';
+import GameView from '../views/game/gameView.js';
+import SingleGameView from '../views/game/singleGameView.js';
 
 import '../static/css/main.sass';
 import '../static/css/gamestyles.sass';
@@ -21,5 +23,7 @@ router
     .register('/signup', SignUpView)
     .register('/profile', ProfileView)
     .register('/leaders', ScoreboardView)
-    .register('/about', AboutView);
+    .register('/about', AboutView)
+    .register('/startgame',GameView)
+    .register('/singleplayer',SingleGameView);
 router.start(router);
