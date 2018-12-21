@@ -8,4 +8,4 @@
 
 ## Описание
 ### [Backend](https://github.com/go-park-mail-ru/2018_2_Simple_Name)
-### [Application](http://simplegame.now.sh)
+### [Application](https://simplegame.ru.com)
