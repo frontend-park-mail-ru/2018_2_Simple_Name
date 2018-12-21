@@ -2,7 +2,7 @@ import WsService from '../js/modules/webSocketService.js';
 import SimpleObj from './SimpleObj.js';
 import AnimatedObj from './AnimatedObj.js';
 
-const backUrl = 'simplegame.ru.com';
+const backUrl = '127.0.0.1:8082';
 
 export default class GameService {
     constructor(root, backFunc, singleFlag) {
@@ -16,7 +16,7 @@ export default class GameService {
         this.WSService.subscribe(Status.StatusGame, this.gameCallback.bind(this));
         this.WSService.subscribe(Status.StatusGameOver, this.gameoverCallback.bind(this));
         this.WSService.onclose(this.onWSClose.bind(this));
-        this.WSService.onerror(this.onWSClose.bind(this));
+        this.WSService.onerror(this.onWSError.bind(this));
 
         window.addEventListener('resize', this.updateSize.bind(this));
         this.HeaderState = {};
@@ -37,7 +37,12 @@ export default class GameService {
     }
     onWSClose() {
         if (this.Status !== Status.StatusGameOver && this.Status !== Status.StatusError) {
-            this.backFunc('Server Connection problem');
+            this.backFunc();
+        }
+    }
+    onWSError() {
+        if (this.Status !== Status.StatusGameOver && this.Status !== Status.StatusError) {
+            this.backFunc('Проблема соединения с сервером!');
         }
     }
 
@@ -75,6 +80,14 @@ export default class GameService {
         this.initHeader(data);
         this.initGameArea(data);
         this.initFooter(data);
+        this.button = new SimpleObj(this.gameroot.frame, 'button-exit', 'button-exit');
+        this.button.frame.addEventListener('click',(event)=>{
+            this.WSService.close();
+            this.backFunc();
+        })
+        window.addEventListener('popstate', () => {
+            this.WSService.close();
+        });
 
         this.baseW = 1200;
         this.baseH = 500;
@@ -112,15 +125,20 @@ export default class GameService {
             text = 'Draw =)';
         } else {
             if (checkOwn) {
-                text = 'You win!';
+                text = 'Победа!';
                 w.addType('win');
             } else {
-                text = 'You lose :(';
+                text = 'Проиграл :(';
                 w.addType('lose');
             }
         }
         w.setTextBox(text);
-        setTimeout(this.backFunc, 5000);
+        this.menubutton = new SimpleObj(this.gameroot.frame, 'button-gameover', 'button-gameover');
+        this.menubutton.setTextBox('Меню');
+        this.menubutton.frame.addEventListener('click',(event)=>{
+            this.WSService.close();
+            this.backFunc();
+        })
     }
 
     initHeader(data) {

@@ -1,3 +1,7 @@
+@font-face
+  font-family: 'Varela Round'
+  src: url('../fonts/VarelaRound-Regular.ttf') format('truetype')
+
 .background
   background-size: 100% 100%
   background-repeat: no-repeat
@@ -22,7 +26,7 @@
 
 .header
   width: 100%
-  height: 11%
+  height: 13%
 
 .gameArea
   width: 100%
@@ -168,7 +172,7 @@
   position: absolute
   width: 30%
   height: 10%
-  top: 0%
+  top: 1%
   left: 38%
 
 .buyPanel-tab
@@ -186,23 +190,25 @@
   background-image: url("../media/game-media/tabs/tab_mob3.png")
 
 p
-  word-break: break-all;
-  font-size: 1.6vw;
-  text-align: center;
-  margin: 0 0;
+  font-family: 'Varela Round', sans-serif
+  word-break: break-all
+  font-size: 1.6vw
+  text-align: center
+  margin: 0 0
 
 div 
-  overflow: hidden;
+  overflow: hidden
 
 .nicknameBox
-  top: 0%
+  top: 1%
   position: absolute
-  width: 25%
+  width: 27%
   height: 4%
   background-color: black
   opacity: 0.7
 
 .healthBar
+  top: 7%
   position: absolute
   width: 20%
   height: 5%
@@ -210,13 +216,15 @@ div
   background-color: brown
 
 .healthVal
+  top: 7%
   position: absolute
   width: 6%
   height: 5% 
-  background-color: black;
+  background-color: black
   border-color: white
-  opacity: 0.7;
-
+  opacity: 0.7
+.healthVal p 
+  
 .mob
   position: absolute
   width: 3.8vw
@@ -239,7 +247,7 @@ div
 @-moz-keyframes mob-dead
 
 .border
-  border-radius: 30%
+  border-radius: 3px
   border-width: 0.18vw
   border-style: solid
   border-color: black
@@ -247,27 +255,26 @@ div
 .target
   position: absolute
   top: 35%
-  height: 24vh;
-  width: 12.2vw;
+  height: 24vh
+  width: 12.2vw
 
 .points
   position: absolute
   width: 6%
   height: 4%
-  top: 10%
+  top: 12%
   left: 48%
   background-color: black
   border-color: white
-  opacity: 0.7;
+  opacity: 0.7
 
 #own-healthBar
-  top: 5%;
-  left: 8%;
+  top: 7%
+  left: 8%
 
 #own-nickname
-  left: 2%
+  left: 1%
 #own-healthVal
-  top: 5%
   left: 1%
 
 .own-mob1
@@ -407,14 +414,12 @@ div
   background-image: url("../media/game-media/map/own_tar.png")
 
 #rival-nickname
-  left: 73%
+  left: 72%
 
 #rival-healthBar
-  top: 5%
   left: 72%
 
 #rival-healthVal
-  top: 5%
   left: 93%
 
 .rival-mob1
@@ -550,23 +555,64 @@ div
 
 
 .rival-target
-  left: 88%;
-  background-image: url("../media/game-media/map/rival_tar.png");
+  left: 88%
+  background-image: url("../media/game-media/map/rival_tar.png")
 
 .gameover-window
-  top: 30%
-  width: 100%
-  height: 50%
+  top: 31%
+  left: 35%
+  width: 30%
+  height: 30%
   opacity: 0.7 
+  border-width: 0.3vw
+  border-style: solid
+  border-color: black
+  border-radius: 5px
   position: absolute
   background-color: black
 
 #gameover-window p
-  font-size: 5vw
+  position: absolute
+  font-size: 4vw
+  top: 24%
 .win
-  background-color: rgb(57, 188, 197)
+  background-color: #03243a
   text-decoration-color: rgb(179, 31, 31)
+
+.win p 
+  left: 25%
 
 .lose
   background-color: rgb(30, 5, 54)
   text-decoration-color: rgb(215, 227, 228)
+
+.lose p 
+  left: 11%
+.button-gameover  
+  top: 53%
+  left: 43.5%
+  width: 14%
+  height: 5%
+  position: absolute
+  background-color: #000
+  border: 2px solid black
+  border-radius: 10px
+  background-color: #ffb600
+.button-gameover p
+  position: absolute
+  font-size: 2vw
+  top: 0
+  left: 31%
+  color: black
+.button-exit  
+  top: 91%
+  left: 95%
+  width: 4%
+  height: 7%
+  position: absolute
+  background-image: url("../media/game-media/map/door.png")
+  background-size: 100% 100%
+  background-repeat: no-repeat
+  background-color: black
+  border-radius: 3px
+
