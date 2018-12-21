@@ -13,9 +13,13 @@ export default class ScoreboardView extends BaseView {
         this.RouterModule = router;
 
         bus.on(`users-loaded-${this.pageIndex}`, (data) => {
-
-            this.users = data.users;
-            this.pagesCount = Math.ceil(data.count / this.onPage);
+            if (data.valid) {
+                this.users = data.users;
+                this.pagesCount = Math.ceil(data.count / this.onPage);
+            } else {
+                this.RouterModule.open('/', 'Отсутствует интернет :(');
+                return;
+            }
             this.renderScoreboard();
         });
 

@@ -2,14 +2,16 @@ class HttpRequest {
     dofetch({
         url, method, data, contentType, callback = function () { }
     } = {}) {
-        return fetch(`http://127.0.0.1:8080/api${url}`, {
+        return fetch(`https://simplegame.ru.com/api${url}`, {
             method,
-            // mode: 'no-cors',
+            mode: 'cors',
             credentials: 'include',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': contentType
             }
+        }).catch((error) => {
+            return error;
         });
     }
 

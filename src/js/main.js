@@ -16,13 +16,12 @@ import '../swReg.js';
 
 const root = document.getElementById('root');
 const router = new Router(root);
-
 router
     .register('/', MenuView)
     .register('/signin', SignInView)
     .register('/signup', SignUpView)
     .register('/profile', ProfileView)
-    .register('/leaders', ScoreboardView)
+    .register('/leaders/0', ScoreboardView, 0)
     .register('/about', AboutView)
     .register('/startgame',GameView)
     .register('/singleplayer',SingleGameView);

@@ -5,8 +5,8 @@ export default class SimpleObj {
         this.name = name;
         this.typeClass = typeClass;
         this.frame = createFrame(root, name, typeClass);
-        this.frame.addEventListener('mousedown',() => { return false; });
-        this.frame.addEventListener('select',() => { return false; });
+        this.frame.addEventListener('mousedown', () => { return false; });
+        this.frame.addEventListener('select', () => { return false; });
     }
 
     hide() {

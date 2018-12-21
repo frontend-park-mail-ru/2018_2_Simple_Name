@@ -4,12 +4,26 @@ export default class LeadersService {
     static async FetchData(limit, offset) {
         const res1 = await this.fetchPagesCount();
 
-        const res2 = await this.fetchUsers(limit, offset);
+        if (res1 === false) {
+            return {
+                'valid': false
+            };
+        }
 
         const count = res1;
+
+        const res2 = await this.fetchUsers(limit, offset);
+
+        if (res2 === false) {
+            return {
+                'valid': false
+            };
+        }
+
         const users = res2;
 
         const data = {
+            'valid': true,
             'users': users,
             'count': count.leaderscount
         };
@@ -20,11 +34,23 @@ export default class LeadersService {
 
     static async fetchPagesCount() {
         const response = await httpRequest.doGet({ url: '/leaderscount' });
-        return await response.json();
+        let res = {};
+        if (response.ok) {
+            res = await response.json();
+            return res;
+        }
+
+        return false;
     }
 
     static async fetchUsers(limit, offset) {
         const response = await httpRequest.doGet({ url: `/leaders?limit=${limit}&offset=${offset}` });
-        return await response.json();
+        let res;
+        if (response.ok) {
+            res = await response.json();
+            return res;
+        }
+
+        return false;
     }
 }

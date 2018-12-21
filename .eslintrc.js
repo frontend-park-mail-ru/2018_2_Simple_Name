@@ -39,6 +39,7 @@ module.exports = {
         "guard-for-in": 0,
         "no-unused-vars": 0,
         "quote-props": 0,
+        "quotes": [2, "single", { "avoidEscape": true }],
         "arrow-body-style": 0,
         "padded-blocks": 0,
         "operator-assignment": 0,

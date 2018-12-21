@@ -1,24 +1,31 @@
+@font-face
+  font-family: 'Varela Round'
+  src: url('../fonts/VarelaRound-Regular.ttf') format('truetype')
+
 .table-menu
   display: block
   padding: 5px
   border: 2px solid black
   border-radius: 10px
-  box-shadow: 8px 10px 10px rgba(14, 14, 14, 0.5)
   background: #ffb600
   margin: auto
+  overflow: hidden
+  word-break: keep-all
+  font-size: 30px
   margin-top: 5px
-  width: 15%
+  width: 200px
 
 .warn-title
   text-align: center
-  font-family: 'Indie Flower', cursive
+  font-family: Varela Round, sans-serif
   font-size: 20px
   font: bold
   color: red
   margin-top: 20px
 
 .profile-pic
-  display: block
+  display: flex
+  margin: auto
   width: 75px
   height: 75px
   margin-bottom: 15px
@@ -40,37 +47,50 @@ th
 .button-menu
   display: block
   width: 116px
+  margin-left: auto
+  margin-right: auto
   box-shadow: 5px 5px black
   border: 2px solid black
   border-radius: 10px
   background-color: #ffb600
   padding: 6px
   text-align: center
-  margin-left: 46%
   margin-top: 15px
 
 .info-block
-  display: block
-  display: flex
-  width: 100%
-  flex-direction: column
-  justify-content: flex-start
+    width: auto
+    -webkit-box-orient: vertical
+    -webkit-box-direction: normal
+    -ms-flex-direction: column
+    flex-direction: column
+    -webkit-box-pack: start
+    -ms-flex-pack: start
+    justify-content: flex-start
 
 .form-group
-  margin-left: 40%
-  font-family: 'Varela Round', sans-serif
-  align-items: center
-  display: flex
-  justify-content: space-between
-  width: 21%
+    display: flex
+    padding: 1px
+    word-break: break-all
+    overflow: hidden
+    width: 270px
+    margin: auto
+    font-family: Varela Round, sans-serif
+    -webkit-box-align: center
+    -ms-flex-align: center
+    align-items: center
+    -webkit-box-pack: justify
+    -ms-flex-pack: justify
+    justify-content: space-between
 
 input
-  border: 1px solid
-  border-radius: 5px
-  line-height: 22px
-  padding-left: 4px
-  box-shadow: 3px 3px black
-  margin: 1px
+    border: 1px solid
+    width: 105px
+    border-radius: 5px
+    line-height: 22px
+    padding-left: 4px
+    -webkit-box-shadow: 3px 3px #000
+    box-shadow: 3px 3px #000
+    margin: 1px
 
 .capitalSymb
   text-transform: capitalize
@@ -78,6 +98,9 @@ input
 .pageTitle
   text-align: center
   padding-top: 5%
+  overflow: hidden
+  word-break: keep-all
+  font-size: 40px
   color: #ffb600
   font-family: 'Varela Round', sans-serif
   text-shadow: 5px 5px 3px rgb(0, 0, 0)
@@ -89,7 +112,7 @@ input
   margin: 10px
 
 .about-page
-  font-family: 'Indie Flower', cursive
+  font-family: 'Varela Round', sans-serif
   padding: 1% 27%
   font-size: 20px
   text-align: center
@@ -106,7 +129,9 @@ a
   font-family: 'Varela Round', sans-serif
 
 .button
-  margin-left: 46%
+  display: block
+  margin-left: auto
+  margin-right: auto
   margin-top: 2%
   border: 2px solid black
   border-radius: 10px
@@ -115,13 +140,15 @@ a
   color: #A60000
   font-family: 'Varela Round', sans-serif
   font-size: 16px
+  overflow: hidden
+  word-break: break-all
   font-weight: bold
   padding: 10px 10px
   width: 130px
   text-align: center
 
 body
-  background-image: url('/static/b3f5e82c46a8e0cd2d7a8b5dce47a084.png')
+  background-image: url('../media/game-background.png')
   color: whitesmoke
   margin: auto
 
@@ -148,7 +175,6 @@ body
       background-color: rgb(155, 139, 103)
 
 .hvr-grow
-  display: inline-block
   vertical-align: middle
   -webkit-transform: perspective(1px) translateZ(0)
   transform: perspective(1px) translateZ(0)

@@ -1,58 +1,59 @@
-// const CACHE = new Date().toISOString();
 const CACHE = 'cache-v1-simplegame';
 const { assets } = global.serviceWorkerOption;
 let assetsToCache = [...assets];
 
 assetsToCache = assetsToCache.map(path => {
+    if (path === '/index.html') return new URL('/', global.location).toString();
     const res = new URL(path, global.location).toString();
     return res;
 });
+
+assetsToCache.push('/about');
+assetsToCache.push('/signin');
+assetsToCache.push('/signup');
 
 // При установке воркера мы должны закешировать часть данных (статику)
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE).then((cache) => {
-            return cache.addAll([...assetsToCache, '/']);
+            return cache.addAll([...assetsToCache]);
         })
     );
 });
-
-// период обновления кэша - одни сутки
-let MAX_AGE = 86400000;
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        // ищем запрошенный ресурс среди закэшированных
-        caches.match(event.request).then((cachedResponse) => {
-            let lastModified,
-                fetchRequest;
-            // если ресурс есть в кэше
-            if (cachedResponse) {
-                // получаем дату последнего обновления
-                lastModified = new Date(cachedResponse.headers.get('last-modified'));
-                // и если мы считаем ресурс устаревшим
-                if (lastModified && (Date.now() - lastModified.getTime()) > MAX_AGE) {
-                    fetchRequest = event.request.clone();
-                    // создаём новый запрос
-                    return fetch(fetchRequest).then((response) => {
-                        // при неудаче всегда можно выдать ресурс из кэша
-                        if (!response || response.status !== 200) {
-                            return cachedResponse;
-                        }
-                        // обновляем кэш
-                        caches.open(CACHE).then((cache) => {
-                            cache.put(event.request, response.clone());
-                        });
-                        // возвращаем свежий ресурс
-                        return response;
-                    }).catch(() => {
-                        return cachedResponse;
-                    });
-                }
-                return cachedResponse;
-            }
-            // запрашиваем из сети как обычно
-            return fetch(event.request);
-        })
-    );
+    if (navigator.onLine) {
+        const req = event.request;
+        const compareSign = req.url.match('signin') || req.url.match('signup');
+        const compareGet = req.method === 'GET' && compareSign;
+        const compareFinal = (compareGet || req.url.match('about')) || req.url.match('leaders');
+
+        if (compareFinal) {
+            return fetch(event.request).then((response) => {
+                return caches.open(CACHE).then((cache) => {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            });
+        }
+        return fetch(event.request);
+
+    }
+
+    event.respondWith(caches.match(event.request).then((cachedResponse) => {
+        // выдаём кэш, если он есть
+        if (cachedResponse) {
+            return fromCache(event.request);
+        }
+    }));
+
+    return fetch(event.request);
+
+
 });
+
+function fromCache(request) {
+    return caches.open(CACHE)
+        .then((cache) => cache.match(request)
+            .then((matching) => matching));
+}
