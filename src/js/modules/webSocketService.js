@@ -1,6 +1,6 @@
 export default class WsService {
     constructor(url) {
-        this.ws = new WebSocket(`wss://${url}`);
+        this.ws = new WebSocket(`ws://${url}`);
         this.listCommands = [];
         this.ws.addEventListener('message', (event) => {
             const msg = JSON.parse(event.data);
@@ -33,5 +33,9 @@ export default class WsService {
 
     subscribe(command, callback) {
         this.listCommands[command] = callback;
+    }
+
+    close(){
+        this.ws.close();
     }
 }

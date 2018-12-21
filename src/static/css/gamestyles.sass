@@ -1,10 +1,9 @@
+@font-face
+  font-family: 'Varela Round'
+  src: url('../fonts/VarelaRound-Regular.ttf') format('truetype')
+
 .background
-  position: fixed
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  background-size: 100%
+  background-size: 100% 100%
   background-repeat: no-repeat
 
 .gameBackground
@@ -24,22 +23,20 @@
   left: 0
   width: 100%
   height: 100%
-  background-size: 100%
-  background-repeat: no-repeat
 
 .header
   width: 100%
-  height: 70px
+  height: 13%
 
 .gameArea
-  width: 1200px
-  height: 500px
+  width: 100%
+  height: 80%
   background-size: auto
   margin-left: auto
   margin-right: auto
 
 .footer
-  height: 300px
+  height: 9%
   text-align: center
   font-size: 15pt
   background-color: black
@@ -93,7 +90,6 @@
   height: 10vh
   top: 40vh
   left: 47.5vw
-  background-size: 100% 100%
   animation-name: weel-rotate
   animation-iteration-count: infinite
 
@@ -176,13 +172,13 @@
   position: absolute
   width: 30%
   height: 10%
-  top: 0%
-  left: 32%
+  top: 1%
+  left: 38%
 
 .buyPanel-tab
   position: absolute
-  height: 100%
-  background-repeat: no-repeat
+  height: 80%
+  width: 10%
 
 #buyPanel-tab1
   background-image: url("../media/game-media/tabs/tab_mob1.png")
@@ -193,77 +189,93 @@
 #buyPanel-tab3
   background-image: url("../media/game-media/tabs/tab_mob3.png")
 
+p
+  font-family: 'Varela Round', sans-serif
+  word-break: break-all
+  font-size: 1.6vw
+  text-align: center
+  margin: 0 0
+
+div 
+  overflow: hidden
+
 .nicknameBox
+  top: 1%
   position: absolute
-  width: 25%
+  width: 27%
   height: 4%
-  font-size: 15pt
   background-color: black
   opacity: 0.7
 
 .healthBar
+  top: 7%
   position: absolute
   width: 20%
   height: 5%
-  border-radius: 30%
-  border-width: 2px
-  border-style: solid
   border-color: black
   background-color: brown
 
 .healthVal
+  top: 7%
   position: absolute
-  width: 4%
-  height: 5%
-  text-align: center
-  font-size: 15pt
+  width: 6%
+  height: 5% 
   background-color: black
+  border-color: white
   opacity: 0.7
-
+.healthVal p 
+  
 .mob
   position: absolute
-  width: 50px
-  height: 50px
+  width: 3.8vw
+  height: 7.5vh
   animation-iteration-count: infinite
-  background-size: 100% 100%
+  z-index: 3
 
 .deadmob
   position: absolute
-  width: 50px
-  height: 50px
-  background-size: 100% 100%
-  background-repeat: no-repeat
+  width: 3.8vw
+  height: 7.5vh
   background-image: url("../media/game-media/mobs/blood.png")
   animation-name: mob-dead
   animation-iteration-count: 1
+  z-index: 0
 
 @keyframes mob-dead
 
 
 @-moz-keyframes mob-dead
 
+.border
+  border-radius: 3px
+  border-width: 0.18vw
+  border-style: solid
+  border-color: black
 
 .target
-  top: 295px
   position: absolute
-  height: 150px
-  width: 150px
+  top: 35%
+  height: 24vh
+  width: 12.2vw
 
 .points
   position: absolute
-  top: 10%
-  left: 45%
-  font-size: 20pt
+  width: 6%
+  height: 4%
+  top: 12%
+  left: 48%
   background-color: black
+  border-color: white
   opacity: 0.7
 
 #own-healthBar
-  top: 5%
-  left: 5%
+  top: 7%
+  left: 8%
 
+#own-nickname
+  left: 1%
 #own-healthVal
-  top: 5%
-  left: 0%
+  left: 1%
 
 .own-mob1
   animation-name: own-mob1-run
@@ -398,19 +410,17 @@
 
 
 .own-target
+  left: 0
   background-image: url("../media/game-media/map/own_tar.png")
 
 #rival-nickname
-  top: 0%
-  left: 75%
+  left: 72%
 
 #rival-healthBar
-  top: 5%
-  left: 75%
+  left: 72%
 
 #rival-healthVal
-  top: 5%
-  left: 96%
+  left: 93%
 
 .rival-mob1
   animation-name: rival-mob1-run
@@ -545,23 +555,64 @@
 
 
 .rival-target
-  left: 1105px
+  left: 88%
   background-image: url("../media/game-media/map/rival_tar.png")
 
 .gameover-window
-  top: 30%
-  width: 100%
-  height: 50%
-  opacity: 0.7
-  font-size: 50pt
-  text-align: center
+  top: 31%
+  left: 35%
+  width: 30%
+  height: 30%
+  opacity: 0.7 
+  border-width: 0.3vw
+  border-style: solid
+  border-color: black
+  border-radius: 5px
   position: absolute
   background-color: black
 
+#gameover-window p
+  position: absolute
+  font-size: 4vw
+  top: 24%
 .win
-  background-color: rgb(57, 188, 197)
+  background-color: #03243a
   text-decoration-color: rgb(179, 31, 31)
+
+.win p 
+  left: 25%
 
 .lose
   background-color: rgb(30, 5, 54)
   text-decoration-color: rgb(215, 227, 228)
+
+.lose p 
+  left: 11%
+.button-gameover  
+  top: 53%
+  left: 43.5%
+  width: 14%
+  height: 5%
+  position: absolute
+  background-color: #000
+  border: 2px solid black
+  border-radius: 10px
+  background-color: #ffb600
+.button-gameover p
+  position: absolute
+  font-size: 2vw
+  top: 0
+  left: 31%
+  color: black
+.button-exit  
+  top: 91%
+  left: 95%
+  width: 4%
+  height: 7%
+  position: absolute
+  background-image: url("../media/game-media/map/door.png")
+  background-size: 100% 100%
+  background-repeat: no-repeat
+  background-color: black
+  border-radius: 3px
+

@@ -44,7 +44,7 @@ export default class SimpleObj {
     }
 
     setTextBox(text) {
-        this.frame.innerText = text;
+        this.frame.p.innerText = text
     }
 
     setType(typeClass) {
@@ -54,6 +54,10 @@ export default class SimpleObj {
 
     setWidth(width) {
         this.frame.style.width = `${width}px`;
+    }
+
+    setWidthPer(width) {
+        this.frame.style.width = `${width}%`;
     }
 
     addType(typeClass) {
@@ -76,6 +80,12 @@ export default class SimpleObj {
         return { x, y };
     }
 
+    docPos(){
+        const x = this.frame.getBoundingClientRect().x;
+        const y = this.frame.getBoundingClientRect().y;
+        return { x, y };
+    }
+
     clearFrame() {
         this.frame.innerHTML = '';
     }
@@ -87,6 +97,9 @@ export default class SimpleObj {
 function createFrame(root, name, typeClass) {
     const frame = document.createElement('div');
     root.appendChild(frame);
+    const p = document.createElement('p');
+    frame.appendChild(p);
+    frame.p = p; 
     frame.id = name;
     frame.name = name;
     frame.classList = typeClass;
