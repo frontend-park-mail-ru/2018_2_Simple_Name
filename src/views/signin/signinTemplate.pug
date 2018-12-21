@@ -5,19 +5,19 @@ block title
     | Simple Game
 
 block header
-    +pageTitle('Sign in')
+    +page-title('Вход')
 
 block content
     div
         form#signinForm.info-block(method='POST')
-            div.form-group Email:
+            div.form-group Почта:
                 input#email(type='email', placeholder='name@email.com', name='email')
-            div.form-group Password:
+            div.form-group Пароль:
                 input#password(type='password', placeholder='Password', name='password')
 
-            button#signinButton.button.hvr-grow(type='submit') Sign in
+            button#signinButton.button.hvr-grow(type='submit') Войти
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 

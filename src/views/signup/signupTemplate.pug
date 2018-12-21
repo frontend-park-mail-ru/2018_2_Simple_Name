@@ -5,26 +5,26 @@ block title
     | Simple Game
 
 block header
-    +pageTitle('Sign up')
+    +page-title('Регистрация')
 
 block content
   div
     form#signupForm.info-block(method= 'POST')
-      div.form-group Nickname:
+      div.form-group Никнейм:
         input#nickname.form-control(type='text' placeholder='Nickname' name='nickname')
 
-      div.form-group Email:
+      div.form-group Почта@mail.ru:
         input#email.form-control(type='email' placeholder='name@email.com' name='email')
 
-      div.form-group Password:
+      div.form-group Пароль:
         input#password.form-control(type='password' placeholder='Password', name='password')
 
-      div.form-group Confirm Password:
+      div.form-group Еще раз:
         input#repeatPassword.form-control(type='password' placeholder='Repeat password', name='repeatPassword')
 
-      button#signupButton.button.hvr-grow(type='submit') Sign up
+      button#signupButton.button.hvr-grow(type='submit') Поехали!
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
 
   div#signUpErrorText.warn-title #{statusText}
 

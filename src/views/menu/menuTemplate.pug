@@ -5,7 +5,7 @@ block title
     | Simple Game
 
 block header
-    +pageTitle('Simple Game')
+    +page-title('Simple Game')
 
 block content
     div#buttons
@@ -15,20 +15,20 @@ block content
                     a.table-menu.hvr-grow(href=link name=link)= item
         if (!auth)
             div
-                +menuList('signup', 'Sign up')
+                +menuList('signup', 'Регистрация')
             div
-                +menuList('signin', 'Sign in')
+                +menuList('signin', 'Войти')
         if(auth)
             div
-                +menuList('singleplayer', 'Singleplayer')
+                +menuList('singleplayer', 'Один игрок')
             div
-                +menuList('startgame', 'Multiplayer')
+                +menuList('startgame', 'Мультиплеер')
             div
-                +menuList('profile', 'Profile')
+                +menuList('profile', 'Профиль')
         div
-            +menuList('leaders/0', 'Leaders')
+            +menuList('leaders/0', 'Лидеры')
         div
-            +menuList('about', 'About')
+            +menuList('about', 'Об игре')
 
     div.warn-title #{statusText}
 

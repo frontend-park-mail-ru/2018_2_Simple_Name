@@ -5,7 +5,7 @@ block title
     | Simple Game
 
 block header
-    +pageTitle('Leaders')
+    +page-title('Лидеры')
 
 block content
 
@@ -13,7 +13,7 @@ block content
         mixin scoreTable(players)
             table.score-table
                 tr
-                    each val in ['Nickname', 'Score']
+                    each val in ['Игрок', 'Очки']
                         th= val 
                 each user in players
                     tr
@@ -48,7 +48,7 @@ block content
         div#pagination
             +pagination(pagesCount, pageIndex)
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 

@@ -5,30 +5,30 @@ block title
     | Simple Game
 
 block header
-    +pageTitle('Profile')
+    +page-title('Профиль')
 
 block content
     div.info-block
         img.profile-pic(src="https://simplegame.ru.com/avatar/"+playerNickname+".png")
         form(method='POST')#profileForm
-            div.form-group Upload avatar:
+            div.form-group Загрузить аватар:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
-            div.form-group Nickname:
+            div.form-group Никнейм:
                 input#nickname(type='text', value= playerNickname, readonly)
-            div.form-group Highscore:
+            div.form-group Лучший результат:
                 input#score(type='text', value= playerScore, readonly)
-            div.form-group Email:
+            div.form-group Почта:
                 input#email(type='email', value= playerEmail, readonly)
-            div.form-group Change password:
+            div.form-group Изменить пароль:
                 input#newpassword(type='password', placeholder='New Password', name='newpassword')
-            div.form-group Repeat password:
+            div.form-group Повторите пароль:
                 input#repeatnewpassword(type='password', placeholder='Repeat password', name='repeatnewpassword')
                 
-            button.button.hvr-grow#profileSave(type='submit') Save changes
+            button.button.hvr-grow#profileSave(type='submit') Сохранить изменения
 
-        button.button-ref.button.button-menu.hvr-grow#logout() Logout
+        button.button-ref.button.button-menu.hvr-grow#logout() Выйти
 
-        a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+        a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 
