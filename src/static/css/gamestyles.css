@@ -250,6 +250,10 @@ div {
   opacity: 0.7;
 }
 
+.nicknameBox .nicknameBox p {
+  font-size: 2vw;
+}
+
 .healthBar {
   top: 7%;
   position: absolute;
@@ -267,6 +271,10 @@ div {
   background-color: black;
   border-color: white;
   opacity: 0.7;
+}
+
+.healthVal p {
+  font-size: 1.6vw;
 }
 
 .mob {
