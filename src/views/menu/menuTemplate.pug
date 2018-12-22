@@ -1,8 +1,4 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
-
-block title
-    | Simple Game
 
 block header
     +page-title('Simple Game')
@@ -12,7 +8,7 @@ block content
         mixin menuList(link, item)
             dl.menu
                 dt
-                    a.table-menu.hvr-grow(href=link name=link)= item
+                    a.button.button_large(href=link name=link)= item
         if (!auth)
             div
                 +menuList('signup', 'Регистрация')

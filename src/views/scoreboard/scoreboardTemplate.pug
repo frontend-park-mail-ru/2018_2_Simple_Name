@@ -1,8 +1,4 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
-
-block title
-    | Simple Game
 
 block header
     +page-title('Лидеры')
@@ -35,9 +31,9 @@ block content
                         - var pageName = index -1;
 
                         if (index === active)
-                            a.active.button-ref(title= titleName name= pageName href='/leaders/' + pageName)=index
+                            a.pagination__link.pagination__link_active(title= titleName name= pageName href='/leaders/' + pageName)=index
                         else
-                            a.button-ref(title= b name= pageName href = '/leaders/' + pageName)= index
+                            a.pagination__link(title= b name= pageName href = '/leaders/' + pageName)= index
 
                     //- next arrow
                     if (next < amount)
@@ -48,7 +44,7 @@ block content
         div#pagination
             +pagination(pagesCount, pageIndex)
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
+    a#backtomenu.button.button_small(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 

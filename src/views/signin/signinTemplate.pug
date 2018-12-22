@@ -1,23 +1,19 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
-
-block title
-    | Simple Game
 
 block header
     +page-title('Вход')
 
 block content
     div
-        form#signinForm.info-block(method='POST')
-            div.form-group Почта:
+        form#signinForm.form(method='POST')
+            div.form__item Почта:
                 input#email(type='email', placeholder='name@email.com', name='email')
-            div.form-group Пароль:
+            div.form__item Пароль:
                 input#password(type='password', placeholder='Password', name='password')
 
-            button#signinButton.button.hvr-grow(type='submit') Войти
+            button#signinButton.button(type='submit') Войти
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Назад
+    a#backtomenu.button.button_small(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 

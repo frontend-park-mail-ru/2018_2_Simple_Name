@@ -1,8 +1,4 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
-
-block title
-    | Simple Game
 
 block header
     +page-title('Об игре')
@@ -17,4 +13,4 @@ block content
             | Попробуй протестировать свою стратегию на своем друге или в одиночной игре
             | на Гене - искусcтвенном интеллекте высшего уровня!
 
-    a#backtomenu.button-menu.hvr-grow(name='menu' href='/') Назад
+    a#backtomenu.button.button_small(name='menu' href='/') Назад
