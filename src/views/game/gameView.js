@@ -14,8 +14,8 @@ export default class GameView extends BaseView {
     }
 
     backToMenu(text){
-        this.el.innerHTML = '';
         this.RouterModule.open('/', text);
+        location.reload();//для удаления обЬекта игры
     }
 
     render(text) {
