@@ -87,6 +87,7 @@ export default class GameService {
         })
         window.addEventListener('popstate', () => {
             this.WSService.close();
+            this.backFunc();
         });
 
         this.baseW = 1200;
@@ -302,7 +303,6 @@ export default class GameService {
     }
 
     mobClickCallback(event) {
-        console.log(this.baseW - (event.clientX / this.koefX - this.realX));
         const pos = { x: this.baseW - (event.clientX / this.koefX - this.realX), y: event.clientY / this.koefY - this.realY };
         this.WSService.send({
             command: 'killmob',
