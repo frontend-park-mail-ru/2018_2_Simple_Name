@@ -14,9 +14,7 @@ export default class SingleGameView extends BaseView {
 
     backToMenu(text){
         this.RouterModule.open('/', text);
-        console.log('backToMenu');
         location.reload();//для удаления обЬекта игры
-        console.log('reload');
     }
 
     render(text) {
