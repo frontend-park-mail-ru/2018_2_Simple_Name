@@ -1,0 +1,28 @@
+.pagination {
+  clear: both;
+  margin-top: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.pagination a {
+  color: red;
+  display: inline-block;
+  margin: 2px 2px 2px 0;
+  padding: 6px 9px 5px 9px;
+  text-decoration: none;
+  border-radius: 5px;
+  -webkit-transition: background-color .3s;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: #ffb600;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #9b8b67;
+}
+/*# sourceMappingURL=pagination.css.map */

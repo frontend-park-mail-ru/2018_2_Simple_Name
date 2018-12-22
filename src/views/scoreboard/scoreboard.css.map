@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,EAAE,EAAE,EAAE,EAAE,CAAC;EACnB,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,eAAe;EACvB,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;EAClB,eAAe,EAAE,QAAQ;EACzB,WAAW,EAAE,sBAAsB;CAAG;;AAExC,AAAA,EAAE,CAAC;EACD,KAAK,EAAE,OAAO;CAAG",
+    "sources": [
+        "scoreboard.sass"
+    ],
+    "names": [],
+    "file": "scoreboard.css"
+}

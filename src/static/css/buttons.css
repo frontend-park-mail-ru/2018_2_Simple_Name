@@ -1,0 +1,44 @@
+.button-menu {
+  display: block;
+  width: 116px;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-box-shadow: 5px 5px black;
+          box-shadow: 5px 5px black;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ffb600;
+  padding: 6px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.button-ref {
+  margin-top: 5px;
+  text-decoration: none;
+  color: #A60000;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ffb600;
+  -webkit-box-shadow: 5px 5px black;
+          box-shadow: 5px 5px black;
+  color: #A60000;
+  font-family: 'a_FuturaRound', arial;
+  font-size: 16px;
+  text-align: center;
+  font-size: 18px;
+  overflow: hidden;
+  word-break: keep-all;
+  font-weight: bold;
+  padding: 10px 10px;
+  width: 131px;
+}
+/*# sourceMappingURL=buttons.css.map */

@@ -1,0 +1,739 @@
+@font-face {
+  font-family: 'Varela Round';
+  src: url("../fonts/VarelaRound-Regular.ttf") format("truetype");
+}
+
+.background {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.gameBackground {
+  background-image: url("../media/game-media/map/background.jpg");
+}
+
+.waitBackground {
+  background-image: url("../media/game-background.png");
+}
+
+.text-style {
+  text-align: center;
+  color: white;
+  font-family: 'Varela Round', sans-serif;
+}
+
+#gameroot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 13%;
+}
+
+.gameArea {
+  width: 100%;
+  height: 80%;
+  background-size: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer {
+  height: 9%;
+  text-align: center;
+  font-size: 15pt;
+  background-color: black;
+  opacity: 0;
+  color: white;
+}
+
+.footer-show {
+  opacity: .8;
+  -webkit-animation-name: footer-show;
+          animation-name: footer-show;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+
+@-webkit-keyframes footer-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: .8;
+  }
+}
+
+@keyframes footer-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: .8;
+  }
+}
+
+.footer-hide {
+  -webkit-animation-name: footer-hide;
+          animation-name: footer-hide;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+
+@-webkit-keyframes footer-hide {
+  from {
+    opacity: .8;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes footer-hide {
+  from {
+    opacity: .8;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#weel {
+  position: absolute;
+  width: 5vw;
+  height: 10vh;
+  top: 40vh;
+  left: 47.5vw;
+  -webkit-animation-name: weel-rotate;
+          animation-name: weel-rotate;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes weel-rotate {
+  from {
+    background-image: url("../media/game-media/weel/1.jpg");
+  }
+  to {
+    background-image: url("../media/game-media/weel/2.jpg");
+  }
+}
+
+@keyframes weel-rotate {
+  from {
+    background-image: url("../media/game-media/weel/1.jpg");
+  }
+  to {
+    background-image: url("../media/game-media/weel/2.jpg");
+  }
+}
+
+.messageBox {
+  color: white;
+  position: absolute;
+  height: 50px;
+  top: 85vh;
+  left: 20px;
+  background-color: #1b092c;
+  font-size: 20pt;
+  opacity: 0;
+}
+
+.messageBox-show {
+  opacity: .8;
+  -webkit-animation-name: messageBox-show;
+          animation-name: messageBox-show;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+
+@-webkit-keyframes messageBox-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: .8;
+  }
+}
+
+@keyframes messageBox-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: .8;
+  }
+}
+
+.messageBox-hide {
+  -webkit-animation-name: messageBox-hide;
+          animation-name: messageBox-hide;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+
+@-webkit-keyframes messageBox-hide {
+  from {
+    opacity: .8;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes messageBox-hide {
+  from {
+    opacity: .8;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.room {
+  position: absolute;
+  width: 5%;
+  height: 10%;
+  top: 0%;
+  left: 62%;
+  font-size: 18pt;
+}
+
+#buyPanel {
+  position: absolute;
+  width: 30%;
+  height: 10%;
+  top: 1%;
+  left: 38%;
+}
+
+.buyPanel-tab {
+  position: absolute;
+  height: 80%;
+  width: 10%;
+}
+
+#buyPanel-tab1 {
+  background-image: url("../media/game-media/tabs/tab_mob1.png");
+}
+
+#buyPanel-tab2 {
+  background-image: url("../media/game-media/tabs/tab_mob2.png");
+}
+
+#buyPanel-tab3 {
+  background-image: url("../media/game-media/tabs/tab_mob3.png");
+}
+
+p {
+  font-family: Varela Round,sans-serif;
+  word-break: break-all;
+  text-align: center;
+  margin: 0;
+}
+
+div {
+  overflow: hidden;
+}
+
+.nicknameBox {
+  top: 1%;
+  position: absolute;
+  width: 27%;
+  height: 4%;
+  background-color: black;
+  opacity: 0.7;
+}
+
+.healthBar {
+  top: 7%;
+  position: absolute;
+  width: 20%;
+  height: 5%;
+  border-color: black;
+  background-color: brown;
+}
+
+.healthVal {
+  top: 7%;
+  position: absolute;
+  width: 6%;
+  height: 5%;
+  background-color: black;
+  border-color: white;
+  opacity: 0.7;
+}
+
+.mob {
+  position: absolute;
+  width: 3.8vw;
+  height: 7.5vh;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  z-index: 3;
+}
+
+.deadmob {
+  position: absolute;
+  width: 3.8vw;
+  height: 7.5vh;
+  background-image: url("../media/game-media/mobs/blood.png");
+  -webkit-animation-name: mob-dead;
+          animation-name: mob-dead;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  z-index: 0;
+}
+
+@-webkit-keyframes mob-dead {}
+
+@keyframes mob-dead {}.border {
+  border-radius: 3px;
+  border-width: 0.18vw;
+  border-style: solid;
+  border-color: black;
+}
+
+.target {
+  position: absolute;
+  top: 35%;
+  height: 24vh;
+  width: 12.2vw;
+}
+
+.points {
+  position: absolute;
+  width: 6%;
+  height: 4%;
+  top: 12%;
+  left: 48%;
+  background-color: black;
+  border-color: white;
+  opacity: 0.7;
+}
+
+#own-healthBar {
+  top: 7%;
+  left: 8%;
+}
+
+#own-nickname {
+  left: 1%;
+}
+
+#own-healthVal {
+  left: 1%;
+}
+
+.own-mob1 {
+  -webkit-animation-name: own-mob1-run;
+          animation-name: own-mob1-run;
+}
+
+@-webkit-keyframes own-mob1-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_run2.png");
+  }
+}
+
+@keyframes own-mob1-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_run2.png");
+  }
+}
+
+.own-mob1-attack {
+  -webkit-animation-name: own-mob1-attack;
+          animation-name: own-mob1-attack;
+}
+
+@-webkit-keyframes own-mob1-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack3.png");
+  }
+}
+
+@keyframes own-mob1-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob1/own_mob1_attack3.png");
+  }
+}
+
+.own-mob2 {
+  -webkit-animation-name: own-mob2-run;
+          animation-name: own-mob2-run;
+}
+
+@-webkit-keyframes own-mob2-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_run2.png");
+  }
+}
+
+@keyframes own-mob2-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_run2.png");
+  }
+}
+
+.own-mob2-attack {
+  -webkit-animation-name: own-mob2-attack;
+          animation-name: own-mob2-attack;
+}
+
+@-webkit-keyframes own-mob2-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack3.png");
+  }
+}
+
+@keyframes own-mob2-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob2/own_mob2_attack3.png");
+  }
+}
+
+.own-mob3 {
+  -webkit-animation-name: own-mob3-run;
+          animation-name: own-mob3-run;
+}
+
+@-webkit-keyframes own-mob3-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_run2.png");
+  }
+}
+
+@keyframes own-mob3-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_run2.png");
+  }
+}
+
+.own-mob3-attack {
+  -webkit-animation-name: own-mob3-attack;
+          animation-name: own-mob3-attack;
+}
+
+@-webkit-keyframes own-mob3-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack3.png");
+  }
+}
+
+@keyframes own-mob3-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob3/own_mob3_attack3.png");
+  }
+}
+
+.own-target {
+  left: 0;
+  background-image: url("../media/game-media/map/own_tar.png");
+}
+
+#rival-nickname {
+  left: 72%;
+}
+
+#rival-healthBar {
+  left: 72%;
+}
+
+#rival-healthVal {
+  left: 93%;
+}
+
+.rival-mob1 {
+  -webkit-animation-name: rival-mob1-run;
+          animation-name: rival-mob1-run;
+}
+
+@-webkit-keyframes rival-mob1-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_run2.png");
+  }
+}
+
+@keyframes rival-mob1-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_run2.png");
+  }
+}
+
+.rival-mob1-attack {
+  -webkit-animation-name: rival-mob1-attack;
+          animation-name: rival-mob1-attack;
+}
+
+@-webkit-keyframes rival-mob1-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack3.png");
+  }
+}
+
+@keyframes rival-mob1-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob1/rival_mob1_attack3.png");
+  }
+}
+
+.rival-mob2 {
+  -webkit-animation-name: rival-mob2-run;
+          animation-name: rival-mob2-run;
+}
+
+@-webkit-keyframes rival-mob2-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_run2.png");
+  }
+}
+
+@keyframes rival-mob2-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_run2.png");
+  }
+}
+
+.rival-mob2-attack {
+  -webkit-animation-name: rival-mob2-attack;
+          animation-name: rival-mob2-attack;
+}
+
+@-webkit-keyframes rival-mob2-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack3.png");
+  }
+}
+
+@keyframes rival-mob2-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob2/rival_mob2_attack3.png");
+  }
+}
+
+.rival-mob3 {
+  -webkit-animation-name: rival-mob3-run;
+          animation-name: rival-mob3-run;
+}
+
+@-webkit-keyframes rival-mob3-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_run2.png");
+  }
+}
+
+@keyframes rival-mob3-run {
+  from {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_run1.png");
+  }
+  to {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_run2.png");
+  }
+}
+
+.rival-mob3-attack {
+  -webkit-animation-name: rival-mob3-attack;
+          animation-name: rival-mob3-attack;
+}
+
+@-webkit-keyframes rival-mob3-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack3.png");
+  }
+}
+
+@keyframes rival-mob3-attack {
+  0% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack1.png");
+  }
+  50% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack2.png");
+  }
+  100% {
+    background-image: url("../media/game-media/mobs/mob3/rival_mob3_attack3.png");
+  }
+}
+
+.rival-target {
+  left: 88%;
+  background-image: url("../media/game-media/map/rival_tar.png");
+}
+
+.gameover-window {
+  top: 31%;
+  left: 35%;
+  width: 30%;
+  height: 30%;
+  opacity: 0.7;
+  border-width: 0.3vw;
+  border-style: solid;
+  border-color: black;
+  border-radius: 5px;
+  position: absolute;
+  background-color: black;
+}
+
+#gameover-window p {
+  position: absolute;
+  font-size: 4vw;
+  top: 24%;
+}
+
+.win {
+  background-color: #03243a;
+  -webkit-text-decoration-color: #b31f1f;
+          text-decoration-color: #b31f1f;
+}
+
+.win p {
+  left: 25%;
+}
+
+.lose {
+  background-color: #1e0536;
+  -webkit-text-decoration-color: #d7e3e4;
+          text-decoration-color: #d7e3e4;
+}
+
+.lose p {
+  left: 11%;
+}
+
+.button-gameover {
+  top: 53%;
+  left: 43.5%;
+  width: 14%;
+  height: 5%;
+  position: absolute;
+  background-color: #000;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ffb600;
+}
+
+.button-gameover p {
+  position: absolute;
+  font-size: 2vw;
+  top: 0;
+  left: 31%;
+  color: black;
+}
+
+.button-exit {
+  top: 91%;
+  left: 95%;
+  width: 4%;
+  height: 7%;
+  position: absolute;
+  background-image: url("../media/game-media/map/door.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: black;
+  border-radius: 3px;
+}
+/*# sourceMappingURL=gamestyles.css.map */
