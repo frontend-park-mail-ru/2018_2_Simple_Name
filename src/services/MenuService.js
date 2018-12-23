@@ -11,10 +11,15 @@ export default class SignInService {
 
     static async fetchAuth() {
         const resp = await httpRequest.doGet({
-            url: "/islogged"
+            url: '/islogged'
         });
+
         // Проверка статуса ответа
-        return resp.status === 200;
+        if (resp.ok) {
+            return resp.status === 200;
+        }
+        return false;
+
     }
 
 

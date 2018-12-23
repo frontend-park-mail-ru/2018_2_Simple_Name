@@ -1,5 +1,4 @@
 import ScoreboardView from '../../views/scoreboard/scoreboardView.js';
-
 export default class Router {
     constructor(root) {
         this.routes = {};
@@ -11,7 +10,7 @@ export default class Router {
         let view = null;
         let el = null;
 
-        if (typeof View === "object") {
+        if (typeof View === 'object') {
             view = View;
             el = View.el;
         }
@@ -92,14 +91,6 @@ export default class Router {
 
             event.preventDefault();
             const link = event.target;
-
-            if (link.pathname === "/startgame") {
-                const root = document.getElementById('root');
-                root.innerHTML = "";
-                const Game = window.GameModule;
-                const gameService = new Game(root, router);
-                return;
-            }
 
             this.open(link.pathname);
         });

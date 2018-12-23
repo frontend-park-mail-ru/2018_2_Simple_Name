@@ -1,34 +1,33 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
 
 block title
     | Simple Game
 
 block header
-    +pageTitle('Profile')
+    +page-title('Профиль')
 
 block content
-    div.info-block
-        img.form-group.profile-pic(src="http://127.0.0.1:3004/"+playerEmail)
+    div.form
+        img.form__avatar(src="https://simplegame.ru.com/avatar/"+playerNickname+".png")
         form(method='POST')#profileForm
-            div.form-group Upload avatar:
+            div.form__item Загрузить аватар:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
-            div.form-group Nickname:
+            div.form__item Никнейм:
                 input#nickname(type='text', value= playerNickname, readonly)
-            div.form-group Highscore:
+            div.form__item Лучший результат:
                 input#score(type='text', value= playerScore, readonly)
-            div.form-group Email:
+            div.form__item Почта:
                 input#email(type='email', value= playerEmail, readonly)
-            div.form-group Change password:
+            div.form__item Изменить пароль:
                 input#newpassword(type='password', placeholder='New Password', name='newpassword')
-            div.form-group
-                input#repeatnewpassword(type='password', placeholder='Repeat New Password', name='repeatnewpassword')
+            div.form__item Повторите пароль:
+                input#repeatnewpassword(type='password', placeholder='Repeat password', name='repeatnewpassword')
                 
-            button.button.hvr-grow#profileSave(type='submit') Save changes
+            button.button#profileSave(type='submit') Сохранить изменения
 
-        button.button-ref.button.button-menu.hvr-grow#logout() Logout
+        button#logout.button.button_ref.button_small() Выйти
 
-        a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+        a#backtomenu.button.button_small(name='menu' href='/') Назад
 
     div.warn-title #{statusText}
 

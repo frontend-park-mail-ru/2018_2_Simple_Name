@@ -1,32 +1,28 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
 
-block title
-    | Simple Game
-
 block header
-    +pageTitle('Sign up')
+    +page-title('Регистрация')
 
 block content
   div
-    form#signupForm.info-block(method= 'POST')
-      div.form-group Nickname:
+    form#signupForm.form(method= 'POST')
+      div.form__item Никнейм:
         input#nickname.form-control(type='text' placeholder='Nickname' name='nickname')
 
-      div.form-group Email:
+      div.form__item Почта@mail.ru:
         input#email.form-control(type='email' placeholder='name@email.com' name='email')
 
-      div.form-group Password:
+      div.form__item Пароль:
         input#password.form-control(type='password' placeholder='Password', name='password')
 
-      div.form-group Confirm Password:
+      div.form__item Еще раз:
         input#repeatPassword.form-control(type='password' placeholder='Repeat password', name='repeatPassword')
 
-      button#signupButton.button.hvr-grow(type='submit') Sign up
+      button#signupButton.button(type='submit') Поехали!
 
-    a.button-menu.hvr-grow#backtomenu(name='menu' href='/') Back to menu
+    a#backtomenu.button.button_small(name='menu' href='/') Назад
 
-  div.warn-title #{statusText}
+  div#signUpErrorText.warn-title #{statusText}
 
         
 

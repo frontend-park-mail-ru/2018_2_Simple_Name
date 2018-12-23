@@ -1,6 +1,6 @@
-import BaseView from "../baseView/baseView.js";
+import BaseView from '../baseView/baseView.js';
 import bus from '../../js/modules/EventBus.js';
-import LeaderService from "../../services/LeaderService.js";
+import LeaderService from '../../services/LeaderService.js';
 import scoreboardTemplate from './scoreboardTemplate.pug';
 
 export default class ScoreboardView extends BaseView {
@@ -13,9 +13,13 @@ export default class ScoreboardView extends BaseView {
         this.RouterModule = router;
 
         bus.on(`users-loaded-${this.pageIndex}`, (data) => {
-
-            this.users = data.users;
-            this.pagesCount = Math.ceil(data.count / this.onPage);
+            if (data.valid) {
+                this.users = data.users;
+                this.pagesCount = Math.ceil(data.count / this.onPage);
+            } else {
+                this.RouterModule.open('/', 'Отсутствует интернет :(');
+                return;
+            }
             this.renderScoreboard();
         });
 

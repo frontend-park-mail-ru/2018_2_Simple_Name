@@ -18,7 +18,7 @@ module.exports = {
 
     output: {
         filename: 'index.js',
-        publicPath: '/static/',
+        publicPath: '/',
         path: path.resolve(__dirname, 'dist')
     },
 
@@ -31,13 +31,16 @@ module.exports = {
                     fallback: 'style-loader'
                 })
             },
-
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg|jpeg|jpg)$/,
-                exclude: /node_modules/,
-                loader: 'url-loader?limit=100000'
+                test: /\.(png|svg|jpeg|jpg)$/,
+                loader: 'image-webpack-loader',
+                enforce: 'pre'
             },
-
+            {
+                test: /\.(png|svg|jpeg|jpg|eot|svg|ttf|woff|woff2)$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=1000&name=img/[hash].[ext]'
+            },
             {
                 test: /\.pug$/,
                 exclude: /node_modules/,
@@ -45,9 +48,14 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }
-
         ]
     },
     plugins: [
@@ -57,11 +65,7 @@ module.exports = {
             template: './src/index.html'
         }),
         new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, './src/sw.js'),
-            excludes: [
-                '**/.*',
-                '**/*.map'
-            ]
+            entry: path.join(__dirname, './src/sw.js')
         })
     ]
 };

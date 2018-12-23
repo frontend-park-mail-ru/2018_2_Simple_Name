@@ -1,32 +1,30 @@
-extends ../layout/mainTemplate
 include ../modules/headerTemplate
 
-block title
-    | Simple Game
-
 block header
-    +pageTitle('Simple Game')
+    +page-title('Simple Game')
 
 block content
     div#buttons
         mixin menuList(link, item)
             dl.menu
                 dt
-                    a.table-menu.hvr-grow(href=link name=link)= item
+                    a.button.button_large(href=link name=link)= item
         if (!auth)
             div
-                +menuList('signup', 'Sign up')
+                +menuList('signup', 'Регистрация')
             div
-                +menuList('signin', 'Sign in')
+                +menuList('signin', 'Войти')
         if(auth)
             div
-                +menuList('startgame', 'Start Game')
+                +menuList('singleplayer', 'Один игрок')
             div
-                +menuList('profile', 'Profile')
+                +menuList('startgame', 'Мультиплеер')
+            div
+                +menuList('profile', 'Профиль')
         div
-            +menuList('leaders', 'Leaders')
+            +menuList('leaders/0', 'Лидеры')
         div
-            +menuList('about', 'About')
+            +menuList('about', 'Об игре')
 
     div.warn-title #{statusText}
 
