@@ -8,7 +8,7 @@ block header
 
 block content
     div.form
-        img.form__avatar(src="https://simplegame.ru.com/avatar/"+playerNickname+".png")
+        img.form__avatar(src="http://127.0.0.1:8080/avatar/"+playerNickname+".png")
         form(method='POST')#profileForm
             div.form__item Загрузить аватар:
                 input#newavatar(type='file', name='newavatar' enctype='multipart/form-data')
